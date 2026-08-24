@@ -90,23 +90,20 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino (Búsqueda multitérmino)
+// Endpoint 3: Animes en Español Latino (Filtrado exhaustivo sobre catálogo amplio)
 app.get('/api/latino', async (req, res) => {
   try {
-    const busquedas = ['latino', 'audio latino', 'dub', 'espanol'];
-    
-    // Ejecutar todas las búsquedas en paralelo (extrae hasta 2 páginas de cada una)
-    const resultados = await Promise.all(
-      busquedas.map(term => fetchMultipage(`https://animeflv.net/browse?q=${encodeURIComponent(term)}`, 2))
-    );
+    // 1. Extraemos un volumen grande de animes del catálogo principal (5 páginas)
+    const granCatalogo = await fetchMultipage('https://animeflv.net/browse', 5);
 
-    // Aplanar arrays y eliminar duplicados por URL
-    const combinados = resultados.flat();
-    const unicosMap = new Map();
-    combinados.forEach(item => unicosMap.set(item.url, item));
-    const scrapedLatino = Array.from(unicosMap.values());
+    // 2. Filtramos cualquier anime que tenga "latino", "dub", "castellano" o "lat" en su URL o título
+    const soloLatinoScraped = granCatalogo.filter(anime => {
+      const texto = `${anime.title} ${anime.url}`.toLowerCase();
+      return texto.includes('latino') || texto.includes('dub') || texto.includes('castellano') || texto.includes('-lat');
+    });
 
-    const animeLatinoTagged = scrapedLatino.map(anime => ({ ...anime, idioma: 'Español Latino' }));
+    // 3. Etiquetamos e incluimos los propios
+    const animeLatinoTagged = soloLatinoScraped.map(anime => ({ ...anime, idioma: 'Español Latino' }));
     const propiosLatino = misAnimesPropios.filter(a => a.idioma === 'Español Latino');
     const todosLatino = [...propiosLatino, ...animeLatinoTagged];
 
