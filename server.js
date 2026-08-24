@@ -89,10 +89,10 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino
+// Endpoint 3: Animes en Español Latino (Catálogo completo corregido)
 app.get('/api/latino', async (req, res) => {
   try {
-    const { data } = await axios.get('https://animeflv.net/browse?q=latino', {
+    const { data } = await axios.get('https://animeflv.net/browse?genre%5B%5D=latino&order=default', {
       timeout: 10000,
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -128,3 +128,4 @@ const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log('Servidor corriendo en el puerto ' + PORT);
 });
+      
