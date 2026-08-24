@@ -90,11 +90,16 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino (Corregido con filtro oficial de tipo y respaldo)
+// Endpoint 3: Animes en Español Latino (Extracción masiva por géneros/etiquetas)
 app.get('/api/latino', async (req, res) => {
   try {
-    let scrapedLatino = await fetchMultipage('https://animeflv.net/browse?type[]=tv-latino', 3);
+    // 1. Intentar por los filtros de catálogo doblado de AnimeFLV
+    let scrapedLatino = await fetchMultipage('https://animeflv.net/browse?genre[]=latino', 3);
 
+    // 2. Respaldos alternativos si el filtro por género no retorna suficientes
+    if (scrapedLatino.length === 0) {
+      scrapedLatino = await fetchMultipage('https://animeflv.net/browse?type[]=tv-latino', 3);
+    }
     if (scrapedLatino.length === 0) {
       scrapedLatino = await fetchMultipage('https://animeflv.net/browse?q=latino', 3);
     }
@@ -109,6 +114,7 @@ app.get('/api/latino', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
 
 // Endpoint 4: Agregar tus propios animes personalizados
 app.post('/api/animes/subir', (req, res) => {
