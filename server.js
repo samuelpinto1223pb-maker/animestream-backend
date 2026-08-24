@@ -30,7 +30,7 @@ async function scrapeAnimeFLV(url) {
         if (!idsVistos.has(id)) {
           idsVistos.add(id);
           const fullImage = image && image.startsWith('http') ? image : `https://animeflv.net${image}`;
-          const esLatino = title.toLowerCase().includes('latino') || title.toLowerCase().includes('(lat)') || url.includes('latino');
+          const esLatino = title.toLowerCase().includes('latino') || title.toLowerCase().includes('(lat)') || url.includes('23') || url.includes('latino');
 
           results.push({
             id,
@@ -62,15 +62,14 @@ app.get('/api/animes', async (req, res) => {
   }
 });
 
-// Endpoint 2: Catálogo Exclusivo Latino (Corrección de URL sin corchetes codificados)
+// Endpoint 2: Catálogo Exclusivo Latino (Filtrado por ID de género 23)
 app.get('/api/latino', async (req, res) => {
   try {
     let animesLatino = [];
     let idsVistos = new Set();
 
-    for (let p = 1; p <= 5; p++) {
-      // URL directa compatible con el motor de búsqueda de AnimeFLV
-      const url = `https://animeflv.net/browse?q=latino&order=rating&page=${p}`;
+    for (let p = 1; p <= 3; p++) {
+      const url = `https://animeflv.net/browse?genre%5B%5D=23&order=rating&page=${p}`;
       const items = await scrapeAnimeFLV(url);
 
       items.forEach(item => {
@@ -80,6 +79,11 @@ app.get('/api/latino', async (req, res) => {
           animesLatino.push(item);
         }
       });
+    }
+
+    if (animesLatino.length === 0) {
+      const urlFallback = 'https://animeflv.net/browse?q=latino';
+      animesLatino = await scrapeAnimeFLV(urlFallback);
     }
 
     res.json({ success: true, count: animesLatino.length, data: animesLatino });
