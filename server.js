@@ -11,14 +11,13 @@ app.get('/', (req, res) => {
   res.send('Servidor de AnimeStream funcionando correctamente.');
 });
 
-// Endpoint 1: Animes recientes / novedades
+// Endpoint 1: Todos los animes del catálogo (General)
 app.get('/api/animes', async (req, res) => {
   try {
-    const { data } = await axios.get('https://animeflv.net', {
+    const { data } = await axios.get('https://animeflv.net/browse', {
       timeout: 10000,
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
         'Accept-Language': 'es-ES,es;q=0.9'
       }
     });
@@ -26,16 +25,14 @@ app.get('/api/animes', async (req, res) => {
     const $ = cheerio.load(data);
     const animes = [];
 
-    $('.ListEpisodios li, ul.ListAnimes li').each((index, element) => {
-      const title = $(element).find('.Title, .Title strong').text().trim();
-      const episode = $(element).find('.Capa, .Nro').text().trim();
+    $('ul.ListAnimes li').each((index, element) => {
+      const title = $(element).find('h3.Title').text().trim() || $(element).find('.Title').first().text().trim();
       const image = $(element).find('img').attr('src');
       const url = $(element).find('a').attr('href');
 
       if (title) {
         animes.push({
           title: title,
-          episode: episode || 'N/A',
           image: image ? (image.startsWith('http') ? image : 'https://animeflv.net' + image) : null,
           url: url ? 'https://animeflv.net' + url : null
         });
@@ -68,8 +65,8 @@ app.get('/api/search', async (req, res) => {
     const $ = cheerio.load(data);
     const results = [];
 
-    $('ul.ListAnimes li, article.Anime').each((i, el) => {
-      const title = $(el).find('.Title').text().trim();
+    $('ul.ListAnimes li').each((i, el) => {
+      const title = $(el).find('h3.Title').text().trim() || $(el).find('.Title').first().text().trim();
       const image = $(el).find('img').attr('src');
       const url = $(el).find('a').attr('href');
 
@@ -89,10 +86,10 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino
+// Endpoint 3: Animes en Español Latino exclusivamente
 app.get('/api/latino', async (req, res) => {
   try {
-    const { data } = await axios.get('https://animeflv.net/browse?q=latino', {
+    const { data } = await axios.get('https://animeflv.net/browse?genre[]=latino&order=default', {
       timeout: 10000,
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -103,8 +100,8 @@ app.get('/api/latino', async (req, res) => {
     const $ = cheerio.load(data);
     const results = [];
 
-    $('ul.ListAnimes li, article.Anime').each((i, el) => {
-      const title = $(el).find('.Title').text().trim();
+    $('ul.ListAnimes li').each((i, el) => {
+      const title = $(el).find('h3.Title').text().trim() || $(el).find('.Title').first().text().trim();
       const image = $(el).find('img').attr('src');
       const url = $(el).find('a').attr('href');
 
@@ -129,4 +126,4 @@ app.listen(PORT, () => {
   console.log('Servidor corriendo en el puerto ' + PORT);
 });
 
-      
+
