@@ -13,18 +13,18 @@ app.get('/', (req, res) => {
 
 app.get('/api/animes', async (req, res) => {
   try {
-    const { data } = await axios.get('https://www.animeflv.net', {
+    const { data } = await axios.get('https://animeflv.net', {
+      timeout: 10000,
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8'
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+        'Accept-Language': 'es-ES,es;q=0.9'
       }
     });
 
     const $ = cheerio.load(data);
     const animes = [];
 
-    // Intenta extraer episodios recientes o animes en emisión
     $('.ListEpisodios li, .ListAnimes li').each((index, element) => {
       const title = $(element).find('.Title, .Title strong').text().trim();
       const episode = $(element).find('.Capa, .Nro').text().trim();
@@ -35,8 +35,8 @@ app.get('/api/animes', async (req, res) => {
         animes.push({
           title,
           episode: episode || 'N/A',
-          image: image ? (image.startsWith('http') ? image : `https://www.animeflv.net${image}`) : null,
-          url: url ? `https://www.animeflv.net${url}` : null
+          image: image ? (image.startsWith('http') ? image : `https://animeflv.net${image}`) : null,
+          url: url ? `https://animeflv.net${url}` : null
         });
       }
     });
@@ -51,4 +51,3 @@ app.get('/api/animes', async (req, res) => {
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
