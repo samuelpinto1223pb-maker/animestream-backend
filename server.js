@@ -90,20 +90,13 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino (Filtrado exhaustivo sobre catálogo amplio)
+// Endpoint 3: Animes en Español Latino
 app.get('/api/latino', async (req, res) => {
   try {
-    // 1. Extraemos un volumen grande de animes del catálogo principal (5 páginas)
-    const granCatalogo = await fetchMultipage('https://animeflv.net/browse', 5);
+    // Trae los resultados directos de la búsqueda en AnimeFLV
+    const scrapedLatino = await fetchMultipage('https://animeflv.net/browse?q=latino', 3);
 
-    // 2. Filtramos cualquier anime que tenga "latino", "dub", "castellano" o "lat" en su URL o título
-    const soloLatinoScraped = granCatalogo.filter(anime => {
-      const texto = `${anime.title} ${anime.url}`.toLowerCase();
-      return texto.includes('latino') || texto.includes('dub') || texto.includes('castellano') || texto.includes('-lat');
-    });
-
-    // 3. Etiquetamos e incluimos los propios
-    const animeLatinoTagged = soloLatinoScraped.map(anime => ({ ...anime, idioma: 'Español Latino' }));
+    const animeLatinoTagged = scrapedLatino.map(anime => ({ ...anime, idioma: 'Español Latino' }));
     const propiosLatino = misAnimesPropios.filter(a => a.idioma === 'Español Latino');
     const todosLatino = [...propiosLatino, ...animeLatinoTagged];
 
@@ -113,6 +106,7 @@ app.get('/api/latino', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
 
 
 
