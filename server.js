@@ -89,6 +89,41 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
+// Endpoint 3: Animes en Español Latino
+app.get('/api/latino', async (req, res) => {
+  try {
+    const { data } = await axios.get('https://animeflv.net/browse?q=latino', {
+      timeout: 10000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept-Language': 'es-ES,es;q=0.9'
+      }
+    });
+
+    const $ = cheerio.load(data);
+    const results = [];
+
+    $('.ListAnimes li').each((i, el) => {
+      const title = $(el).find('.Title').text().trim();
+      const image = $(el).find('img').attr('src');
+      const url = $(el).find('a').attr('href');
+
+      if (title) {
+        results.push({
+          title: title,
+          image: image ? (image.startsWith('http') ? image : 'https://animeflv.net' + image) : null,
+          url: url ? 'https://animeflv.net' + url : null
+        });
+      }
+    });
+
+    res.json({ success: true, count: results.length, data: results });
+  } catch (error) {
+    console.error('Error en latino:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
   console.log('Servidor corriendo en el puerto ' + PORT);
