@@ -90,12 +90,15 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino (3 páginas del catálogo doblado)
+// Endpoint 3: Animes en Español Latino (Corregido con filtro oficial de tipo y respaldo)
 app.get('/api/latino', async (req, res) => {
   try {
-    const latinoUrl = 'https://animeflv.net/browse?genre[]=latino';
-    const scrapedLatino = await fetchMultipage(latinoUrl, 3);
-    
+    let scrapedLatino = await fetchMultipage('https://animeflv.net/browse?type[]=tv-latino', 3);
+
+    if (scrapedLatino.length === 0) {
+      scrapedLatino = await fetchMultipage('https://animeflv.net/browse?q=latino', 3);
+    }
+
     const animeLatinoTagged = scrapedLatino.map(anime => ({ ...anime, idioma: 'Español Latino' }));
     const propiosLatino = misAnimesPropios.filter(a => a.idioma === 'Español Latino');
     const todosLatino = [...propiosLatino, ...animeLatinoTagged];
