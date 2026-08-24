@@ -11,6 +11,7 @@ app.get('/', (req, res) => {
   res.send('Servidor de AnimeStream funcionando correctamente.');
 });
 
+// Endpoint 1: Animes recientes / novedades
 app.get('/api/animes', async (req, res) => {
   try {
     const { data } = await axios.get('https://animeflv.net', {
@@ -44,6 +45,46 @@ app.get('/api/animes', async (req, res) => {
     res.json({ success: true, count: animes.length, data: animes });
   } catch (error) {
     console.error('Error detallado:', error.message);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Endpoint 2: Buscar animes por nombre
+app.get('/api/search', async (req, res) => {
+  const query = req.query.q;
+  if (!query) {
+    return res.status(400).json({ success: false, error: 'Debes proporcionar un término de búsqueda' });
+  }
+
+  try {
+    const { data } = await axios.get('https://animeflv.net/browse?q=' + encodeURIComponent(query), {
+      timeout: 10000,
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept-Language': 'es-ES,es;q=0.9'
+      }
+    });
+
+    const $ = cheerio.load(data);
+    const results = [];
+
+    $('.ListAnimes li').each((i, el) => {
+      const title = $(el).find('.Title').text().trim();
+      const image = $(el).find('img').attr('src');
+      const url = $(el).find('a').attr('href');
+
+      if (title) {
+        results.push({
+          title: title,
+          image: image ? (image.startsWith('http') ? image : 'https://animeflv.net' + image) : null,
+          url: url ? 'https://animeflv.net' + url : null
+        });
+      }
+    });
+
+    res.json({ success: true, count: results.length, data: results });
+  } catch (error) {
+    console.error('Error en búsqueda:', error.message);
     res.status(500).json({ success: false, error: error.message });
   }
 });
