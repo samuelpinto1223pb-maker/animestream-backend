@@ -90,19 +90,20 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino (Extracción masiva por géneros/etiquetas)
+// Endpoint 3: Animes en Español Latino (Búsqueda por palabras clave)
 app.get('/api/latino', async (req, res) => {
   try {
-    // 1. Intentar por los filtros de catálogo doblado de AnimeFLV
-    let scrapedLatino = await fetchMultipage('https://animeflv.net/browse?genre[]=latino', 3);
+    // Busca combinaciones comunes que AnimeFLV usa en sus títulos doblados
+    const [resLatino, resAudio] = await Promise.all([
+      fetchMultipage('https://animeflv.net/browse?q=latino', 2),
+      fetchMultipage('https://animeflv.net/browse?q=audio+latino', 2)
+    ]);
 
-    // 2. Respaldos alternativos si el filtro por género no retorna suficientes
-    if (scrapedLatino.length === 0) {
-      scrapedLatino = await fetchMultipage('https://animeflv.net/browse?type[]=tv-latino', 3);
-    }
-    if (scrapedLatino.length === 0) {
-      scrapedLatino = await fetchMultipage('https://animeflv.net/browse?q=latino', 3);
-    }
+    // Combinar y eliminar duplicados por URL
+    const combinados = [...resLatino, ...resAudio];
+    const unicosMap = new Map();
+    combinados.forEach(item => unicosMap.set(item.url, item));
+    const scrapedLatino = Array.from(unicosMap.values());
 
     const animeLatinoTagged = scrapedLatino.map(anime => ({ ...anime, idioma: 'Español Latino' }));
     const propiosLatino = misAnimesPropios.filter(a => a.idioma === 'Español Latino');
