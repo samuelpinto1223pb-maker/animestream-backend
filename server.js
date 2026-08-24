@@ -33,10 +33,10 @@ app.get('/api/animes', async (req, res) => {
 
       if (title) {
         animes.push({
-          title,
+          title: title,
           episode: episode || 'N/A',
-          image: image ? (image.startsWith('http') ? image : `https://animeflv.net${image}`) : null,
-          url: url ? `https://animeflv.net${url}` : null
+          image: image ? (image.startsWith('http') ? image : 'https://animeflv.net' + image) : null,
+          url: url ? 'https://animeflv.net' + url : null
         });
       }
     });
@@ -50,4 +50,5 @@ app.get('/api/animes', async (req, res) => {
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log('Servidor corriendo en el puerto ' + PORT);
+});
