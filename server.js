@@ -90,17 +90,18 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino (Búsqueda por palabras clave)
+// Endpoint 3: Animes en Español Latino (Búsqueda multitérmino)
 app.get('/api/latino', async (req, res) => {
   try {
-    // Busca combinaciones comunes que AnimeFLV usa en sus títulos doblados
-    const [resLatino, resAudio] = await Promise.all([
-      fetchMultipage('https://animeflv.net/browse?q=latino', 2),
-      fetchMultipage('https://animeflv.net/browse?q=audio+latino', 2)
-    ]);
+    const busquedas = ['latino', 'audio latino', 'dub', 'espanol'];
+    
+    // Ejecutar todas las búsquedas en paralelo (extrae hasta 2 páginas de cada una)
+    const resultados = await Promise.all(
+      busquedas.map(term => fetchMultipage(`https://animeflv.net/browse?q=${encodeURIComponent(term)}`, 2))
+    );
 
-    // Combinar y eliminar duplicados por URL
-    const combinados = [...resLatino, ...resAudio];
+    // Aplanar arrays y eliminar duplicados por URL
+    const combinados = resultados.flat();
     const unicosMap = new Map();
     combinados.forEach(item => unicosMap.set(item.url, item));
     const scrapedLatino = Array.from(unicosMap.values());
@@ -115,6 +116,7 @@ app.get('/api/latino', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
 
 
 // Endpoint 4: Agregar tus propios animes personalizados
