@@ -11,7 +11,7 @@ const HEADERS_HTTP = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
 };
 
-// Función base: Raspa cualquier página del catálogo sin romper URLs ni duplicar
+// Función base: Raspa cualquier página de AnimeFLV
 async function scrapeAnimeFLV(url) {
   try {
     const { data } = await axios.get(url, { headers: HEADERS_HTTP });
@@ -30,14 +30,12 @@ async function scrapeAnimeFLV(url) {
         if (!idsVistos.has(id)) {
           idsVistos.add(id);
           const fullImage = image && image.startsWith('http') ? image : `https://animeflv.net${image}`;
-          const esLatino = title.toLowerCase().includes('latino') || title.toLowerCase().includes('(lat)') || url.includes('23') || url.includes('latino');
-
           results.push({
             id,
             title,
             image: fullImage,
             url: `https://animeflv.net${relativeUrl}`,
-            idioma: esLatino ? 'Español Latino' : 'Japonés (Subtitulado)'
+            idioma: title.toLowerCase().includes('latino') ? 'Español Latino' : 'Japonés (Subtitulado)'
           });
         }
       }
@@ -50,7 +48,7 @@ async function scrapeAnimeFLV(url) {
   }
 }
 
-// Endpoint 1: Catálogo General
+// Endpoint 1: Catálogo General (AnimeFLV)
 app.get('/api/animes', async (req, res) => {
   try {
     const page = req.query.page || 1;
@@ -62,37 +60,40 @@ app.get('/api/animes', async (req, res) => {
   }
 });
 
-// Endpoint 2: Catálogo Exclusivo Latino (Filtrado por ID de género 23)
+// Endpoint 2: Catálogo Exclusivo Latino (Fuente Alternativa: JKAnime)
 app.get('/api/latino', async (req, res) => {
   try {
-    let animesLatino = [];
-    let idsVistos = new Set();
+    const page = req.query.page || 1;
+    // URL del directorio de audio latino en JKAnime
+    const url = `https://jkanime.net/subbed/latino/${page}/`;
+    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+    const $ = cheerio.load(data);
+    let results = [];
 
-    for (let p = 1; p <= 3; p++) {
-      const url = `https://animeflv.net/browse?genre%5B%5D=23&order=rating&page=${p}`;
-      const items = await scrapeAnimeFLV(url);
+    $('.anime__item, .bloque').each((_, element) => {
+      const title = $(element).find('h5, .title, a').first().text().trim();
+      const image = $(element).find('.anime__item__pic, img').attr('data-setbg') || $(element).find('img').attr('src');
+      const relativeUrl = $(element).find('a').attr('href');
 
-      items.forEach(item => {
-        if (!idsVistos.has(item.id)) {
-          idsVistos.add(item.id);
-          item.idioma = 'Español Latino';
-          animesLatino.push(item);
-        }
-      });
-    }
+      if (title && relativeUrl) {
+        const cleanId = relativeUrl.replace('https://jkanime.net/', '').replace(/\//g, '');
+        results.push({
+          id: cleanId,
+          title,
+          image: image || null,
+          url: relativeUrl,
+          idioma: 'Español Latino'
+        });
+      }
+    });
 
-    if (animesLatino.length === 0) {
-      const urlFallback = 'https://animeflv.net/browse?q=latino';
-      animesLatino = await scrapeAnimeFLV(urlFallback);
-    }
-
-    res.json({ success: true, count: animesLatino.length, data: animesLatino });
+    res.json({ success: true, fuente: 'JKAnime', page: Number(page), count: results.length, data: results });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 });
 
-// Endpoint 3: Búsqueda Global
+// Endpoint 3: Búsqueda Global (AnimeFLV)
 app.get('/api/search', async (req, res) => {
   const query = req.query.q;
   if (!query) return res.status(400).json({ success: false, error: 'Ingresa un texto para buscar' });
@@ -106,7 +107,7 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 4: Temporadas y Episodios
+// Endpoint 4: Temporadas y Episodios (AnimeFLV)
 app.get('/api/anime/:id', async (req, res) => {
   try {
     const animeId = req.params.id;
@@ -153,5 +154,5 @@ app.get('/api/anime/:id', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`Servidor automático en puerto ${PORT}`));
-      
+app.listen(PORT, () => console.log(`Servidor en puerto ${PORT}`));
+                                    
