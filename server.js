@@ -11,7 +11,7 @@ const HEADERS_HTTP = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
 };
 
-// Función base: Raspa cualquier página del catálogo o búsqueda sin duplicados
+// Función base: Raspa cualquier página del catálogo sin romper URLs ni duplicar
 async function scrapeAnimeFLV(url) {
   try {
     const { data } = await axios.get(url, { headers: HEADERS_HTTP });
@@ -19,7 +19,7 @@ async function scrapeAnimeFLV(url) {
     let results = [];
     let idsVistos = new Set();
 
-    $('.ListAnimes li').each((_, element) => {
+    $('article.Anime, .ListAnimes li').each((_, element) => {
       const title = $(element).find('.Title').text().trim();
       const image = $(element).find('img').attr('src');
       const relativeUrl = $(element).find('a').attr('href');
@@ -27,11 +27,10 @@ async function scrapeAnimeFLV(url) {
       if (title && relativeUrl) {
         const id = relativeUrl.replace('/anime/', '');
         
-        // Evita agregar el mismo anime dos veces
         if (!idsVistos.has(id)) {
           idsVistos.add(id);
           const fullImage = image && image.startsWith('http') ? image : `https://animeflv.net${image}`;
-          const esLatino = title.toLowerCase().includes('latino') || title.toLowerCase().includes('(lat)') || url.includes('genre[]=latino');
+          const esLatino = title.toLowerCase().includes('latino') || title.toLowerCase().includes('(lat)') || url.includes('latino');
 
           results.push({
             id,
@@ -51,7 +50,7 @@ async function scrapeAnimeFLV(url) {
   }
 }
 
-// Endpoint 1: Catálogo General (24 animes por página, ordenados por temporadas)
+// Endpoint 1: Catálogo General
 app.get('/api/animes', async (req, res) => {
   try {
     const page = req.query.page || 1;
@@ -63,14 +62,15 @@ app.get('/api/animes', async (req, res) => {
   }
 });
 
-// Endpoint 2: Catálogo Exclusivo Latino (Filtro por género doblado a lo largo de 5 páginas)
+// Endpoint 2: Catálogo Exclusivo Latino (Corrección de URL sin corchetes codificados)
 app.get('/api/latino', async (req, res) => {
   try {
     let animesLatino = [];
     let idsVistos = new Set();
 
     for (let p = 1; p <= 5; p++) {
-      const url = `https://animeflv.net/browse?genre[]=latino&order=default&page=${p}`;
+      // URL directa compatible con el motor de búsqueda de AnimeFLV
+      const url = `https://animeflv.net/browse?q=latino&order=rating&page=${p}`;
       const items = await scrapeAnimeFLV(url);
 
       items.forEach(item => {
@@ -102,7 +102,7 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 4: Obtener Temporadas y Episodios de un Anime
+// Endpoint 4: Temporadas y Episodios
 app.get('/api/anime/:id', async (req, res) => {
   try {
     const animeId = req.params.id;
@@ -150,4 +150,4 @@ app.get('/api/anime/:id', async (req, res) => {
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Servidor automático en puerto ${PORT}`));
-        
+      
