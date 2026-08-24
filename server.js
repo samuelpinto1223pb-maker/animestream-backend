@@ -90,24 +90,38 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 3: Animes en Español Latino
+ // Endpoint 3: Animes en Español Latino (Catálogo estático + scraping)
 app.get('/api/latino', async (req, res) => {
   try {
-    // Trae los resultados directos de la búsqueda en AnimeFLV
-    const scrapedLatino = await fetchMultipage('https://animeflv.net/browse?q=latino', 3);
+    // Lista base con títulos conocidos en Español Latino en AnimeFLV
+    const listaLatinoBase = [
+      { title: "Dragon Ball Super Latino", image: "https://animeflv.net/uploads/animes/covers/2793.jpg", url: "https://animeflv.net/anime/dragon-ball-super-latino", idioma: "Español Latino" },
+      { title: "Naruto Latino", image: "https://animeflv.net/uploads/animes/covers/84.jpg", url: "https://animeflv.net/anime/naruto-latino", idioma: "Español Latino" },
+      { title: "Bleach Latino", image: "https://animeflv.net/uploads/animes/covers/268.jpg", url: "https://animeflv.net/anime/bleach-latino", idioma: "Español Latino" },
+      { title: "Death Note Latino", image: "https://animeflv.net/uploads/animes/covers/309.jpg", url: "https://animeflv.net/anime/death-note-latino", idioma: "Español Latino" },
+      { title: "One Piece Latino", image: "https://animeflv.net/uploads/animes/covers/1.jpg", url: "https://animeflv.net/anime/one-piece-latino", idioma: "Español Latino" },
+      { title: "Demon Slayer (Kimetsu no Yaiba) Latino", image: "https://animeflv.net/uploads/animes/covers/3105.jpg", url: "https://animeflv.net/anime/kimetsu-no-yaiba-latino", idioma: "Español Latino" },
+      { title: "My Hero Academia Latino", image: "https://animeflv.net/uploads/animes/covers/2470.jpg", url: "https://animeflv.net/anime/boku-no-hero-academia-latino", idioma: "Español Latino" },
+      { title: "Attack on Titan (Shingeki no Kyojin) Latino", image: "https://animeflv.net/uploads/animes/covers/1070.jpg", url: "https://animeflv.net/anime/shingeki-no-kyojin-latino", idioma: "Español Latino" },
+      { title: "Jujutsu Kaisen Latino", image: "https://animeflv.net/uploads/animes/covers/3358.jpg", url: "https://animeflv.net/anime/jujutsu-kaisen-tv-latino", idioma: "Español Latino" },
+      { title: "Tokyo Ghoul Latino", image: "https://animeflv.net/uploads/animes/covers/1297.jpg", url: "https://animeflv.net/anime/tokyo-ghoul-latino", idioma: "Español Latino" }
+    ];
 
+    const scrapedLatino = await fetchMultipage('https://animeflv.net/browse?q=latino', 1);
     const animeLatinoTagged = scrapedLatino.map(anime => ({ ...anime, idioma: 'Español Latino' }));
-    const propiosLatino = misAnimesPropios.filter(a => a.idioma === 'Español Latino');
-    const todosLatino = [...propiosLatino, ...animeLatinoTagged];
 
-    res.json({ success: true, count: todosLatino.length, data: todosLatino });
+    // Combinar lista base, propios y scraped eliminando duplicados por URL
+    const todos = [...listaLatinoBase, ...misAnimesPropios.filter(a => a.idioma === 'Español Latino'), ...animeLatinoTagged];
+    const unicosMap = new Map();
+    todos.forEach(item => unicosMap.set(item.url, item));
+    const resultadoFinal = Array.from(unicosMap.values());
+
+    res.json({ success: true, count: resultadoFinal.length, data: resultadoFinal });
   } catch (error) {
     console.error('Error en latino:', error.message);
     res.status(500).json({ success: false, error: error.message });
   }
 });
-
-
 
 
 // Endpoint 4: Agregar tus propios animes personalizados
