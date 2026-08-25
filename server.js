@@ -11,8 +11,8 @@ const HEADERS_HTTP = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
 };
 
-// Función base para raspar cualquier URL del directorio de AnimeFLV
-async function scrapeAnimeFLV(url) {
+// Función base para raspar cualquier página de AnimeFLV
+async function scrapeAnimeFLV(url, esLatino = false) {
   try {
     const { data } = await axios.get(url, { headers: HEADERS_HTTP });
     const $ = cheerio.load(data);
@@ -35,7 +35,7 @@ async function scrapeAnimeFLV(url) {
             title,
             image: fullImage,
             url: `https://animeflv.net${relativeUrl}`,
-            idioma: title.toLowerCase().includes('latino') ? 'Español Latino' : 'Japonés (Subtitulado)'
+            idioma: esLatino || title.toLowerCase().includes('latino') ? 'Español Latino' : 'Japonés (Subtitulado)'
           });
         }
       }
@@ -48,7 +48,7 @@ async function scrapeAnimeFLV(url) {
   }
 }
 
-// Endpoint 1: Catálogo General
+// Endpoint 1: Catálogo General (Sube capítulos/animes en tiempo real)
 app.get('/api/animes', async (req, res) => {
   try {
     const page = req.query.page || 1;
@@ -60,19 +60,19 @@ app.get('/api/animes', async (req, res) => {
   }
 });
 
-// Endpoint 2: Catálogo Directo Completo (Trae todos los animes del directorio sin búsqueda ni filtros)
+// Endpoint 2: Catálogo Exclusivo Latino (Filtrado por doblaje latino)
 app.get('/api/latino', async (req, res) => {
   try {
     const page = req.query.page || 1;
-    const url = `https://animeflv.net/browse?page=${page}`;
-    const animes = await scrapeAnimeFLV(url);
+    const url = `https://animeflv.net/browse?q=latino&page=${page}`;
+    const animes = await scrapeAnimeFLV(url, true);
     res.json({ success: true, page: Number(page), count: animes.length, data: animes });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 });
 
-// Endpoint 3: Búsqueda Global (Para cuando el usuario escriba algo en la barra de búsqueda)
+// Endpoint 3: Búsqueda Global
 app.get('/api/search', async (req, res) => {
   const query = req.query.q;
   if (!query) return res.status(400).json({ success: false, error: 'Ingresa un texto para buscar' });
@@ -86,7 +86,7 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 4: Temporadas y Episodios
+// Endpoint 4: Detalles del Anime, Temporadas Relacionadas y Todos los Episodios en Vivo
 app.get('/api/anime/:id', async (req, res) => {
   try {
     const animeId = req.params.id;
@@ -98,6 +98,21 @@ app.get('/api/anime/:id', async (req, res) => {
     const sinopsis = $('.Plot').text().trim();
     const image = $('.AnimeCover .Image img').attr('src');
     
+    // Extraer temporadas/animes relacionados si existen
+    let temporadasRelacionadas = [];
+    $('.ListAnimes li').each((_, element) => {
+      const relTitle = $(element).find('a').text().trim();
+      const relUrl = $(element).find('a').attr('href');
+      if (relTitle && relUrl) {
+        temporadasRelacionadas.push({
+          title: relTitle,
+          id: relUrl.replace('/anime/', ''),
+          url: `https://animeflv.net${relUrl}`
+        });
+      }
+    });
+
+    // Extraer en tiempo real la lista completa de episodios
     const scripts = $('script').toArray();
     let episodios = [];
 
@@ -124,6 +139,7 @@ app.get('/api/anime/:id', async (req, res) => {
         sinopsis,
         image: image ? `https://animeflv.net${image}` : null,
         total_episodios: episodios.length,
+        temporadas_relacionadas: temporadasRelacionadas,
         episodios
       }
     });
@@ -134,3 +150,4 @@ app.get('/api/anime/:id', async (req, res) => {
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Servidor en puerto ${PORT}`));
+        
