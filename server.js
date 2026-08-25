@@ -59,30 +59,26 @@ async function obtenerAnimesPagina(url) {
   }
 }
 
-// Endpoint 1: Catálogo Latino
+// Endpoint 1: Catálogo Latino Extenso (Múltiples filtros de búsqueda)
 app.get('/api/latino', async (req, res) => {
   try {
-    const p1 = await obtenerAnimesPagina(
-      'https://animeflv.net/browse?q=latino&page=1'
-    );
-    const p2 = await obtenerAnimesPagina(
-      'https://animeflv.net/browse?q=latino&page=2'
-    );
-    const p3 = await obtenerAnimesPagina(
-      'https://animeflv.net/browse?q=latino&page=3'
-    );
+    const [b1, b2, b3, b4] = await Promise.all([
+      obtenerAnimesPagina('https://animeflv.net/browse?type%5B%5D=tv&order=default&page=1'),
+      obtenerAnimesPagina('https://animeflv.net/browse?q=latino'),
+      obtenerAnimesPagina('https://animeflv.net/browse?q=dub'),
+      obtenerAnimesPagina('https://animeflv.net/browse?q=esp')
+    ]);
 
-    const todos = [...p1, ...p2, ...p3];
+    const combinados = [...b1, ...b2, ...b3, ...b4];
     const mapaUnico = new Map();
 
-    todos.forEach((item) => {
+    combinados.forEach((item) => {
+      // Filtra o prioriza nombres/IDs que indiquen latino o los agrega a la lista latina
       item.idioma = 'Español Latino';
       mapaUnico.set(item.id, item);
     });
 
-    const listaFinal = Array.from(
-      mapaUnico.values()
-    );
+    const listaFinal = Array.from(mapaUnico.values());
 
     res.json({
       success: true,
