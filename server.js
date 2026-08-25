@@ -166,9 +166,18 @@ app.get('/api/anime/:id', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
-  console.log(`Servidor en puerto ${PORT}`);
-  // Inicia la recolección masiva en segundo plano
-  poblarCatalogoLatinoAuto();
+app.listen(PORT, async () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+    
+    // 1. Escaneo inicial al arrancar
+    await poblarCatalogoLatinoAuto();
+
+    // 2. Escaneo automático cada 24 horas
+    const veinticuatroHoras = 24 * 60 * 60 * 1000;
+    setInterval(async () => {
+        console.log("Iniciando escaneo automático programado (24h)...");
+        await poblarCatalogoLatinoAuto();
+    }, veinticuatroHoras);
 });
+
                            
