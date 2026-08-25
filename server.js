@@ -59,20 +59,20 @@ async function obtenerAnimesPagina(url) {
   }
 }
 
-// Endpoint 1: Catálogo Latino Paginado (Recorre todas las páginas)
+// Endpoint 1: Catálogo Latino (Múltiples fuentes para catálogo amplio)
 app.get('/api/latino', async (req, res) => {
   try {
     const page = req.query.page || 1;
-    // Escanea de a 3 páginas por consulta para no saturar la red
-    const pInicio = (Number(page) - 1) * 3 + 1;
-    
-    const [b1, b2, b3] = await Promise.all([
-      obtenerAnimesPagina(`https://animeflv.net/browse?q=latino&page=${pInicio}`),
-      obtenerAnimesPagina(`https://animeflv.net/browse?q=latino&page=${pInicio + 1}`),
-      obtenerAnimesPagina(`https://animeflv.net/browse?q=latino&page=${pInicio + 2}`)
+    const offset = (Number(page) - 1) * 2;
+
+    const [b1, b2, b3, b4] = await Promise.all([
+      obtenerAnimesPagina(`https://animeflv.net/browse?q=latino`),
+      obtenerAnimesPagina(`https://animeflv.net/browse?q=dub&page=${offset + 1}`),
+      obtenerAnimesPagina(`https://animeflv.net/browse?q=esp&page=${offset + 1}`),
+      obtenerAnimesPagina(`https://animeflv.net/browse?type%5B%5D=tv&order=default&page=${page}`)
     ]);
 
-    const combinados = [...b1, ...b2, ...b3];
+    const combinados = [...b1, ...b2, ...b3, ...b4];
     const mapaUnico = new Map();
 
     combinados.forEach((item) => {
