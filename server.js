@@ -11,8 +11,8 @@ const HEADERS_HTTP = {
   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
 };
 
-// Función base para raspar cualquier página de AnimeFLV
-async function scrapeAnimeFLV(url, esLatino = false) {
+// Función base para raspar cualquier listado de AnimeFLV
+async function scrapeAnimeFLV(url, etiquetaIdioma = null) {
   try {
     const { data } = await axios.get(url, { headers: HEADERS_HTTP });
     const $ = cheerio.load(data);
@@ -30,12 +30,19 @@ async function scrapeAnimeFLV(url, esLatino = false) {
         if (!idsVistos.has(id)) {
           idsVistos.add(id);
           const fullImage = image && image.startsWith('http') ? image : `https://animeflv.net${image}`;
+          
+          // Determinar idioma
+          let idiomaFinal = etiquetaIdioma;
+          if (!idiomaFinal) {
+            idiomaFinal = title.toLowerCase().includes('latino') ? 'Español Latino' : 'Japonés (Subtitulado)';
+          }
+
           results.push({
             id,
             title,
             image: fullImage,
             url: `https://animeflv.net${relativeUrl}`,
-            idioma: esLatino || title.toLowerCase().includes('latino') ? 'Español Latino' : 'Japonés (Subtitulado)'
+            idioma: idiomaFinal
           });
         }
       }
@@ -48,7 +55,7 @@ async function scrapeAnimeFLV(url, esLatino = false) {
   }
 }
 
-// Endpoint 1: Catálogo General (Sube capítulos/animes en tiempo real)
+// Endpoint 1: Catálogo General
 app.get('/api/animes', async (req, res) => {
   try {
     const page = req.query.page || 1;
@@ -60,13 +67,26 @@ app.get('/api/animes', async (req, res) => {
   }
 });
 
-// Endpoint 2: Catálogo Exclusivo Latino (Filtrado por doblaje latino)
+// Endpoint 2: Catálogo Exclusivo Latino (Usa el filtro de doblaje latino oficial + búsqueda)
 app.get('/api/latino', async (req, res) => {
   try {
     const page = req.query.page || 1;
-    const url = `https://animeflv.net/browse?q=latino&page=${page}`;
-    const animes = await scrapeAnimeFLV(url, true);
-    res.json({ success: true, page: Number(page), count: animes.length, data: animes });
+    
+    // Consulta por filtro de categoría latino y por término clave
+    const urlFiltro = `https://animeflv.net/browse?type[]=latino&page=${page}`;
+    const urlBusqueda = `https://animeflv.net/browse?q=latino&page=${page}`;
+
+    const [resFiltro, resBusqueda] = await Promise.all([
+      scrapeAnimeFLV(urlFiltro, 'Español Latino'),
+      scrapeAnimeFLV(urlBusqueda, 'Español Latino')
+    ]);
+
+    // Unir resultados eliminando duplicados
+    const mapaAnimes = new Map();
+    [...resFiltro, ...resBusqueda].forEach(item => mapaAnimes.set(item.id, item));
+    const animesLatinos = Array.from(mapaAnimes.values());
+
+    res.json({ success: true, page: Number(page), count: animesLatinos.length, data: animesLatinos });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -86,7 +106,7 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-// Endpoint 4: Detalles del Anime, Temporadas Relacionadas y Todos los Episodios en Vivo
+// Endpoint 4: Detalles del Anime, Temporadas y Episodios en tiempo real
 app.get('/api/anime/:id', async (req, res) => {
   try {
     const animeId = req.params.id;
@@ -98,7 +118,6 @@ app.get('/api/anime/:id', async (req, res) => {
     const sinopsis = $('.Plot').text().trim();
     const image = $('.AnimeCover .Image img').attr('src');
     
-    // Extraer temporadas/animes relacionados si existen
     let temporadasRelacionadas = [];
     $('.ListAnimes li').each((_, element) => {
       const relTitle = $(element).find('a').text().trim();
@@ -112,7 +131,6 @@ app.get('/api/anime/:id', async (req, res) => {
       }
     });
 
-    // Extraer en tiempo real la lista completa de episodios
     const scripts = $('script').toArray();
     let episodios = [];
 
@@ -150,4 +168,4 @@ app.get('/api/anime/:id', async (req, res) => {
 
 const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => console.log(`Servidor en puerto ${PORT}`));
-        
+      
