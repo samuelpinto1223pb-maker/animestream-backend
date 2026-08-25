@@ -8,89 +8,130 @@ app.use(cors());
 app.use(express.json());
 
 const HEADERS_HTTP = {
-  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+  'User-Agent':
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
 };
 
-// Endpoint 1: Catálogo Exclusivo Latino (JKAnime)
-app.get('/api/latino', async (req, res) => {
+async function obtenerAnimesPagina(url) {
   try {
-    const page = req.query.page || 1;
-    const url = `https://jkanime.net/latino/${page}/`;
-    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+    const { data } = await axios.get(url, {
+      headers: HEADERS_HTTP
+    });
     const $ = cheerio.load(data);
     let resultados = [];
 
-    $('.anime__item').each((_, element) => {
-      const title = $(element).find('.anime__item__text h5 a').text().trim();
-      const relativeUrl = $(element).find('.anime__item__text h5 a').attr('href');
-      const image = $(element).find('.anime__item__pic').attr('data-setbg');
+    $('article.Anime, .ListAnimes li').each(
+      (_, element) => {
+        const title = $(element)
+          .find('.Title')
+          .text()
+          .trim();
+        const image = $(element)
+          .find('img')
+          .attr('src');
+        const relativeUrl = $(element)
+          .find('a')
+          .attr('href');
 
-      if (title && relativeUrl) {
-        const id = relativeUrl.replace('https://jkanime.net/', '').replace('/', '');
-        resultados.push({
-          id,
-          title,
-          image: image || null,
-          url: relativeUrl,
-          idioma: 'Español Latino'
-        });
+        if (title && relativeUrl) {
+          const id = relativeUrl.replace(
+            '/anime/',
+            ''
+          );
+          const fullImage =
+            image && image.startsWith('http')
+              ? image
+              : `https://animeflv.net${image}`;
+
+          resultados.push({
+            id,
+            title,
+            image: fullImage,
+            url: `https://animeflv.net${relativeUrl}`
+          });
+        }
       }
+    );
+
+    return resultados;
+  } catch (error) {
+    return [];
+  }
+}
+
+// Endpoint 1: Catálogo Latino
+app.get('/api/latino', async (req, res) => {
+  try {
+    const p1 = await obtenerAnimesPagina(
+      'https://animeflv.net/browse?q=latino&page=1'
+    );
+    const p2 = await obtenerAnimesPagina(
+      'https://animeflv.net/browse?q=latino&page=2'
+    );
+    const p3 = await obtenerAnimesPagina(
+      'https://animeflv.net/browse?q=latino&page=3'
+    );
+
+    const todos = [...p1, ...p2, ...p3];
+    const mapaUnico = new Map();
+
+    todos.forEach((item) => {
+      item.idioma = 'Español Latino';
+      mapaUnico.set(item.id, item);
     });
+
+    const listaFinal = Array.from(
+      mapaUnico.values()
+    );
 
     res.json({
       success: true,
-      fuente: 'JKAnime',
-      page: Number(page),
-      count: resultados.length,
-      data: resultados
+      count: listaFinal.length,
+      data: listaFinal
     });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: error.message });
   }
 });
 
-// Endpoint 2: Catálogo General (AnimeFLV)
+// Endpoint 2: Catálogo General
 app.get('/api/animes', async (req, res) => {
   try {
     const page = req.query.page || 1;
     const url = `https://animeflv.net/browse?page=${page}`;
-    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
-    const $ = cheerio.load(data);
-    let results = [];
-
-    $('article.Anime, .ListAnimes li').each((_, element) => {
-      const title = $(element).find('.Title').text().trim();
-      const image = $(element).find('img').attr('src');
-      const relativeUrl = $(element).find('a').attr('href');
-
-      if (title && relativeUrl) {
-        const id = relativeUrl.replace('/anime/', '');
-        results.push({
-          id,
-          title,
-          image: image && image.startsWith('http') ? image : `https://animeflv.net${image}`,
-          url: `https://animeflv.net${relativeUrl}`
-        });
-      }
+    const animes = await obtenerAnimesPagina(url);
+    res.json({
+      success: true,
+      page: Number(page),
+      count: animes.length,
+      data: animes
     });
-
-    res.json({ success: true, page: Number(page), count: results.length, data: results });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: error.message });
   }
 });
 
-// Endpoint 3: Detalles del Anime Latino
-app.get('/api/latino/anime/:id', async (req, res) => {
+// Endpoint 3: Detalles del Anime
+app.get('/api/anime/:id', async (req, res) => {
   try {
     const animeId = req.params.id;
-    const url = `https://jkanime.net/${animeId}/`;
-    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+    const url = `https://animeflv.net/anime/${animeId}`;
+    const { data } = await axios.get(url, {
+      headers: HEADERS_HTTP
+    });
     const $ = cheerio.load(data);
 
-    const title = $('.anime__details__title h3').text().trim();
-    const sinopsis = $('.anime__details__text p').text().trim();
-    const image = $('.anime__details__pic').attr('data-setbg');
+    const title = $('.section-body .Title')
+      .text()
+      .trim();
+    const sinopsis = $('.Plot').text().trim();
+    const image = $('.AnimeCover .Image img').attr(
+      'src'
+    );
 
     res.json({
       success: true,
@@ -98,15 +139,19 @@ app.get('/api/latino/anime/:id', async (req, res) => {
         id: animeId,
         title,
         sinopsis,
-        image: image || null,
-        idioma: 'Español Latino'
+        image: image
+          ? `https://animeflv.net${image}`
+          : null
       }
     });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res
+      .status(500)
+      .json({ success: false, error: error.message });
   }
 });
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`Servidor en puerto ${PORT}`));
-                                            
+app.listen(PORT, () =>
+  console.log(`Servidor en puerto ${PORT}`)
+);
