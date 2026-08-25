@@ -59,21 +59,23 @@ async function obtenerAnimesPagina(url) {
   }
 }
 
-// Endpoint 1: Catálogo Latino Extenso (Múltiples filtros de búsqueda)
+// Endpoint 1: Catálogo Latino Paginado (Recorre todas las páginas)
 app.get('/api/latino', async (req, res) => {
   try {
-    const [b1, b2, b3, b4] = await Promise.all([
-      obtenerAnimesPagina('https://animeflv.net/browse?type%5B%5D=tv&order=default&page=1'),
-      obtenerAnimesPagina('https://animeflv.net/browse?q=latino'),
-      obtenerAnimesPagina('https://animeflv.net/browse?q=dub'),
-      obtenerAnimesPagina('https://animeflv.net/browse?q=esp')
+    const page = req.query.page || 1;
+    // Escanea de a 3 páginas por consulta para no saturar la red
+    const pInicio = (Number(page) - 1) * 3 + 1;
+    
+    const [b1, b2, b3] = await Promise.all([
+      obtenerAnimesPagina(`https://animeflv.net/browse?q=latino&page=${pInicio}`),
+      obtenerAnimesPagina(`https://animeflv.net/browse?q=latino&page=${pInicio + 1}`),
+      obtenerAnimesPagina(`https://animeflv.net/browse?q=latino&page=${pInicio + 2}`)
     ]);
 
-    const combinados = [...b1, ...b2, ...b3, ...b4];
+    const combinados = [...b1, ...b2, ...b3];
     const mapaUnico = new Map();
 
     combinados.forEach((item) => {
-      // Filtra o prioriza nombres/IDs que indiquen latino o los agrega a la lista latina
       item.idioma = 'Español Latino';
       mapaUnico.set(item.id, item);
     });
@@ -82,6 +84,7 @@ app.get('/api/latino', async (req, res) => {
 
     res.json({
       success: true,
+      page: Number(page),
       count: listaFinal.length,
       data: listaFinal
     });
