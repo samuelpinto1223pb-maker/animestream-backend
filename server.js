@@ -76,7 +76,6 @@ async function poblarCatalogoLatinoAuto() {
   console.log('Iniciando escaneo automático para superar los 1,000 animes latinos...');
   let catalogoLocal = leerJsonLocal();
 
-  // Recorre las primeras 45 páginas de AnimeFLV
   for (let i = 1; i <= 45; i++) {
     try {
       const url = `https://animeflv.net/browse?type%5B%5D=tv&order=default&page=${i}`;
@@ -95,7 +94,6 @@ async function poblarCatalogoLatinoAuto() {
         guardarJsonLocal(catalogoLocal);
       }
 
-      // Pausa de 1 segundo entre páginas para evitar bloqueos
       await new Promise(resolve => setTimeout(resolve, 1000));
     } catch (e) {
       console.log(`Error en página ${i}, continuando...`);
@@ -139,7 +137,7 @@ app.get('/api/animes', async (req, res) => {
   }
 });
 
-// Endpoint 3: Detalles de Anime
+// Endpoint 3: Detalles del Anime + Lista de Episodios
 app.get('/api/anime/:id', async (req, res) => {
   try {
     const animeId = req.params.id;
@@ -151,14 +149,63 @@ app.get('/api/anime/:id', async (req, res) => {
     const sinopsis = $('.Plot').text().trim();
     const image = $('.AnimeCover .Image img').attr('src');
 
+    const scripts = $('script');
+    let episodes = [];
+    scripts.each((_, el) => {
+      const content = $(el).html();
+      if (content && content.includes('var episodes =')) {
+        const epData = content.match(/var episodes = (\[\[.*?\]\]);/);
+        if (epData && epData[1]) {
+          const parsedEps = JSON.parse(epData[1]);
+          episodes = parsedEps.map(ep => ({
+            number: ep[0],
+            id: `${animeId}-${ep[0]}`
+          }));
+        }
+      }
+    });
+
     res.json({
       success: true,
       data: {
         id: animeId,
         title,
         sinopsis,
-        image: image ? `https://animeflv.net${image}` : null
+        image: image ? `https://animeflv.net${image}` : null,
+        episodes
       }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Endpoint 4: Motor para obtener Servidores de Video del Episodio
+app.get('/api/ver/:episodeId', async (req, res) => {
+  try {
+    const episodeId = req.params.episodeId;
+    const url = `https://animeflv.net/ver/${episodeId}`;
+    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+    const $ = cheerio.load(data);
+
+    const scripts = $('script');
+    let servers = [];
+
+    scripts.each((_, el) => {
+      const content = $(el).html();
+      if (content && content.includes('var videos =')) {
+        const videoData = content.match(/var videos = (\{.*?\});/);
+        if (videoData && videoData[1]) {
+          const parsed = JSON.parse(videoData[1]);
+          servers = parsed.SUB || parsed.LAT || [];
+        }
+      }
+    });
+
+    res.json({
+      success: true,
+      episodeId,
+      servers
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -169,15 +216,12 @@ const PORT = process.env.PORT || 10000;
 app.listen(PORT, async () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
     
-    // 1. Escaneo inicial al arrancar
     await poblarCatalogoLatinoAuto();
 
-    // 2. Escaneo automático cada 24 horas
     const veinticuatroHoras = 24 * 60 * 60 * 1000;
     setInterval(async () => {
         console.log("Iniciando escaneo automático programado (24h)...");
         await poblarCatalogoLatinoAuto();
     }, veinticuatroHoras);
 });
-
-                           
+          
