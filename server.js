@@ -6,7 +6,9 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-app.use(cors());
+
+// Permitir peticiones desde cualquier origen (Evita bloqueos de CORS en el navegador)
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 const HEADERS_HTTP = {
@@ -16,7 +18,6 @@ const HEADERS_HTTP = {
 
 const JSON_PATH = path.join(__dirname, 'latino.json');
 
-// Leer archivo latino.json
 function leerJsonLocal() {
   try {
     if (fs.existsSync(JSON_PATH)) {
@@ -29,17 +30,15 @@ function leerJsonLocal() {
   return [];
 }
 
-// Guardar cambios en latino.json
 function guardarJsonLocal(listaActualizada) {
   try {
     fs.writeFileSync(JSON_PATH, JSON.stringify(listaActualizada, null, 2), 'utf-8');
-    console.log(`¡Base de datos guardada! Total animes: ${listaActualizada.length}`);
+    console.log('¡Base de datos guardada! Total animes: ' + listaActualizada.length);
   } catch (error) {
     console.error('Error al escribir en latino.json:', error);
   }
 }
 
-// Extraer animes de una página específica
 async function obtenerAnimesPagina(url) {
   try {
     const { data } = await axios.get(url, { headers: HEADERS_HTTP });
@@ -53,13 +52,13 @@ async function obtenerAnimesPagina(url) {
 
       if (title && relativeUrl) {
         const id = relativeUrl.replace('/anime/', '');
-        const fullImage = image && image.startsWith('http') ? image : `https://animeflv.net${image}`;
+        const fullImage = (image && image.indexOf('http') === 0) ? image : 'https://animeflv.net' + image;
 
         resultados.push({
-          id,
-          title,
+          id: id,
+          title: title,
           image: fullImage,
-          url: `https://animeflv.net${relativeUrl}`,
+          url: 'https://animeflv.net' + relativeUrl,
           idioma: 'Español Latino'
         });
       }
@@ -71,14 +70,13 @@ async function obtenerAnimesPagina(url) {
   }
 }
 
-// Bucle Automático: Escanea de la página 1 a la 45 para llegar a 1,000+ animes
 async function poblarCatalogoLatinoAuto() {
-  console.log('Iniciando escaneo automático para superar los 1,000 animes latinos...');
+  console.log('Iniciando escaneo automático programado...');
   let catalogoLocal = leerJsonLocal();
 
   for (let i = 1; i <= 45; i++) {
     try {
-      const url = `https://animeflv.net/browse?type%5B%5D=tv&order=default&page=${i}`;
+      const url = 'https://animeflv.net/browse?type%5B%5D=tv&order=default&page=' + i;
       const animesPagina = await obtenerAnimesPagina(url);
 
       let huboNuevos = false;
@@ -96,18 +94,18 @@ async function poblarCatalogoLatinoAuto() {
 
       await new Promise(resolve => setTimeout(resolve, 1000));
     } catch (e) {
-      console.log(`Error en página ${i}, continuando...`);
+      console.log('Error en página ' + i + ', continuando...');
     }
   }
   console.log('¡Escaneo masivo completado con éxito!');
 }
 
-// Endpoint 1: Catálogo Latino (Prioritario y Ultrarrápido desde JSON)
+// Endpoint 1: Catálogo Latino
 app.get('/api/latino', (req, res) => {
   try {
     const catalogoLocal = leerJsonLocal();
     const page = Number(req.query.page) || 1;
-    const limit = Number(req.query.limit) || 20;
+    const limit = Number(req.query.limit) || 50;
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
@@ -125,11 +123,11 @@ app.get('/api/latino', (req, res) => {
   }
 });
 
-// Endpoint 2: Catálogo General (Secundario)
+// Endpoint 2: Catálogo General
 app.get('/api/animes', async (req, res) => {
   try {
     const page = req.query.page || 1;
-    const url = `https://animeflv.net/browse?page=${page}`;
+    const url = 'https://animeflv.net/browse?page=' + page;
     const animes = await obtenerAnimesPagina(url);
     res.json({ success: true, page: Number(page), count: animes.length, data: animes });
   } catch (error) {
@@ -137,11 +135,11 @@ app.get('/api/animes', async (req, res) => {
   }
 });
 
-// Endpoint 3: Detalles del Anime + Lista de Episodios
+// Endpoint 3: Detalles del Anime
 app.get('/api/anime/:id', async (req, res) => {
   try {
     const animeId = req.params.id;
-    const url = `https://animeflv.net/anime/${animeId}`;
+    const url = 'https://animeflv.net/anime/' + animeId;
     const { data } = await axios.get(url, { headers: HEADERS_HTTP });
     const $ = cheerio.load(data);
 
@@ -153,13 +151,13 @@ app.get('/api/anime/:id', async (req, res) => {
     let episodes = [];
     scripts.each((_, el) => {
       const content = $(el).html();
-      if (content && content.includes('var episodes =')) {
+      if (content && content.indexOf('var episodes =') !== -1) {
         const epData = content.match(/var episodes = (\[\[.*?\]\]);/);
         if (epData && epData[1]) {
           const parsedEps = JSON.parse(epData[1]);
           episodes = parsedEps.map(ep => ({
             number: ep[0],
-            id: `${animeId}-${ep[0]}`
+            id: animeId + '-' + ep[0]
           }));
         }
       }
@@ -169,10 +167,10 @@ app.get('/api/anime/:id', async (req, res) => {
       success: true,
       data: {
         id: animeId,
-        title,
-        sinopsis,
-        image: image ? `https://animeflv.net${image}` : null,
-        episodes
+        title: title,
+        sinopsis: sinopsis,
+        image: image ? 'https://animeflv.net' + image : null,
+        episodes: episodes
       }
     });
   } catch (error) {
@@ -180,11 +178,11 @@ app.get('/api/anime/:id', async (req, res) => {
   }
 });
 
-// Endpoint 4: Motor para obtener Servidores de Video del Episodio
+// Endpoint 4: Servidores de Video
 app.get('/api/ver/:episodeId', async (req, res) => {
   try {
     const episodeId = req.params.episodeId;
-    const url = `https://animeflv.net/ver/${episodeId}`;
+    const url = 'https://animeflv.net/ver/' + episodeId;
     const { data } = await axios.get(url, { headers: HEADERS_HTTP });
     const $ = cheerio.load(data);
 
@@ -193,7 +191,7 @@ app.get('/api/ver/:episodeId', async (req, res) => {
 
     scripts.each((_, el) => {
       const content = $(el).html();
-      if (content && content.includes('var videos =')) {
+      if (content && content.indexOf('var videos =') !== -1) {
         const videoData = content.match(/var videos = (\{.*?\});/);
         if (videoData && videoData[1]) {
           const parsed = JSON.parse(videoData[1]);
@@ -204,8 +202,8 @@ app.get('/api/ver/:episodeId', async (req, res) => {
 
     res.json({
       success: true,
-      episodeId,
-      servers
+      episodeId: episodeId,
+      servers: servers
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -213,15 +211,13 @@ app.get('/api/ver/:episodeId', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, async () => {
-    console.log(`Servidor corriendo en el puerto ${PORT}`);
+app.listen(PORT, () => {
+    console.log('Servidor corriendo en el puerto ' + PORT);
     
-    await poblarCatalogoLatinoAuto();
-
+    // Escaneo automático programado cada 24 horas
     const veinticuatroHoras = 24 * 60 * 60 * 1000;
     setInterval(async () => {
-        console.log("Iniciando escaneo automático programado (24h)...");
         await poblarCatalogoLatinoAuto();
     }, veinticuatroHoras);
 });
-          
+      
