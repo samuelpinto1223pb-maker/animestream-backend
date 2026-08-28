@@ -50,13 +50,15 @@ async function obtenerAnimesPagina(url) {
       if (title && relativeUrl) {
         const id = relativeUrl.replace('/anime/', '').replace('/', '');
         const fullImage = image && image.startsWith('http') ? image : 'https://animeflv.net' + image;
+        const esLatino = title.toLowerCase().includes('latino');
 
         resultados.push({
           id: id,
           title: title,
           image: fullImage,
           url: 'https://animeflv.net/' + id,
-          idioma: title.toLowerCase().includes('latino') ? 'Español Latino' : 'Subtitulado'
+          idioma: esLatino ? 'Español Latino' : 'Japonés / Sub',
+          esLatino: esLatino
         });
       }
     });
@@ -68,7 +70,7 @@ async function obtenerAnimesPagina(url) {
 }
 
 async function poblarCatalogoLatinoAuto() {
-  console.log('Iniciando escaneo automático...');
+  console.log('Iniciando escaneo automático prioritario...');
   let catalogoLocal = leerJsonLocal();
 
   for (let i = 1; i <= 150; i++) {
@@ -86,6 +88,7 @@ async function poblarCatalogoLatinoAuto() {
       });
 
       if (huboNuevos) {
+        catalogoLocal.sort((a, b) => (b.esLatino ? 1 : 0) - (a.esLatino ? 1 : 0));
         guardarJsonLocal(catalogoLocal);
       }
       await new Promise(resolve => setTimeout(resolve, 600));
@@ -95,36 +98,37 @@ async function poblarCatalogoLatinoAuto() {
   }
 }
 
-// Endpoint 1: Catálogo con soporte de fallback en vivo para garantizar páginas (1, 2, 3...)
+// Endpoint 1: Catálogo Priorizado
 app.get('/api/latino', async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 20;
-    const catalogoLocal = leerJsonLocal();
+    let catalogoLocal = leerJsonLocal();
 
-    let listaFinal = catalogoLocal.filter(a => a.title.toLowerCase().includes('latino') || a.idioma === 'Español Latino');
-    
-    // Si el JSON local aún tiene pocos elementos, traemos directamente de AnimeFLV en vivo
-    if (listaFinal.length < 50) {
+    if (catalogoLocal.length === 0) {
       const urlLive = 'https://animeflv.net/browse?order=default&page=' + page;
       const animesEnVivo = await obtenerAnimesPagina(urlLive);
       return res.json({
         success: true,
         page: page,
-        total_registrados: 2800, // Fuerza el cálculo para mostrar más páginas en la web
+        total_registrados: 2800,
         count: animesEnVivo.length,
         data: animesEnVivo
       });
     }
 
+    const latinos = catalogoLocal.filter(a => a.esLatino);
+    const japoneses = catalogoLocal.filter(a => !a.esLatino);
+    const listaOrdenada = [...latinos, ...japoneses];
+
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const resultados = listaFinal.slice(startIndex, endIndex);
+    const resultados = listaOrdenada.slice(startIndex, endIndex);
 
     res.json({
       success: true,
       page: page,
-      total_registrados: Math.max(listaFinal.length, 2800),
+      total_registrados: Math.max(listaOrdenada.length, 2800),
       count: resultados.length,
       data: resultados
     });
@@ -133,7 +137,7 @@ app.get('/api/latino', async (req, res) => {
   }
 });
 
-// Endpoint 2: Detalles y Episodios Corregidos (Robustecido)
+// Endpoint 2: Detalles y Episodios
 app.get('/api/anime/:id', async (req, res) => {
   try {
     const rawId = req.params.id;
@@ -144,7 +148,6 @@ app.get('/api/anime/:id', async (req, res) => {
     try {
       response = await axios.get(url, { headers: HEADERS_HTTP });
     } catch (err) {
-      // Si el ID exacto falla, buscamos en vivo por texto
       const searchUrl = 'https://animeflv.net/browse?q=' + encodeURIComponent(cleanId.replace(/-/g, ' '));
       const busqueda = await obtenerAnimesPagina(searchUrl);
       if (busqueda.length > 0) {
@@ -207,7 +210,7 @@ app.get('/api/ver/:episodeId', async (req, res) => {
         const videoData = content.match(/var videos = (\{.*?\});/);
         if (videoData && videoData[1]) {
           const parsed = JSON.parse(videoData[1]);
-          servers = parsed.SUB || parsed.LAT || [];
+          servers = (parsed && (parsed.LAT || parsed.SUB)) || [];
         }
       }
     });
