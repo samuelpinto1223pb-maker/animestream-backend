@@ -8,23 +8,25 @@ app.use(cors());
 app.use(express.json());
 
 const HEADERS_HTTP = {
-  'User-Agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+  'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
+  'Cache-Control': 'no-cache'
 };
 
 async function obtenerAnimesPagina(url) {
   try {
-    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+    const { data } = await axios.get(url, { headers: HEADERS_HTTP, timeout: 8000 });
     const $ = cheerio.load(data);
     let resultados = [];
 
-    $('article.Anime, .ListAnimes li').each((_, element) => {
-      const title = $(element).find('.Title').text().trim();
-      const image = $(element).find('img').attr('src');
+    $('article.Anime, .ListAnimes li, ul.ListAnimes > li').each((_, element) => {
+      const title = $(element).find('.Title, h3, .Title').first().text().trim();
+      const image = $(element).find('img').attr('src') || $(element).find('img').attr('data-cfsrc');
       const relativeUrl = $(element).find('a').attr('href');
 
       if (title && relativeUrl) {
-        const id = relativeUrl.replace('/anime/', '').replace('/', '');
+        const id = relativeUrl.replace('/anime/', '').replace(/\//g, '');
         const fullImage = image && image.startsWith('http') ? image : 'https://animeflv.net' + image;
         const esLatino = title.toLowerCase().includes('latino');
 
@@ -41,49 +43,53 @@ async function obtenerAnimesPagina(url) {
 
     return resultados;
   } catch (error) {
+    console.error('Error al hacer scrape:', error.message);
     return [];
   }
 }
 
-// Endpoint 1: Catálogo en Vivo por Pág (Sin depender de archivos JSON efímeros)
+// Endpoint 1: Catálogo Principal
 app.get('/api/latino', async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
     const urlLive = 'https://animeflv.net/browse?order=default&page=' + page;
-    const animesEnVivo = await obtenerAnimesPagina(urlLive);
+    let animes = await obtenerAnimesPagina(urlLive);
 
-    // Priorizar animes latinos dentro de la página actual
-    animesEnVivo.sort((a, b) => (b.esLatino ? 1 : 0) - (a.esLatino ? 1 : 0));
+    // Fallback: si falla la ordenación por defecto, intentar el catálogo directo
+    if (animes.length === 0) {
+      animes = await obtenerAnimesPagina('https://animeflv.net/browse?page=' + page);
+    }
+
+    animes.sort((a, b) => (b.esLatino ? 1 : 0) - (a.esLatino ? 1 : 0));
 
     res.json({
       success: true,
       page: page,
       total_registrados: 2800,
-      count: animesEnVivo.length,
-      data: animesEnVivo
+      count: animes.length,
+      data: animes
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
 });
 
-// Endpoint 2: Detalles y Episodios con Búsqueda de Respaldo
+// Endpoint 2: Detalles y Episodios
 app.get('/api/anime/:id', async (req, res) => {
   try {
     const rawId = req.params.id;
-    const cleanId = rawId.replace('/anime/', '').replace('/', '');
+    const cleanId = rawId.replace('/anime/', '').replace(/\//g, '');
     let url = 'https://animeflv.net/anime/' + cleanId;
 
     let response;
     try {
-      response = await axios.get(url, { headers: HEADERS_HTTP });
+      response = await axios.get(url, { headers: HEADERS_HTTP, timeout: 8000 });
     } catch (err) {
-      // Si la URL directa falla, buscar el slug correcto
       const searchUrl = 'https://animeflv.net/browse?q=' + encodeURIComponent(cleanId.replace(/-/g, ' '));
       const busqueda = await obtenerAnimesPagina(searchUrl);
       if (busqueda.length > 0) {
         url = 'https://animeflv.net/anime/' + busqueda[0].id;
-        response = await axios.get(url, { headers: HEADERS_HTTP });
+        response = await axios.get(url, { headers: HEADERS_HTTP, timeout: 8000 });
       } else {
         return res.status(404).json({ success: false, error: 'Anime no encontrado' });
       }
@@ -120,16 +126,16 @@ app.get('/api/anime/:id', async (req, res) => {
       }
     });
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Error al obtener capítulos: ' + error.message });
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
-// Endpoint 3: Ver Episodio (Servidores)
+// Endpoint 3: Servidores de Reproducción
 app.get('/api/ver/:episodeId', async (req, res) => {
   try {
     const episodeId = req.params.episodeId;
     const url = 'https://animeflv.net/ver/' + episodeId;
-    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+    const { data } = await axios.get(url, { headers: HEADERS_HTTP, timeout: 8000 });
     const $ = cheerio.load(data);
 
     let servers = [];
@@ -156,7 +162,7 @@ app.get('/api/ver/:episodeId', async (req, res) => {
   }
 });
 
-// Endpoint 4: Buscador
+// Endpoint 4: Búsqueda
 app.get('/api/buscar', async (req, res) => {
   try {
     const query = req.query.q;
