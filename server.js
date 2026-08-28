@@ -14,6 +14,15 @@ let configServidor = {
   claveAdmin: "admin2026"  // Contraseña de administración
 };
 
+// ENCABEZADOS ANTIBLOQUEO (Para evitar error 403 de Cloudflare)
+const HEADERS_NAVEGADOR = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+  'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
+  'Referer': 'https://ww3.animeonline.ninja/',
+  'Cache-Control': 'no-cache'
+};
+
 // 1. MONITOREO DEL ESTADO DEL SERVIDOR
 app.get('/api/estado-servidor', (req, res) => {
   res.json({
@@ -40,10 +49,8 @@ app.post('/api/admin/ajustar-limite', (req, res) => {
 app.get('/api/catalogo-ninja', async (req, res) => {
   try {
     const response = await axios.get('https://ww3.animeonline.ninja/', {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
-      },
-      timeout: 10000
+      headers: HEADERS_NAVEGADOR,
+      timeout: 12000
     });
 
     const $ = cheerio.load(response.data);
@@ -63,7 +70,6 @@ app.get('/api/catalogo-ninja', async (req, res) => {
       }
     });
 
-    // Envía los primeros 12 animes encontrados en portada
     res.json({ success: true, animes: listaAnimes.slice(0, 12) });
   } catch (error) {
     console.error("Error al obtener catálogo:", error.message);
@@ -71,7 +77,7 @@ app.get('/api/catalogo-ninja', async (req, res) => {
   }
 });
 
-// 4. EXTRAER MOTORES DE VIDEO DEL EPISODIO
+// 4. EXTRAER MOTORES DE VIDEO DEL EPISODIO (Con protección antibloqueo 403)
 app.post('/api/extraer-ninja', async (req, res) => {
   if (configServidor.usuariosActivos >= configServidor.limiteUsuarios) {
     return res.status(429).json({ 
@@ -90,16 +96,13 @@ app.post('/api/extraer-ninja', async (req, res) => {
 
   try {
     const response = await axios.get(urlNinja, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-        'Referer': 'https://ww3.animeonline.ninja/'
-      },
-      timeout: 10000
+      headers: HEADERS_NAVEGADOR,
+      timeout: 12000
     });
 
     const $ = cheerio.load(response.data);
 
-    // Escanear motores de video principales y alternativos
+    // Escanear iframe principal u opciones secundarias
     let streamUrl = $('iframe').attr('src') || $('iframe').attr('data-src');
 
     if (!streamUrl) {
