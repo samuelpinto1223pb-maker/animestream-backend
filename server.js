@@ -8,66 +8,34 @@ app.use(cors());
 app.use(express.json());
 
 const HEADERS_HTTP = {
-  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-  'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
-  'Cache-Control': 'no-cache'
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
 };
 
-async function obtenerAnimesPagina(url) {
-  try {
-    const { data } = await axios.get(url, { headers: HEADERS_HTTP, timeout: 8000 });
-    const $ = cheerio.load(data);
-    let resultados = [];
-
-    $('article.Anime, .ListAnimes li, ul.ListAnimes > li').each((_, element) => {
-      const title = $(element).find('.Title, h3, .Title').first().text().trim();
-      const image = $(element).find('img').attr('src') || $(element).find('img').attr('data-cfsrc');
-      const relativeUrl = $(element).find('a').attr('href');
-
-      if (title && relativeUrl) {
-        const id = relativeUrl.replace('/anime/', '').replace(/\//g, '');
-        const fullImage = image && image.startsWith('http') ? image : 'https://animeflv.net' + image;
-        const esLatino = title.toLowerCase().includes('latino');
-
-        resultados.push({
-          id: id,
-          title: title,
-          image: fullImage,
-          url: 'https://animeflv.net/anime/' + id,
-          idioma: esLatino ? 'Español Latino' : 'Japonés / Sub',
-          esLatino: esLatino
-        });
-      }
-    });
-
-    return resultados;
-  } catch (error) {
-    console.error('Error al hacer scrape:', error.message);
-    return [];
-  }
-}
-
-// Endpoint 1: Catálogo Principal
+// Endpoint 1: Catálogo mediante API pública sin bloqueos de Cloudflare
 app.get('/api/latino', async (req, res) => {
   try {
     const page = Number(req.query.page) || 1;
-    const urlLive = 'https://animeflv.net/browse?order=default&page=' + page;
-    let animes = await obtenerAnimesPagina(urlLive);
+    const { data } = await axios.get(`https://api.jikan.moe/v4/top/anime?page=${page}&limit=24`);
 
-    // Fallback: si falla la ordenación por defecto, intentar el catálogo directo
-    if (animes.length === 0) {
-      animes = await obtenerAnimesPagina('https://animeflv.net/browse?page=' + page);
-    }
-
-    animes.sort((a, b) => (b.esLatino ? 1 : 0) - (a.esLatino ? 1 : 0));
+    const resultados = data.data.map(anime => {
+      const title = anime.title;
+      const cleanSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+      return {
+        id: cleanSlug,
+        title: title,
+        image: anime.images.jpg.large_image_url || anime.images.jpg.image_url,
+        url: anime.url,
+        idioma: title.toLowerCase().includes('latino') ? 'Español Latino' : 'Japonés / Sub',
+        esLatino: title.toLowerCase().includes('latino')
+      };
+    });
 
     res.json({
       success: true,
       page: page,
       total_registrados: 2800,
-      count: animes.length,
-      data: animes
+      count: resultados.length,
+      data: resultados
     });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
@@ -77,24 +45,10 @@ app.get('/api/latino', async (req, res) => {
 // Endpoint 2: Detalles y Episodios
 app.get('/api/anime/:id', async (req, res) => {
   try {
-    const rawId = req.params.id;
-    const cleanId = rawId.replace('/anime/', '').replace(/\//g, '');
-    let url = 'https://animeflv.net/anime/' + cleanId;
-
-    let response;
-    try {
-      response = await axios.get(url, { headers: HEADERS_HTTP, timeout: 8000 });
-    } catch (err) {
-      const searchUrl = 'https://animeflv.net/browse?q=' + encodeURIComponent(cleanId.replace(/-/g, ' '));
-      const busqueda = await obtenerAnimesPagina(searchUrl);
-      if (busqueda.length > 0) {
-        url = 'https://animeflv.net/anime/' + busqueda[0].id;
-        response = await axios.get(url, { headers: HEADERS_HTTP, timeout: 8000 });
-      } else {
-        return res.status(404).json({ success: false, error: 'Anime no encontrado' });
-      }
-    }
-
+    const cleanId = req.params.id.replace('/anime/', '').replace(/\//g, '');
+    const url = 'https://animeflv.net/anime/' + cleanId;
+    
+    const response = await axios.get(url, { headers: HEADERS_HTTP, timeout: 8000 });
     const $ = cheerio.load(response.data);
     const title = $('.section-body .Title').text().trim() || $('h1.Title').text().trim();
     const image = $('.AnimeCover .Image img').attr('src');
@@ -120,7 +74,7 @@ app.get('/api/anime/:id', async (req, res) => {
       success: true,
       data: {
         id: cleanId,
-        title: title,
+        title: title || cleanId,
         image: image ? (image.startsWith('http') ? image : 'https://animeflv.net' + image) : null,
         episodes: episodes
       }
@@ -130,7 +84,7 @@ app.get('/api/anime/:id', async (req, res) => {
   }
 });
 
-// Endpoint 3: Servidores de Reproducción
+// Endpoint 3: Servidores
 app.get('/api/ver/:episodeId', async (req, res) => {
   try {
     const episodeId = req.params.episodeId;
@@ -162,13 +116,22 @@ app.get('/api/ver/:episodeId', async (req, res) => {
   }
 });
 
-// Endpoint 4: Búsqueda
+// Endpoint 4: Buscador
 app.get('/api/buscar', async (req, res) => {
   try {
     const query = req.query.q;
     if (!query) return res.status(400).json({ success: false, error: 'Término requerido' });
-    const url = 'https://animeflv.net/browse?q=' + encodeURIComponent(query);
-    const resultados = await obtenerAnimesPagina(url);
+    
+    const { data } = await axios.get(`https://api.jikan.moe/v4/anime?q=${encodeURIComponent(query)}&limit=20`);
+    const resultados = data.data.map(anime => ({
+      id: anime.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      title: anime.title,
+      image: anime.images.jpg.large_image_url || anime.images.jpg.image_url,
+      url: anime.url,
+      idioma: anime.title.toLowerCase().includes('latino') ? 'Español Latino' : 'Japonés / Sub',
+      esLatino: anime.title.toLowerCase().includes('latino')
+    }));
+
     res.json({ success: true, count: resultados.length, data: resultados });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
