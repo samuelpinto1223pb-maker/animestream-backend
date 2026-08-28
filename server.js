@@ -11,8 +11,7 @@ app.use(express.json());
 
 let configServidor = {
   limiteUsuarios: 10,
-  usuariosActivos: 0,
-  claveAdmin: "admin2026"
+  usuariosActivos: 0
 };
 
 const ARCHIVO_CATALOGO = path.join(__dirname, 'catalogo.json');
@@ -40,31 +39,41 @@ app.get('/api/catalogo-guardado', (req, res) => {
   res.json({ success: true, animes: catalogoLocal });
 });
 
-// EXTRAER REPRODUCTOR DE URL NINJA (USANDO PROXY)
+// EXTRAER REPRODUCTOR DE URL NINJA (MEJORADO)
 app.post('/api/extraer-ninja', async (req, res) => {
   const { urlNinja } = req.body;
   if (!urlNinja) return res.status(400).json({ error: "Falta la URL del episodio" });
 
   try {
-    // Uso de proxy público para evadir el bloqueo 403 de Cloudflare
-    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(urlNinja)}`;
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(urlNinja)}&timestamp=${Date.now()}`;
     const response = await axios.get(proxyUrl, { timeout: 15000 });
     const htmlData = response.data.contents;
     
     const $ = cheerio.load(htmlData);
     let streamUrl = null;
 
-    // Buscar iFrames válidos en la estructura
+    // 1. Buscar en iframe
     $('iframe').each((i, el) => {
-      const src = $(el).attr('src') || $(el).attr('data-src');
-      if (src && !src.includes('facebook') && !src.includes('disqus')) {
+      const src = $(el).attr('src') || $(el).attr('data-src') || $(el).attr('data-lazy-src');
+      if (src && !src.includes('facebook') && !src.includes('disqus') && !src.includes('google')) {
         streamUrl = src;
         return false;
       }
     });
 
+    // 2. Buscar en alternativas (embed / video)
     if (!streamUrl) {
-      return res.status(404).json({ error: "No se encontró un reproductor activo en este episodio." });
+      $('embed, video source').each((i, el) => {
+        const src = $(el).attr('src');
+        if (src) {
+          streamUrl = src;
+          return false;
+        }
+      });
+    }
+
+    if (!streamUrl) {
+      return res.status(404).json({ error: "No se encontró un reproductor activo en este enlace." });
     }
 
     if (streamUrl.startsWith('//')) streamUrl = 'https:' + streamUrl;
@@ -72,26 +81,23 @@ app.post('/api/extraer-ninja', async (req, res) => {
     res.json({ success: true, streamUrl });
   } catch (error) {
     console.error("Error al extraer:", error.message);
-    res.status(500).json({ error: "Error al saltar el bloqueo de la fuente." });
+    res.status(500).json({ error: "Error al conectar con la fuente." });
   }
 });
 
 // AGREGAR ANIME AL CATÁLOGO
 app.post('/api/admin/agregar-anime', (req, res) => {
-  const { pass, titulo, imagen, urlNinja } = req.body;
-  if (pass !== configServidor.claveAdmin) {
-    return res.status(403).json({ error: "Clave incorrecta" });
-  }
+  let { titulo, imagen, urlNinja } = req.body;
 
-  if (!titulo || !imagen || !urlNinja) {
-    return res.status(400).json({ error: "Todos los campos son obligatorios" });
+  if (!urlNinja) {
+    return res.status(400).json({ error: "Debes pegar al menos el enlace de Ninja" });
   }
 
   const nuevoAnime = {
     id: Date.now().toString(),
-    titulo,
-    imagen,
-    urlNinja
+    titulo: titulo && titulo.trim() !== "" ? titulo : "Anime Guardado",
+    imagen: imagen && imagen.trim() !== "" ? imagen : "https://picsum.photos/300/450",
+    urlNinja: urlNinja.trim()
   };
 
   catalogoLocal.unshift(nuevoAnime);
