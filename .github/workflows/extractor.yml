@@ -3,33 +3,22 @@ name: Auto Extractor de Anime
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
-
-permissions:
-  contents: write
+    - cron: '0 0 * * 0' # Se ejecutará automáticamente cada domingo a medianoche
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Clonar repositorio
-        uses: actions/checkout@v4
-
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 20
-
-      - name: Instalación de dependencias
-        run: npm install
-
-      - name: Ejecutar script extractor
-        run: node scripts/extractor.js
-
+          node-version: '18'
+      - run: npm install
+      - run: node scripts/extractor.js
       - name: Guardar cambios en GitHub
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add latino.json || true
-          git commit -m "Actualización automática de catálogo latino" || true
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add latino.json
+          git commit -m "Auto-actualización de catálogo de animes" || exit 0
           git push
