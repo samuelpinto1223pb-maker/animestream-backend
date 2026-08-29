@@ -1,125 +1,92 @@
-const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
 
-const JSON_PATH = path.join(__dirname, '../latino.json');
-const pausar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// Pausa de seguridad para evitar detección de bots
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function obtenerTodosLosEpisodios(animeId) {
-  let episodios = [];
-  let offset = 0;
-  const limit = 20;
-  let hayMas = true;
+async function extraerAnimes() {
+  console.log("Iniciando escaneo sigiloso multi-fuente (Latino + Castellano + Fechas)...");
+  let catalog = [];
+  const TOTAL_PAGES = 5; // 5 páginas x 20 animes = 100 animes
 
-  while (hayMas) {
+  for (let page = 0; page < TOTAL_PAGES; page++) {
+    const offset = page * 20;
+    const url = `https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${offset}&sort=-userCount`;
+
     try {
-      const url = `https://kitsu.io/api/edge/anime/${animeId}/episodes?page[limit]=${limit}&page[offset]=${offset}`;
-      const res = await axios.get(url, {
+      const response = await axios.get(url, {
         headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json'
-        },
-        timeout: 10000
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
       });
-
-      const epData = res.data.data || [];
       
-      epData.forEach(ep => {
-        const epAttr = ep.attributes;
-        const numEp = epAttr.number || (episodios.length + 1);
-        episodios.push({
-          numero: numEp,
-          titulo: epAttr.canonicalTitle || epAttr.titles?.en_jp || `Episodio ${numEp}`,
-          sinopsis: epAttr.synopsis || "Sin descripción disponible.",
-          poster: epAttr.thumbnail?.original || ""
-        });
-      });
+      const items = response.data.data;
 
-      if (epData.length < limit) {
-        hayMas = false;
-      } else {
-        offset += limit;
-        await pausar(500);
-      }
-    } catch (err) {
-      hayMas = false;
-    }
-  }
-
-  return episodios;
-}
-
-async function extraccionMasivaMultiIdioma() {
-  console.log("Iniciando extracción masiva Multi-Idioma (Latino / Castellano)...");
-  const catalogo = [];
-  const limitePorPagina = 20;
-  const paginasTotales = 5; // 100 Animes
-
-  try {
-    for (let p = 0; p < paginasTotales; p++) {
-      const offsetAnime = p * limitePorPagina;
-      console.log(`\n--- CARGANDO PÁGINA ${p + 1} DE ANIMES ---`);
-
-      const urlAnime = `https://kitsu.io/api/edge/anime?page[limit]=${limitePorPagina}&page[offset]=${offsetAnime}&sort=-userCount`;
-      const res = await axios.get(urlAnime, {
-        headers: {
-          'Accept': 'application/vnd.api+json',
-          'Content-Type': 'application/vnd.api+json'
-        },
-        timeout: 10000
-      });
-
-      const listaAnimes = res.data.data || [];
-
-      for (let i = 0; i < listaAnimes.length; i++) {
-        const item = listaAnimes[i];
+      for (let item of items) {
         const attr = item.attributes;
-        const title = attr.canonicalTitle || attr.titles?.en_jp || "Anime";
-        const cleanSlug = title.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '-');
+        const title = attr.canonicalTitle || attr.titles.en || "Sin título";
+        const poster = attr.posterImage ? attr.posterImage.small : "";
+        
+        // Extrae el año de estreno (ej: 2026, 2025, 2024...)
+        const year = attr.startDate ? new Date(attr.startDate).getFullYear() : "Desconocido";
+        const totalEpisodios = attr.episodeCount || 12;
+        const capitulos = [];
 
-        const indiceGlobal = offsetAnime + i + 1;
-        console.log(`[${indiceGlobal}/100] Procesando episodios de: ${title}...`);
-
-        const listaCapitulos = await obtenerTodosLosEpisodios(item.id);
-
-        catalogo.push({
-          id: cleanSlug,
-          title: title,
-          poster: attr.posterImage?.small || attr.posterImage?.original || "",
-          sinopsis: attr.synopsis || "",
-          idiomas_disponibles: ["Español Latino / Sub", "Español Castellano"],
-          total_episodios: listaCapitulos.length,
-          capitulos: listaCapitulos.map(ep => ({
-            ...ep,
+        for (let i = 1; i <= Math.min(totalEpisodios, 24); i++) {
+          capitulos.push({
+            numero: i,
             opciones_reproductor: [
+              {
+                idioma: "Español Latino",
+                servidor: "Anime Ninja",
+                url: `https://animeonline.ninja/episodio/${title.toLowerCase().replace(/[^a-z0-9]/g, '-')}-episodio-${i}/`
+              },
+              {
+                idioma: "Español Castellano",
+                servidor: "Servidor ES",
+                url: `https://www.youtube.com/embed/dQw4w9WgXcQ` // URL de prueba embebible
+              },
               {
                 idioma: "Latino / Sub",
                 servidor: "AnimeFLV",
-                url: `https://animeflv.net/ver/${cleanSlug}-${ep.numero}`
-              },
-              {
-                idioma: "Castellano",
-                servidor: "Servidor ES",
-                url: `https://animeflv.es/ver/${cleanSlug}-${ep.numero}`
+                url: `https://animeflv.net/ver/${title.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${i}`
               }
             ]
-          }))
+          });
+        }
+
+        catalog.push({
+          id: item.id,
+          title: title,
+          poster: poster,
+          year: year,
+          capitulos: capitulos
         });
 
-        await pausar(1000);
+        console.log(`[${catalog.length}/100] Escaneado: ${title} (${year})`);
+        
+        // Pausa de 1.5 segundos entre animes (Anti-Bot)
+        await delay(1500);
       }
-
-      await pausar(2000);
+    } catch (error) {
+      console.error(`Error procesando página ${page}:`, error.message);
     }
 
-    if (catalogo.length > 0) {
-      fs.writeFileSync(JSON_PATH, JSON.stringify(catalogo, null, 2));
-      console.log(`\n¡PROCESO COMPLETADO! Catálogo multi-idioma listo.`);
-    }
-
-  } catch (error) {
-    console.error("Error durante la extracción:", error.message);
+    // Pausa de 3 segundos entre páginas
+    await delay(3000);
   }
+
+  // Ordenar catálogo: los animes más recientes (2026) quedan arriba
+  catalog.sort((a, b) => {
+    const yA = typeof a.year === 'number' ? a.year : 0;
+    const yB = typeof b.year === 'number' ? b.year : 0;
+    return yB - yA;
+  });
+
+  const outputPath = path.join(__dirname, '../latino.json');
+  fs.writeFileSync(outputPath, JSON.stringify(catalog, null, 2));
+  console.log("¡ESCANEO COMPLETADO! Catálogo latino.json actualizado correctamente.");
 }
 
-extraccionMasivaMultiIdioma();
+extraerAnimes();
