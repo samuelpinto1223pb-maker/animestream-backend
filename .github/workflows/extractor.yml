@@ -1,33 +1,32 @@
-name: Auto Extractor de Anime
+nname: Auto Extractor de Anime
 
 on:
-  schedule:
-    - cron: '0 0 * * *'
   workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *' # Se ejecuta automáticamente cada 6 horas
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Clonar repositorio
-      uses: actions/checkout@v3
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
 
-    - name: Configurar Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-    - name: Instalar dependencias
-      run: npm install axios cheerio
+      - name: Instalación de dependencias
+        run: npm install
 
-    - name: Ejecutar Extractor
-      run: node scripts/extractor.js
+      - name: Ejecutar script extractor
+        run: node index.js # Asegúrate de poner aquí el nombre de tu script principal (ej. index.js o scraper.js)
 
-    - name: Guardar cambios en latino.json
-      run: |
-        git config --global user.name "GitHub Auto Bot"
-        git config --global user.email "bot@github.com"
-        git add latino.json
-        git commit -m "Auto-actualización de catálogo y reproductores" || exit 0
-        git push
+      - name: Guardar cambios de latino.json en GitHub
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add latino.json
+          git commit -m "Actualización automática de catálogo latino" || exit 0
+          git push
