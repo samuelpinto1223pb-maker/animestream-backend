@@ -24,7 +24,7 @@ jobs:
         run: npm install
 
       - name: Ejecutar script extractor
-        run: node index.js
+        run: node scripts/index.js # Apunta a la carpeta scripts
 
       - name: Guardar cambios en GitHub
         run: |
