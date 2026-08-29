@@ -1,9 +1,12 @@
-nname: Auto Extractor de Anime
+name: Auto Extractor de Anime
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *' # Se ejecuta automáticamente cada 6 horas
+    - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -21,12 +24,12 @@ jobs:
         run: npm install
 
       - name: Ejecutar script extractor
-        run: node index.js # Asegúrate de poner aquí el nombre de tu script principal (ej. index.js o scraper.js)
+        run: node server.js
 
-      - name: Guardar cambios de latino.json en GitHub
+      - name: Guardar cambios en GitHub
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add latino.json
-          git commit -m "Actualización automática de catálogo latino" || exit 0
+          git add latino.json || true
+          git commit -m "Actualización automática de catálogo latino" || true
           git push
