@@ -4,21 +4,20 @@ const path = require('path');
 
 const JSON_PATH = path.join(__dirname, '../latino.json');
 
-// Función auxiliar para forzar la pausa
 const pausar = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function extraerCatalogoLento() {
-  console.log("Iniciando extracción progresiva con pausas de seguridad...");
+  console.log("Iniciando extracción progresiva estable...");
   
   const catalogo = [];
-  const limitePorPagina = 50;
-  const paginasTotales = 5; // 5 páginas x 50 = 250 animes
-  const tiempoPausa = 2000; // 2000 ms = 2 segundos de espera entre llamadas
+  const limitePorPagina = 20; // Límite permitido por Kitsu para evitar Error 400
+  const paginasTotales = 5;    // 5 páginas x 20 = 100 animes
+  const tiempoPausa = 1500;   // 1.5 segundos entre peticiones
 
   try {
     for (let i = 0; i < paginasTotales; i++) {
       const offset = i * limitePorPagina;
-      console.log(`[Página ${i + 1}/${paginasTotales}] Descargando animes del ${offset + 1} al ${offset + limitePorPagina}...`);
+      console.log(`[Página ${i + 1}/${paginasTotales}] Procesando animes del ${offset + 1} al ${offset + limitePorPagina}...`);
 
       const url = `https://kitsu.io/api/edge/anime?page[limit]=${limitePorPagina}&page[offset]=${offset}&sort=-userCount`;
       
@@ -56,20 +55,18 @@ async function extraerCatalogoLento() {
         });
       });
 
-      // Pausa obligatoria si aún quedan páginas por descargar
       if (i < paginasTotales - 1) {
-        console.log(`Esperando ${tiempoPausa / 1000} segundos para no saturar el servicio...`);
         await pausar(tiempoPausa);
       }
     }
 
     if (catalogo.length > 0) {
       fs.writeFileSync(JSON_PATH, JSON.stringify(catalogo, null, 2));
-      console.log(`¡Éxito! Se procesaron lentamente ${catalogo.length} animes y se guardaron en latino.json.`);
+      console.log(`¡Proceso completado! Se guardaron ${catalogo.length} animes en latino.json.`);
     }
 
   } catch (error) {
-    console.error("Error durante la extracción lenta:", error.message);
+    console.error("Error durante la extracción:", error.message);
   }
 }
 
