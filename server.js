@@ -1,3 +1,5 @@
+
+
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
@@ -8,6 +10,8 @@ const path = require('path');
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+const STREAMHG_API_KEY = '33163f7onx0vuadkojncs';
 
 let configServidor = {
   limiteUsuarios: 10,
@@ -37,64 +41,71 @@ app.get('/api/catalogo-guardado', (req, res) => {
   res.json({ success: true, animes: catalogoLocal });
 });
 
-// EXTRAER REPRODUCTOR (CONECTA DIRECTO O USA BACKUP)
+// EXTRAER Y ENVIAR A STREAMHG
 app.post('/api/extraer-ninja', async (req, res) => {
   const { urlNinja } = req.body;
   if (!urlNinja) return res.status(400).json({ error: "Falta la URL del episodio" });
 
-  let htmlData = "";
-
-  // Intentar conexión directa con User-Agent común
-  try {
-    const directRes = await axios.get(urlNinja, {
-      timeout: 6000,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-      }
-    });
-    htmlData = directRes.data;
-  } catch (e) {
-    // Si falla directo, usar proxy secundario (codetabs) en lugar de allorigins
-    try {
-      const proxyRes = await axios.get(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(urlNinja)}`, { timeout: 8000 });
-      htmlData = proxyRes.data;
-    } catch (proxyError) {
-      console.error("Fallaron ambas conexiones:", proxyError.message);
-      return res.status(504).json({ error: "Servidor fuente lento o no disponible. Intenta de nuevo." });
+  // Si ya es un enlace de StreamHG directo
+  if (urlNinja.includes('streamhg.com/')) {
+    let streamUrl = urlNinja.trim();
+    if (!streamUrl.includes('/e/')) {
+      streamUrl = streamUrl.replace('streamhg.com/', 'streamhg.com/e/');
     }
+    return res.json({ success: true, streamUrl });
+  }
+
+  let htmlData = "";
+  const proxies = [
+    `https://corsproxy.io/?${encodeURIComponent(urlNinja)}`,
+    `https://api.allorigins.win/get?url=${encodeURIComponent(urlNinja)}`
+  ];
+
+  for (const proxy of proxies) {
+    try {
+      const response = await axios.get(proxy, { timeout: 8000 });
+      htmlData = typeof response.data === 'object' && response.data.contents ? response.data.contents : response.data;
+      if (htmlData && htmlData.includes('iframe')) break;
+    } catch (e) {
+      continue;
+    }
+  }
+
+  if (!htmlData) {
+    return res.status(504).json({ error: "No se pudo extraer el origen. Intenta de nuevo." });
   }
 
   try {
     const $ = cheerio.load(htmlData);
-    let streamUrl = null;
+    let directVideoUrl = null;
 
     $('iframe').each((i, el) => {
-      const src = $(el).attr('src') || $(el).attr('data-src') || $(el).attr('data-lazy-src');
-      if (src && !src.includes('facebook') && !src.includes('disqus') && !src.includes('google')) {
-        streamUrl = src;
+      const src = $(el).attr('src') || $(el).attr('data-src');
+      if (src && !src.includes('facebook') && !src.includes('disqus')) {
+        directVideoUrl = src;
         return false;
       }
     });
 
-    if (!streamUrl) {
-      $('embed, video source').each((i, el) => {
-        const src = $(el).attr('src');
-        if (src) {
-          streamUrl = src;
-          return false;
-        }
-      });
+    if (!directVideoUrl) {
+      return res.status(404).json({ error: "No se encontró fuente de vídeo válida." });
     }
 
-    if (!streamUrl) {
-      return res.status(404).json({ error: "No se encontró reproductor activo en esta URL." });
+    if (directVideoUrl.startsWith('//')) directVideoUrl = 'https:' + directVideoUrl;
+
+    // Enviar a la API de StreamHG vía Remote Upload
+    const streamHgRes = await axios.get(`https://streamhg.com/api/upload/url?key=${STREAMHG_API_KEY}&url=${encodeURIComponent(directVideoUrl)}`);
+
+    if (streamHgRes.data && streamHgRes.data.result && streamHgRes.data.result.filecode) {
+      const embedUrl = `https://streamhg.com/e/${streamHgRes.data.result.filecode}`;
+      return res.json({ success: true, streamUrl: embedUrl });
+    } else {
+      // Fallback si la subida remota responde directo con el iframe
+      return res.json({ success: true, streamUrl: directVideoUrl });
     }
 
-    if (streamUrl.startsWith('//')) streamUrl = 'https:' + streamUrl;
-
-    res.json({ success: true, streamUrl });
   } catch (error) {
-    res.status(500).json({ error: "Error procesando el contenido." });
+    res.status(500).json({ error: "Error procesando con la API de StreamHG." });
   }
 });
 
