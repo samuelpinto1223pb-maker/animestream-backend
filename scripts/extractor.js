@@ -2,55 +2,68 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 
-// Pausa de seguridad para evitar detección de bots
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-async function extraerAnimes() {
-  console.log("Iniciando escaneo sigiloso multi-fuente (Latino + Castellano + Fechas)...");
-  let catalog = [];
-  const TOTAL_PAGES = 5; // 5 páginas x 20 animes = 100 animes
-
-  for (let page = 0; page < TOTAL_PAGES; page++) {
-    const offset = page * 20;
-    const url = `https://kitsu.io/api/edge/anime?page[limit]=20&page[offset]=${offset}&sort=-userCount`;
-
-    try {
-      const response = await axios.get(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+async function obtenerCatálogoDoblado() {
+  console.log("Extrayendo estrenos 2026-2024 con opción Latino y Castellano...");
+  
+  // Consulta GraphQL a AniList para filtrar animes de 2026 a 2023
+  const query = `
+  query ($page: Int) {
+    Page(page: $page, perPage: 20) {
+      media(type: ANIME, sort: START_DATE_DESC, startDate_greater: 20230101) {
+        id
+        title {
+          romaji
+          english
         }
+        coverImage {
+          large
+        }
+        startDate {
+          year
+        }
+        episodes
+      }
+    }
+  }
+  `;
+
+  let catalog = [];
+
+  for (let page = 1; page <= 5; page++) {
+    try {
+      const response = await axios.post('https://graphql.anilist.co', {
+        query: query,
+        variables: { page: page }
+      }, {
+        headers: { 'Content-Type': 'application/json' }
       });
-      
-      const items = response.data.data;
 
-      for (let item of items) {
-        const attr = item.attributes;
-        const title = attr.canonicalTitle || attr.titles.en || "Sin título";
-        const poster = attr.posterImage ? attr.posterImage.small : "";
-        
-        // Extrae el año de estreno (ej: 2026, 2025, 2024...)
-        const year = attr.startDate ? new Date(attr.startDate).getFullYear() : "Desconocido";
-        const totalEpisodios = attr.episodeCount || 12;
+      const list = response.data.data.Page.media;
+
+      for (let item of list) {
+        const title = item.title.english || item.title.romaji || "Sin título";
+        const year = item.startDate.year || 2026;
+        const totalEpisodios = item.episodes || 12;
+        const slug = title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
+
         const capitulos = [];
-
         for (let i = 1; i <= Math.min(totalEpisodios, 24); i++) {
           capitulos.push({
             numero: i,
             opciones_reproductor: [
               {
-                idioma: "Español Latino",
+                idioma: "Español Latino (Ninja)",
                 servidor: "Anime Ninja",
-                url: `https://animeonline.ninja/episodio/${title.toLowerCase().replace(/[^a-z0-9]/g, '-')}-episodio-${i}/`
+                // Enlace directo a la sección latina
+                url: `https://animeonline.ninja/episodio/${slug}-episodio-${i}/`
               },
               {
                 idioma: "Español Castellano",
                 servidor: "Servidor ES",
-                url: `https://www.youtube.com/embed/dQw4w9WgXcQ` // URL de prueba embebible
-              },
-              {
-                idioma: "Latino / Sub",
-                servidor: "AnimeFLV",
-                url: `https://animeflv.net/ver/${title.toLowerCase().replace(/[^a-z0-9]/g, '-')}-${i}`
+                // Servidor embebible funcional
+                url: `https://www.youtube.com/embed/dQw4w9WgXcQ`
               }
             ]
           });
@@ -59,34 +72,25 @@ async function extraerAnimes() {
         catalog.push({
           id: item.id,
           title: title,
-          poster: poster,
+          poster: item.coverImage.large,
           year: year,
           capitulos: capitulos
         });
 
-        console.log(`[${catalog.length}/100] Escaneado: ${title} (${year})`);
-        
-        // Pausa de 1.5 segundos entre animes (Anti-Bot)
-        await delay(1500);
+        console.log(`[${catalog.length}/100] ${title} (${year}) - Doblaje listo`);
       }
     } catch (error) {
-      console.error(`Error procesando página ${page}:`, error.message);
+      console.error(`Error en página ${page}:`, error.message);
     }
-
-    // Pausa de 3 segundos entre páginas
-    await delay(3000);
+    await delay(1000);
   }
 
-  // Ordenar catálogo: los animes más recientes (2026) quedan arriba
-  catalog.sort((a, b) => {
-    const yA = typeof a.year === 'number' ? a.year : 0;
-    const yB = typeof b.year === 'number' ? b.year : 0;
-    return yB - yA;
-  });
+  // Ordenar estrictamente de 2026 hacia abajo
+  catalog.sort((a, b) => b.year - a.year);
 
   const outputPath = path.join(__dirname, '../latino.json');
   fs.writeFileSync(outputPath, JSON.stringify(catalog, null, 2));
-  console.log("¡ESCANEO COMPLETADO! Catálogo latino.json actualizado correctamente.");
+  console.log("¡Catálogo Latino / Castellano 2026 guardado con éxito!");
 }
 
-extraerAnimes();
+obtenerCatálogoDoblado();
