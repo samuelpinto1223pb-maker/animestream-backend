@@ -1,53 +1,196 @@
 [
   {
-    "id": "chainsaw-man-tv-latino",
-    "title": "Chainsaw Man (Latino)",
-    "poster": "https://animeflv.net/uploads/animes/covers/3739.jpg",
-    "idioma": "Español Latino",
+    "id": "attack-on-titan",
+    "title": "Attack on Titan",
+    "poster": "https://media.kitsu.app/anime/poster_images/7442/small.jpg",
+    "idioma": "Español Latino / Sub",
     "servers": [
       {
-        "server": "mega",
-        "title": "Opción 1",
-        "code": "https://animeflv.net/ver/chainsaw-man-tv-latino-1"
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/attack-on-titan"
       }
     ]
   },
   {
-    "id": "jujutsu-kaisen-tv-latino",
-    "title": "Jujutsu Kaisen (Latino)",
-    "poster": "https://animeflv.net/uploads/animes/covers/3358.jpg",
-    "idioma": "Español Latino",
+    "id": "boku-no-hero-academia",
+    "title": "Boku no Hero Academia",
+    "poster": "https://media.kitsu.app/anime/poster_images/11469/small.jpg",
+    "idioma": "Español Latino / Sub",
     "servers": [
       {
-        "server": "mega",
-        "title": "Opción 1",
-        "code": "https://animeflv.net/ver/jujutsu-kaisen-tv-latino-1"
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/boku-no-hero-academia"
       }
     ]
   },
   {
-    "id": "demon-slayer-kimetsu-no-yaiba-latino",
-    "title": "Demon Slayer (Latino)",
-    "poster": "https://animeflv.net/uploads/animes/covers/3103.jpg",
-    "idioma": "Español Latino",
+    "id": "boku-no-hero-academia-2",
+    "title": "Boku no Hero Academia 2",
+    "poster": "https://media.kitsu.app/anime/poster_images/12268/small.jpg",
+    "idioma": "Español Latino / Sub",
     "servers": [
       {
-        "server": "mega",
-        "title": "Opción 1",
-        "code": "https://animeflv.net/ver/demon-slayer-kimetsu-no-yaiba-latino-1"
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/boku-no-hero-academia-2"
       }
     ]
   },
   {
-    "id": "one-piece-tv",
+    "id": "one-punch-man",
+    "title": "One Punch Man",
+    "poster": "https://media.kitsu.app/anime/poster_images/10740/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/one-punch-man"
+      }
+    ]
+  },
+  {
+    "id": "boku-no-hero-academia-3",
+    "title": "Boku no Hero Academia 3",
+    "poster": "https://media.kitsu.app/anime/poster_images/13881/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/boku-no-hero-academia-3"
+      }
+    ]
+  },
+  {
+    "id": "death-note",
+    "title": "Death Note",
+    "poster": "https://media.kitsu.app/anime/poster_images/1376/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/death-note"
+      }
+    ]
+  },
+  {
+    "id": "fullmetal-alchemist-brotherhood",
+    "title": "Fullmetal Alchemist: Brotherhood",
+    "poster": "https://media.kitsu.app/anime/poster_images/3936/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/fullmetal-alchemist-brotherhood"
+      }
+    ]
+  },
+  {
+    "id": "kimi-no-na-wa",
+    "title": "Kimi no Na wa.",
+    "poster": "https://media.kitsu.app/anime/poster_images/11614/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/kimi-no-na-wa"
+      }
+    ]
+  },
+  {
+    "id": "hunter-x-hunter-2011",
+    "title": "Hunter x Hunter (2011)",
+    "poster": "https://media.kitsu.app/anime/poster_images/6448/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/hunter-x-hunter-2011"
+      }
+    ]
+  },
+  {
+    "id": "kimetsu-no-yaiba",
+    "title": "Kimetsu no Yaiba",
+    "poster": "https://media.kitsu.app/anime/poster_images/41370/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/kimetsu-no-yaiba"
+      }
+    ]
+  },
+  {
+    "id": "nanatsu-no-taizai",
+    "title": "Nanatsu no Taizai",
+    "poster": "https://media.kitsu.app/anime/poster_images/8699/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/nanatsu-no-taizai"
+      }
+    ]
+  },
+  {
+    "id": "koe-no-katachi",
+    "title": "Koe no Katachi",
+    "poster": "https://media.kitsu.app/anime/poster_images/10028/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/koe-no-katachi"
+      }
+    ]
+  },
+  {
+    "id": "attack-on-titan-season-2",
+    "title": "Attack on Titan Season 2",
+    "poster": "https://media.kitsu.app/anime/poster_images/8671/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/attack-on-titan-season-2"
+      }
+    ]
+  },
+  {
+    "id": "one-piece",
     "title": "One Piece",
-    "poster": "https://animeflv.net/uploads/animes/covers/1.jpg",
-    "idioma": "Español Latino",
+    "poster": "https://media.kitsu.app/anime/poster_images/12/small.jpg",
+    "idioma": "Español Latino / Sub",
     "servers": [
       {
-        "server": "mega",
-        "title": "Opción 1",
-        "code": "https://animeflv.net/ver/one-piece-tv-1"
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/one-piece"
+      }
+    ]
+  },
+  {
+    "id": "attack-on-titan-season-3",
+    "title": "Attack on Titan Season 3",
+    "poster": "https://media.kitsu.app/anime/poster_images/13569/small.jpg",
+    "idioma": "Español Latino / Sub",
+    "servers": [
+      {
+        "server": "animeflv",
+        "title": "Ver en AnimeFLV",
+        "code": "https://animeflv.net/anime/attack-on-titan-season-3"
       }
     ]
   }
