@@ -1,6 +1,7 @@
 const express = require('express');
-const cors = require('cors');
 const axios = require('axios');
+const cheerio = require('cheerio');
+const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
@@ -8,95 +9,146 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const STREAMHG_API_KEY = '33163f7onx0vuadkojncs';
-
-let configServidor = {
-  limiteUsuarios: 10,
-  usuariosActivos: 0
+const HEADERS_HTTP = {
+  'User-Agent':
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
 };
 
-const ARCHIVO_CATALOGO = path.join(__dirname, 'catalogo.json');
+const JSON_PATH = path.join(__dirname, 'latino.json');
 
-let catalogoLocal = [];
-if (fs.existsSync(ARCHIVO_CATALOGO)) {
+function leerJsonLocal() {
   try {
-    catalogoLocal = JSON.parse(fs.readFileSync(ARCHIVO_CATALOGO, 'utf-8'));
-  } catch (e) {
-    catalogoLocal = [];
+    if (fs.existsSync(JSON_PATH)) {
+      return JSON.parse(fs.readFileSync(JSON_PATH, 'utf-8'));
+    }
+  } catch (error) {
+    console.error('Error al leer latino.json:', error);
+  }
+  return [];
+}
+
+function guardarJsonLocal(listaActualizada) {
+  try {
+    fs.writeFileSync(JSON_PATH, JSON.stringify(listaActualizada, null, 2), 'utf-8');
+    console.log(`¡Base de datos actualizada! Total animes: ${listaActualizada.length}`);
+  } catch (error) {
+    console.error('Error al escribir en latino.json:', error);
   }
 }
 
-app.get('/api/estado-servidor', (req, res) => {
+// Extraer animes de la lista principal
+async function obtenerAnimesPagina(url) {
+  try {
+    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+    const $ = cheerio.load(data);
+    let resultados = [];
+
+    $('article.Anime, .ListAnimes li').each((_, element) => {
+      const title = $(element).find('.Title').text().trim();
+      const image = $(element).find('img').attr('src');
+      const relativeUrl = $(element).find('a').attr('href');
+
+      if (title && relativeUrl) {
+        const id = relativeUrl.replace('/anime/', '');
+        const fullImage = image && image.startsWith('http') ? image : `https://animeflv.net${image}`;
+
+        resultados.push({
+          id,
+          title,
+          image: fullImage,
+          url: `https://animeflv.net${relativeUrl}`,
+          idioma: 'Español Latino'
+        });
+      }
+    });
+
+    return resultados;
+  } catch (error) {
+    return [];
+  }
+}
+
+// Extraer los reproductores de un episodio específico
+async function obtenerVideosEpisodio(idAnime, numeroEpisodio) {
+  try {
+    const url = `https://animeflv.net/ver/${idAnime}-${numeroEpisodio}`;
+    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+    
+    // Buscar el script donde AnimeFLV guarda las variables de los videos
+    const match = data.match(/var videos = (\{.*?\});/);
+    if (match && match[1]) {
+      const videosData = JSON.parse(match[1]);
+      // Extraer los embeds principales (SUB/LATINO)
+      const servidores = videosData.SUB || videosData.LAT || [];
+      return servidores.map(s => ({
+        server: s.server,
+        title: s.title,
+        code: s.code // URL iframe/embed
+      }));
+    }
+  } catch (error) {
+    console.error(`Error al extraer episodio ${numeroEpisodio} de ${idAnime}`);
+  }
+  return [];
+}
+
+// Escaneo masivo automático
+async function poblarCatalogoLatinoAuto() {
+  console.log('Iniciando escaneo automático de catálogo...');
+  let catalogoLocal = leerJsonLocal();
+
+  for (let i = 1; i <= 5; i++) { // Cambia el rango de páginas a escanear según necesites
+    try {
+      const url = `https://animeflv.net/browse?type%5B%5D=tv&order=default&page=${i}`;
+      const animesPagina = await obtenerAnimesPagina(url);
+
+      for (let animeNuevo of animesPagina) {
+        const existe = catalogoLocal.some(item => item.id === animeNuevo.id);
+        if (!existe) {
+          catalogoLocal.push(animeNuevo);
+          guardarJsonLocal(catalogoLocal);
+        }
+      }
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    } catch (e) {
+      console.log(`Error en página ${i}, continuando...`);
+    }
+  }
+  console.log('¡Escaneo de catálogo completado!');
+}
+
+// Endpoint 1: Obtener catálogo completo guardado
+app.get('/api/latino', (req, res) => {
+  const catalogoLocal = leerJsonLocal();
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.limit) || 20;
+
+  const startIndex = (page - 1) * limit;
+  const resultados = catalogoLocal.slice(startIndex, startIndex + limit);
+
   res.json({
-    activos: configServidor.usuariosActivos,
-    limite: configServidor.limiteUsuarios,
-    disponible: configServidor.usuariosActivos < configServidor.limiteUsuarios
+    success: true,
+    page,
+    total_registrados: catalogoLocal.length,
+    count: resultados.length,
+    data: resultados
   });
 });
 
-app.get('/api/catalogo-guardado', (req, res) => {
-  res.json({ success: true, animes: catalogoLocal });
-});
+// Endpoint 2: Obtener los reproductores de un capítulo en tiempo real
+app.get('/api/ver/:id/:episodio', async (req, res) => {
+  const { id, episodio } = req.params;
+  const videos = await obtenerVideosEpisodio(id, episodio);
 
-// PROCESAR ENLACE CON STREAMHG API DIRECTO
-app.post('/api/extraer-ninja', async (req, res) => {
-  const { urlNinja } = req.body;
-  if (!urlNinja) return res.status(400).json({ error: "Falta la URL del episodio" });
-
-  let streamUrl = urlNinja.trim();
-
-  // Si ya es un enlace embed de StreamHG
-  if (streamUrl.includes('streamhg.com/e/')) {
-    return res.json({ success: true, streamUrl });
-  }
-
-  // Si es un enlace normal de StreamHG, convertir a embed
-  if (streamUrl.includes('streamhg.com/')) {
-    streamUrl = streamUrl.replace('streamhg.com/', 'streamhg.com/e/');
-    return res.json({ success: true, streamUrl });
-  }
-
-  // Mandar la URL externa a StreamHG mediante Remote Upload
-  try {
-    const remoteRes = await axios.get(`https://streamhg.com/api/upload/url?key=${STREAMHG_API_KEY}&url=${encodeURIComponent(streamUrl)}`);
-
-    if (remoteRes.data && remoteRes.data.result && remoteRes.data.result.filecode) {
-      const finalEmbed = `https://streamhg.com/e/${remoteRes.data.result.filecode}`;
-      return res.json({ success: true, streamUrl: finalEmbed });
-    } else {
-      // Si la API no lo convierte al instante, usa la URL tal cual
-      return res.json({ success: true, streamUrl: streamUrl });
-    }
-  } catch (error) {
-    // Si falla la API de StreamHG, carga la URL original en el reproductor
-    return res.json({ success: true, streamUrl: streamUrl });
+  if (videos.length > 0) {
+    res.json({ success: true, id, episodio, servers: videos });
+  } else {
+    res.status(404).json({ success: false, message: 'No se encontraron reproductores para este episodio.' });
   }
 });
 
-app.post('/api/admin/agregar-anime', (req, res) => {
-  let { titulo, imagen, urlNinja } = req.body;
-
-  if (!urlNinja) {
-    return res.status(400).json({ error: "Debes pegar al menos el enlace del video" });
-  }
-
-  const nuevoAnime = {
-    id: Date.now().toString(),
-    titulo: titulo && titulo.trim() !== "" ? titulo : "Anime Guardado",
-    imagen: imagen && imagen.trim() !== "" ? imagen : "https://picsum.photos/300/450",
-    urlNinja: urlNinja.trim()
-  };
-
-  catalogoLocal.unshift(nuevoAnime);
-  fs.writeFileSync(ARCHIVO_CATALOGO, JSON.stringify(catalogoLocal, null, 2));
-
-  res.json({ success: true, mensaje: "Guardado correctamente", anime: nuevoAnime });
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, async () => {
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+  await poblarCatalogoLatinoAuto();
 });
-
-app.post('/api/liberar-cupo', (req, res) => {
-  if (configServidor.usuariosActivos > 0) configServidor.usuariosActivos--;
-  res.json({ activos: configServidor.usuariosActivos });
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Servidor activo en puerto ${PORT}`));
