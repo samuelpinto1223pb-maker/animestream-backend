@@ -1,35 +1,40 @@
 const express = require('express');
+const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Permitir acceso desde cualquier origen (CORS)
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+// Permite peticiones desde cualquier origen (soluciona el error de carga)
+app.use(cors());
 
-// Ruta de la API para entregar animes y reproductores
-app.get('/api/anime/latino', (req, res) => {
+// Servir la página web (index.html) de la raíz
+app.use(express.static(path.join(__dirname)));
+
+// Endpoint API para enviar el archivo latino.json
+app.get('/api/animes', (req, res) => {
+  // Busca el archivo en la raíz del proyecto
   const jsonPath = path.join(__dirname, 'latino.json');
-  
+
   if (fs.existsSync(jsonPath)) {
-    const data = fs.readFileSync(jsonPath, 'utf8');
     res.setHeader('Content-Type', 'application/json');
-    return res.send(data);
+    res.sendFile(jsonPath);
   } else {
-    return res.status(404).json({ error: 'El archivo latino.json aún no existe.' });
+    res.status(404).json({ error: "El archivo latino.json aún no se ha generado." });
   }
 });
 
-// Ruta base
-app.get('/', (req, res) => {
-  res.send('Servidor backend de AnimeStream activo.');
+// Ruta principal para cargar la interfaz web
+app.get('*', (req, res) => {
+  const indexPath = path.join(__dirname, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.send('Backend de AnimeStream corriendo correctamente.');
+  }
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Servidor de AnimeStream corriendo en el puerto ${PORT}`);
 });
