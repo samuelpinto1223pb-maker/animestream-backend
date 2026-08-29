@@ -1,9 +1,6 @@
-
-
 const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
-const cheerio = require('cheerio');
 const fs = require('fs');
 const path = require('path');
 
@@ -41,71 +38,38 @@ app.get('/api/catalogo-guardado', (req, res) => {
   res.json({ success: true, animes: catalogoLocal });
 });
 
-// EXTRAER Y ENVIAR A STREAMHG
+// PROCESAR ENLACE CON STREAMHG API DIRECTO
 app.post('/api/extraer-ninja', async (req, res) => {
   const { urlNinja } = req.body;
   if (!urlNinja) return res.status(400).json({ error: "Falta la URL del episodio" });
 
-  // Si ya es un enlace de StreamHG directo
-  if (urlNinja.includes('streamhg.com/')) {
-    let streamUrl = urlNinja.trim();
-    if (!streamUrl.includes('/e/')) {
-      streamUrl = streamUrl.replace('streamhg.com/', 'streamhg.com/e/');
-    }
+  let streamUrl = urlNinja.trim();
+
+  // Si ya es un enlace embed de StreamHG
+  if (streamUrl.includes('streamhg.com/e/')) {
     return res.json({ success: true, streamUrl });
   }
 
-  let htmlData = "";
-  const proxies = [
-    `https://corsproxy.io/?${encodeURIComponent(urlNinja)}`,
-    `https://api.allorigins.win/get?url=${encodeURIComponent(urlNinja)}`
-  ];
-
-  for (const proxy of proxies) {
-    try {
-      const response = await axios.get(proxy, { timeout: 8000 });
-      htmlData = typeof response.data === 'object' && response.data.contents ? response.data.contents : response.data;
-      if (htmlData && htmlData.includes('iframe')) break;
-    } catch (e) {
-      continue;
-    }
+  // Si es un enlace normal de StreamHG, convertir a embed
+  if (streamUrl.includes('streamhg.com/')) {
+    streamUrl = streamUrl.replace('streamhg.com/', 'streamhg.com/e/');
+    return res.json({ success: true, streamUrl });
   }
 
-  if (!htmlData) {
-    return res.status(504).json({ error: "No se pudo extraer el origen. Intenta de nuevo." });
-  }
-
+  // Mandar la URL externa a StreamHG mediante Remote Upload
   try {
-    const $ = cheerio.load(htmlData);
-    let directVideoUrl = null;
+    const remoteRes = await axios.get(`https://streamhg.com/api/upload/url?key=${STREAMHG_API_KEY}&url=${encodeURIComponent(streamUrl)}`);
 
-    $('iframe').each((i, el) => {
-      const src = $(el).attr('src') || $(el).attr('data-src');
-      if (src && !src.includes('facebook') && !src.includes('disqus')) {
-        directVideoUrl = src;
-        return false;
-      }
-    });
-
-    if (!directVideoUrl) {
-      return res.status(404).json({ error: "No se encontró fuente de vídeo válida." });
-    }
-
-    if (directVideoUrl.startsWith('//')) directVideoUrl = 'https:' + directVideoUrl;
-
-    // Enviar a la API de StreamHG vía Remote Upload
-    const streamHgRes = await axios.get(`https://streamhg.com/api/upload/url?key=${STREAMHG_API_KEY}&url=${encodeURIComponent(directVideoUrl)}`);
-
-    if (streamHgRes.data && streamHgRes.data.result && streamHgRes.data.result.filecode) {
-      const embedUrl = `https://streamhg.com/e/${streamHgRes.data.result.filecode}`;
-      return res.json({ success: true, streamUrl: embedUrl });
+    if (remoteRes.data && remoteRes.data.result && remoteRes.data.result.filecode) {
+      const finalEmbed = `https://streamhg.com/e/${remoteRes.data.result.filecode}`;
+      return res.json({ success: true, streamUrl: finalEmbed });
     } else {
-      // Fallback si la subida remota responde directo con el iframe
-      return res.json({ success: true, streamUrl: directVideoUrl });
+      // Si la API no lo convierte al instante, usa la URL tal cual
+      return res.json({ success: true, streamUrl: streamUrl });
     }
-
   } catch (error) {
-    res.status(500).json({ error: "Error procesando con la API de StreamHG." });
+    // Si falla la API de StreamHG, carga la URL original en el reproductor
+    return res.json({ success: true, streamUrl: streamUrl });
   }
 });
 
@@ -113,7 +77,7 @@ app.post('/api/admin/agregar-anime', (req, res) => {
   let { titulo, imagen, urlNinja } = req.body;
 
   if (!urlNinja) {
-    return res.status(400).json({ error: "Debes pegar al menos el enlace de Ninja" });
+    return res.status(400).json({ error: "Debes pegar al menos el enlace del video" });
   }
 
   const nuevoAnime = {
