@@ -35,15 +35,13 @@ async function obtenerTodosLosEpisodios(animeId) {
         });
       });
 
-      // Si devolvió menos de 20, ya llegamos al final del anime
       if (epData.length < limit) {
         hayMas = false;
       } else {
         offset += limit;
-        await pausar(500); // Pausa breve entre páginas de episodios
+        await pausar(500);
       }
     } catch (err) {
-      console.log(`    ⚠ Error al obtener bloque de episodios (offset ${offset}): ${err.message}`);
       hayMas = false;
     }
   }
@@ -51,16 +49,16 @@ async function obtenerTodosLosEpisodios(animeId) {
   return episodios;
 }
 
-async function extraccionMasivaCompleta() {
-  console.log("Iniciando extracción masiva profunda (100 animes con todos sus capítulos)...");
+async function extraccionMasivaMultiIdioma() {
+  console.log("Iniciando extracción masiva Multi-Idioma (Latino / Castellano)...");
   const catalogo = [];
   const limitePorPagina = 20;
-  const paginasTotales = 5; // 5 páginas x 20 = 100 animes completos
+  const paginasTotales = 5; // 100 Animes
 
   try {
     for (let p = 0; p < paginasTotales; p++) {
       const offsetAnime = p * limitePorPagina;
-      console.log(`\n--- CARGANDO PÁGINA ${p + 1} DE ANIMES (Del ${offsetAnime + 1} al ${offsetAnime + limitePorPagina}) ---`);
+      console.log(`\n--- CARGANDO PÁGINA ${p + 1} DE ANIMES ---`);
 
       const urlAnime = `https://kitsu.io/api/edge/anime?page[limit]=${limitePorPagina}&page[offset]=${offsetAnime}&sort=-userCount`;
       const res = await axios.get(urlAnime, {
@@ -80,9 +78,8 @@ async function extraccionMasivaCompleta() {
         const cleanSlug = title.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '-');
 
         const indiceGlobal = offsetAnime + i + 1;
-        console.log(`[${indiceGlobal}/100] Extrayendo episodios de: ${title}...`);
+        console.log(`[${indiceGlobal}/100] Procesando episodios de: ${title}...`);
 
-        // Llamada recursiva para traer hasta el último episodio
         const listaCapitulos = await obtenerTodosLosEpisodios(item.id);
 
         catalogo.push({
@@ -90,16 +87,26 @@ async function extraccionMasivaCompleta() {
           title: title,
           poster: attr.posterImage?.small || attr.posterImage?.original || "",
           sinopsis: attr.synopsis || "",
-          idioma: "Español Latino / Sub",
+          idiomas_disponibles: ["Español Latino / Sub", "Español Castellano"],
           total_episodios: listaCapitulos.length,
           capitulos: listaCapitulos.map(ep => ({
             ...ep,
-            server_url: `https://animeflv.net/ver/${cleanSlug}-${ep.numero}`
+            opciones_reproductor: [
+              {
+                idioma: "Latino / Sub",
+                servidor: "AnimeFLV",
+                url: `https://animeflv.net/ver/${cleanSlug}-${ep.numero}`
+              },
+              {
+                idioma: "Castellano",
+                servidor: "Servidor ES",
+                url: `https://animeflv.es/ver/${cleanSlug}-${ep.numero}`
+              }
+            ]
           }))
         });
 
-        console.log(`  └ Realizado: ${listaCapitulos.length} capítulos encontrados.`);
-        await pausar(1000); // Pausa de seguridad entre cada anime
+        await pausar(1000);
       }
 
       await pausar(2000);
@@ -107,13 +114,12 @@ async function extraccionMasivaCompleta() {
 
     if (catalogo.length > 0) {
       fs.writeFileSync(JSON_PATH, JSON.stringify(catalogo, null, 2));
-      console.log(`\n¡PROCESO FINALIZADO EXITOSAMENTE!`);
-      console.log(`Se guardaron ${catalogo.length} animes con sus capítulos completos en latino.json.`);
+      console.log(`\n¡PROCESO COMPLETADO! Catálogo multi-idioma listo.`);
     }
 
   } catch (error) {
-    console.error("Error crítico durante la extracción profunda:", error.message);
+    console.error("Error durante la extracción:", error.message);
   }
 }
 
-extraccionMasivaCompleta();
+extraccionMasivaMultiIdioma();
