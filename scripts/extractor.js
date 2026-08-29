@@ -5,41 +5,40 @@ const path = require('path');
 const JSON_PATH = path.join(__dirname, '../latino.json');
 
 async function extraerCatalogoReal() {
-  console.log("Iniciando extracción mediante Jikan API (MyAnimeList)...");
+  console.log("Iniciando extracción mediante Kitsu API...");
 
   try {
-    // Obtenemos los animes más populares/recientes directamente
-    const res = await axios.get('https://api.jikan.moe/v4/top/anime?limit=15', {
+    // Petición directa a Kitsu API (extremadamente rápida y sin bloqueos 504)
+    const res = await axios.get('https://kitsu.io/api/edge/anime?page[limit]=15&sort=-userCount', {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-      }
+        'Accept': 'application/vnd.api+json',
+        'Content-Type': 'application/vnd.api+json'
+      },
+      timeout: 10000
     });
 
     const datos = res.data.data || [];
     const catalogo = [];
 
     datos.forEach(item => {
-      // Generar slug para AnimeFLV
-      const cleanSlug = item.title
+      const attr = item.attributes;
+      const title = attr.canonicalTitle || attr.titles.en_jp || "Anime";
+      
+      const cleanSlug = title
         .toLowerCase()
         .replace(/[^a-z0-9 ]/g, '')
         .replace(/\s+/g, '-');
 
       catalogo.push({
         id: cleanSlug,
-        title: item.title_japanese ? `${item.title} (${item.title_japanese})` : item.title,
-        poster: item.images?.jpg?.large_image_url || item.images?.jpg?.image_url || "",
+        title: title,
+        poster: attr.posterImage?.small || attr.posterImage?.original || "",
         idioma: "Español Latino / Sub",
         servers: [
           {
             server: "animeflv",
             title: "Ver en AnimeFLV",
             code: `https://animeflv.net/anime/${cleanSlug}`
-          },
-          {
-            server: "stream",
-            title: "Opción HD",
-            code: item.url || "#"
           }
         ]
       });
@@ -47,9 +46,7 @@ async function extraerCatalogoReal() {
 
     if (catalogo.length > 0) {
       fs.writeFileSync(JSON_PATH, JSON.stringify(catalogo, null, 2));
-      console.log(`¡Éxito total! Se extrajeron ${catalogo.length} animes reales y se guardaron en latino.json.`);
-    } else {
-      console.log("No se obtuvieron datos.");
+      console.log(`¡Éxito! Se extrajeron ${catalogo.length} animes reales correctamente.`);
     }
 
   } catch (error) {
