@@ -11,7 +11,8 @@ app.use(express.json());
 
 const HEADERS_HTTP = {
   'User-Agent':
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36',
+  'Referer': 'https://animeflv.net/'
 };
 
 const JSON_PATH = path.join(__dirname, 'latino.json');
@@ -36,7 +37,6 @@ function guardarJsonLocal(listaActualizada) {
   }
 }
 
-// Extraer animes de la lista principal
 async function obtenerAnimesPagina(url) {
   try {
     const { data } = await axios.get(url, { headers: HEADERS_HTTP });
@@ -68,36 +68,47 @@ async function obtenerAnimesPagina(url) {
   }
 }
 
-// Extraer los reproductores de un episodio específico
+// Extraer reproductores buscando var videos en el HTML
 async function obtenerVideosEpisodio(idAnime, numeroEpisodio) {
   try {
-    const url = `https://animeflv.net/ver/${idAnime}-${numeroEpisodio}`;
-    const { data } = await axios.get(url, { headers: HEADERS_HTTP });
-    
-    // Buscar el script donde AnimeFLV guarda las variables de los videos
-    const match = data.match(/var videos = (\{.*?\});/);
-    if (match && match[1]) {
-      const videosData = JSON.parse(match[1]);
-      // Extraer los embeds principales (SUB/LATINO)
-      const servidores = videosData.SUB || videosData.LAT || [];
-      return servidores.map(s => ({
-        server: s.server,
-        title: s.title,
-        code: s.code // URL iframe/embed
-      }));
+    // Probar estructura estándar y alternativa si falla
+    const urlsToTest = [
+      `https://animeflv.net/ver/${idAnime}-${numeroEpisodio}`,
+      `https://animeflv.net/ver/${idAnime.replace(/-tv$/, '')}-${numeroEpisodio}`
+    ];
+
+    for (const url of urlsToTest) {
+      try {
+        const { data } = await axios.get(url, { headers: HEADERS_HTTP });
+        
+        // Buscar el bloque JS var videos
+        const scriptMatch = data.match(/var\s+videos\s*=\s*(\{[\s\S]*?\});/);
+        if (scriptMatch && scriptMatch[1]) {
+          const videosData = JSON.parse(scriptMatch[1]);
+          const servidores = videosData.SUB || videosData.LAT || [];
+          if (servidores.length > 0) {
+            return servidores.map(s => ({
+              server: s.server,
+              title: s.title || s.server,
+              code: s.code
+            }));
+          }
+        }
+      } catch (e) {
+        // Continuar al siguiente intento
+      }
     }
   } catch (error) {
-    console.error(`Error al extraer episodio ${numeroEpisodio} de ${idAnime}`);
+    console.error(`Error procesando episode ${numeroEpisodio} para ${idAnime}:`, error);
   }
   return [];
 }
 
-// Escaneo masivo automático
 async function poblarCatalogoLatinoAuto() {
   console.log('Iniciando escaneo automático de catálogo...');
   let catalogoLocal = leerJsonLocal();
 
-  for (let i = 1; i <= 5; i++) { // Cambia el rango de páginas a escanear según necesites
+  for (let i = 1; i <= 10; i++) {
     try {
       const url = `https://animeflv.net/browse?type%5B%5D=tv&order=default&page=${i}`;
       const animesPagina = await obtenerAnimesPagina(url);
@@ -106,10 +117,10 @@ async function poblarCatalogoLatinoAuto() {
         const existe = catalogoLocal.some(item => item.id === animeNuevo.id);
         if (!existe) {
           catalogoLocal.push(animeNuevo);
-          guardarJsonLocal(catalogoLocal);
         }
       }
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      guardarJsonLocal(catalogoLocal);
+      await new Promise(resolve => setTimeout(resolve, 800));
     } catch (e) {
       console.log(`Error en página ${i}, continuando...`);
     }
@@ -117,7 +128,6 @@ async function poblarCatalogoLatinoAuto() {
   console.log('¡Escaneo de catálogo completado!');
 }
 
-// Endpoint 1: Obtener catálogo completo guardado
 app.get('/api/latino', (req, res) => {
   const catalogoLocal = leerJsonLocal();
   const page = Number(req.query.page) || 1;
@@ -129,13 +139,13 @@ app.get('/api/latino', (req, res) => {
   res.json({
     success: true,
     page,
+    totalPages: Math.ceil(catalogoLocal.length / limit),
     total_registrados: catalogoLocal.length,
     count: resultados.length,
     data: resultados
   });
 });
 
-// Endpoint 2: Obtener los reproductores de un capítulo en tiempo real
 app.get('/api/ver/:id/:episodio', async (req, res) => {
   const { id, episodio } = req.params;
   const videos = await obtenerVideosEpisodio(id, episodio);
