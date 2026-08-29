@@ -1,37 +1,53 @@
 [
   {
-    "title": "Dragon Ball Super (Latino)",
-    "poster": "https://animeflv.net/uploads/animes/covers/2679.jpg",
+    "id": "chainsaw-man-tv-latino",
+    "title": "Chainsaw Man (Latino)",
+    "poster": "https://animeflv.net/uploads/animes/covers/3739.jpg",
     "idioma": "Español Latino",
     "servers": [
       {
         "server": "mega",
-        "title": "MEGA",
-        "code": "https://mega.nz"
+        "title": "Opción 1",
+        "code": "https://animeflv.net/ver/chainsaw-man-tv-latino-1"
       }
     ]
   },
   {
-    "title": "Naruto Shippuden (Latino)",
-    "poster": "https://animeflv.net/uploads/animes/covers/835.jpg",
+    "id": "jujutsu-kaisen-tv-latino",
+    "title": "Jujutsu Kaisen (Latino)",
+    "poster": "https://animeflv.net/uploads/animes/covers/3358.jpg",
     "idioma": "Español Latino",
     "servers": [
       {
-        "server": "sw",
-        "title": "Streamwish",
-        "code": "https://streamwish.top"
+        "server": "mega",
+        "title": "Opción 1",
+        "code": "https://animeflv.net/ver/jujutsu-kaisen-tv-latino-1"
       }
     ]
   },
   {
-    "title": "One Piece (Latino)",
+    "id": "demon-slayer-kimetsu-no-yaiba-latino",
+    "title": "Demon Slayer (Latino)",
+    "poster": "https://animeflv.net/uploads/animes/covers/3103.jpg",
+    "idioma": "Español Latino",
+    "servers": [
+      {
+        "server": "mega",
+        "title": "Opción 1",
+        "code": "https://animeflv.net/ver/demon-slayer-kimetsu-no-yaiba-latino-1"
+      }
+    ]
+  },
+  {
+    "id": "one-piece-tv",
+    "title": "One Piece",
     "poster": "https://animeflv.net/uploads/animes/covers/1.jpg",
     "idioma": "Español Latino",
     "servers": [
       {
-        "server": "yourupload",
-        "title": "YourUpload",
-        "code": "https://yourupload.com"
+        "server": "mega",
+        "title": "Opción 1",
+        "code": "https://animeflv.net/ver/one-piece-tv-1"
       }
     ]
   }
