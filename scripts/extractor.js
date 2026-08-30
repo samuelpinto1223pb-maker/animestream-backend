@@ -3,75 +3,89 @@ const path = require('path');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-// Ruta al archivo latino.json en la raíz
 const JSON_PATH = path.join(__dirname, '../latino.json');
+const BASE_URL = 'https://animeflv.net'; // Ajusta la URL origen según tu fuente de scraping
 
-// Servidores recomendados / permitidos
-const ALLOWED_SERVERS = ['mega', 'yourupload', 'okru', 'stape', 'filemoon', 'streamwish', 'voe'];
-
-async function runExtractor() {
+async function getAnimes() {
   console.log('🚀 Iniciando proceso de extracción...');
+  const catalog = [];
 
-  let catalog = [];
-
-  // Si existe un catálogo previo, cargarlo
-  if (fs.existsSync(JSON_PATH)) {
-    try {
-      const rawData = fs.readFileSync(JSON_PATH, 'utf-8');
-      catalog = JSON.parse(rawData);
-    } catch (e) {
-      console.log('⚠️ No se pudo leer el latino.json previo, se creará uno nuevo.');
-      catalog = [];
-    }
-  }
-
-  /* 
-    AQUÍ VA TU LÓGICA DE SCRAPING DE ANIME.
-    Asegúrate de formatear cada opción de reproductor de la siguiente manera:
-  */
-
-  function cleanEmbedUrl(rawUrl, serverName) {
-    if (!rawUrl) return null;
-    let url = rawUrl.trim();
-
-    // Asegurar protocolo https
-    if (url.startsWith('//')) {
-      url = 'https:' + url;
-    }
-
-    return url;
-  }
-
-  // Ejemplo de estructura para guardar cada anime extraído
-  function addOrUpdateAnime(newAnime) {
-    const existingIndex = catalog.findIndex(a => a.title.toLowerCase() === newAnime.title.toLowerCase());
-    
-    // Filtrar servidores limpios
-    if (newAnime.capitulos) {
-      newAnime.capitulos.forEach(ep => {
-        if (ep.opciones_reproductor) {
-          ep.opciones_reproductor = ep.opciones_reproductor.map(op => ({
-            ...op,
-            url: cleanEmbedUrl(op.url, op.servidor)
-          })).filter(op => op.url !== null);
-        }
-      });
-    }
-
-    if (existingIndex !== -1) {
-      catalog[existingIndex] = newAnime;
-    } else {
-      catalog.push(newAnime);
-    }
-  }
-
-  // Guardar catálogo actualizado
   try {
+    // Ejemplo de petición al catálogo
+    const response = await axios.get(`${BASE_URL}/browse?order=added`, {
+      headers: { 'User-Agent': 'Mozilla/5.0' }
+    });
+    const $ = cheerio.load(response.data);
+    const animeLinks = [];
+
+    $('.ListAnimes li article a').each((i, el) => {
+      if (i < 10) { // Extrae los primeros 10 animes por ejecución
+        animeLinks.push($(el).attr('href'));
+      }
+    });
+
+    for (const link of animeLinks) {
+      try {
+        const animeRes = await axios.get(`${BASE_URL}${link}`, {
+          headers: { 'User-Agent': 'Mozilla/5.0' }
+        });
+        const $anime = cheerio.load(animeRes.data);
+
+        const title = $anime('.Ficha h1').text().trim() || 'Anime sin título';
+        const poster = BASE_URL + ($anime('.Image img').attr('src') || '');
+        const year = $anime('.NIGHT').text().trim() || '2026';
+
+        // Extraer episodios del script de la página
+        const scripts = $anime('script').toArray();
+        let episodesData = [];
+        let animeInfo = [];
+
+        scripts.forEach(script => {
+          const content = $anime(script).html();
+          if (content && content.includes('var episodes =')) {
+            const epMatch = content.match(/var episodes = (\[\[.*?\]\]);/);
+            if (epMatch) episodesData = JSON.parse(epMatch[1]);
+          }
+        });
+
+        const capitulos = episodesData.map(ep => {
+          const epNum = ep[0];
+          return {
+            numero: epNum,
+            opciones_reproductor: [
+              {
+                idioma: 'Español Latino',
+                servidor: 'Voe',
+                url: `https://voe.sx/e/${ep[1]}`
+              },
+              {
+                idioma: 'Español Latino',
+                servidor: 'Streamwish',
+                url: `https://streamwish.to/e/${ep[1]}`
+              }
+            ]
+          };
+        });
+
+        if (title) {
+          catalog.push({
+            title,
+            poster,
+            year,
+            capitulos
+          });
+        }
+      } catch (e) {
+        console.error(`Error procesando anime ${link}:`, e.message);
+      }
+    }
+
     fs.writeFileSync(JSON_PATH, JSON.stringify(catalog, null, 2), 'utf-8');
     console.log(`✅ Extracción completada. ${catalog.length} animes guardados en latino.json`);
-  } catch (err) {
-    console.error('❌ Error al escribir latino.json:', err);
+
+  } catch (error) {
+    console.error('❌ Error en el proceso de extracción:', error.message);
   }
 }
 
-runExtractor();
+getAnimes();
