@@ -1,99 +1,77 @@
 const fs = require('fs');
 const path = require('path');
-const https = require('https');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+// Ruta al archivo latino.json en la raíz
+const JSON_PATH = path.join(__dirname, '../latino.json');
 
-function requestJSON(url) {
-  return new Promise((resolve, reject) => {
-    https.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        try { resolve(JSON.parse(data)); } 
-        catch (e) { reject(e); }
-      });
-    }).on('error', reject);
-  });
-}
+// Servidores recomendados / permitidos
+const ALLOWED_SERVERS = ['mega', 'yourupload', 'okru', 'stape', 'filemoon', 'streamwish', 'voe'];
 
-async function extraerTodoSinLimites() {
-  console.log("Iniciando escaneo masivo (Todos los animes doblados + Todas las temporadas + Motores)...");
+async function runExtractor() {
+  console.log('🚀 Iniciando proceso de extracción...');
+
   let catalog = [];
-  
-  // Escaneamos 25 páginas (hasta 500 animes doblados en total)
-  const TOTAL_PAGINAS = 25;
 
-  for (let page = 0; page < TOTAL_PAGINAS; page++) {
-    const offset = page * 20;
-    const url = `https://kitsu.io/api/edge/anime?filter[categories]=spanish-dub&page[limit]=20&page[offset]=${offset}&sort=-userCount`;
-
+  // Si existe un catálogo previo, cargarlo
+  if (fs.existsSync(JSON_PATH)) {
     try {
-      const response = await requestJSON(url);
-      const items = response.data || [];
-
-      if (items.length === 0) break; // Si ya no hay más animes, termina
-
-      for (let item of items) {
-        const attr = item.attributes;
-        const title = attr.canonicalTitle || attr.titles.en || "Sin título";
-        const poster = attr.posterImage ? attr.posterImage.small : "";
-        
-        let year = attr.startDate ? new Date(attr.startDate).getFullYear() : 2026;
-        if (year > 2026) year = 2026;
-
-        const totalEpisodios = attr.episodeCount || 12;
-        const slug = title.toLowerCase().replace(/[^a-z0-9]/g, '-').replace(/-+/g, '-');
-
-        const capitulos = [];
-        // Genera los motores para TODOS los capítulos que tenga la serie (12, 24, 50, 100+)
-        for (let i = 1; i <= totalEpisodios; i++) {
-          capitulos.push({
-            numero: i,
-            opciones_reproductor: [
-              {
-                idioma: "Español Latino",
-                servidor: "Streamwish (Latino)",
-                url: `https://streamwish.to/e/${slug}-ep${i}`
-              },
-              {
-                idioma: "Español Castellano",
-                servidor: "Filemoon (Castellano)",
-                url: `https://filemoon.sx/e/${slug}-ep${i}`
-              },
-              {
-                idioma: "Español Latino",
-                servidor: "Voe (Servidor 2)",
-                url: `https://voe.sx/e/${slug}-ep${i}`
-              }
-            ]
-          });
-        }
-
-        catalog.push({
-          id: item.id,
-          title: title,
-          poster: poster,
-          year: year,
-          capitulos: capitulos
-        });
-
-        console.log(`[${catalog.length}] Procesado: ${title} (${year}) - ${totalEpisodios} capítulos vinculados.`);
-      }
-    } catch (error) {
-      console.error(`Error procesando bloque ${page}:`, error.message);
+      const rawData = fs.readFileSync(JSON_PATH, 'utf-8');
+      catalog = JSON.parse(rawData);
+    } catch (e) {
+      console.log('⚠️ No se pudo leer el latino.json previo, se creará uno nuevo.');
+      catalog = [];
     }
-
-    // Pausa preventiva de 1.2 segundos entre páginas para estabilidad absoluta
-    await delay(1200);
   }
 
-  // Ordenar el catálogo: 2026 primero, bajando hasta los años 2000
-  catalog.sort((a, b) => b.year - a.year);
+  /* 
+    AQUÍ VA TU LÓGICA DE SCRAPING DE ANIME.
+    Asegúrate de formatear cada opción de reproductor de la siguiente manera:
+  */
 
-  const outputPath = path.join(__dirname, '../latino.json');
-  fs.writeFileSync(outputPath, JSON.stringify(catalog, null, 2));
-  console.log(`¡ESCANEO COMPLETO! Se guardó un total de ${catalog.length} animes con todos sus reproductores.`);
+  function cleanEmbedUrl(rawUrl, serverName) {
+    if (!rawUrl) return null;
+    let url = rawUrl.trim();
+
+    // Asegurar protocolo https
+    if (url.startsWith('//')) {
+      url = 'https:' + url;
+    }
+
+    return url;
+  }
+
+  // Ejemplo de estructura para guardar cada anime extraído
+  function addOrUpdateAnime(newAnime) {
+    const existingIndex = catalog.findIndex(a => a.title.toLowerCase() === newAnime.title.toLowerCase());
+    
+    // Filtrar servidores limpios
+    if (newAnime.capitulos) {
+      newAnime.capitulos.forEach(ep => {
+        if (ep.opciones_reproductor) {
+          ep.opciones_reproductor = ep.opciones_reproductor.map(op => ({
+            ...op,
+            url: cleanEmbedUrl(op.url, op.servidor)
+          })).filter(op => op.url !== null);
+        }
+      });
+    }
+
+    if (existingIndex !== -1) {
+      catalog[existingIndex] = newAnime;
+    } else {
+      catalog.push(newAnime);
+    }
+  }
+
+  // Guardar catálogo actualizado
+  try {
+    fs.writeFileSync(JSON_PATH, JSON.stringify(catalog, null, 2), 'utf-8');
+    console.log(`✅ Extracción completada. ${catalog.length} animes guardados en latino.json`);
+  } catch (err) {
+    console.error('❌ Error al escribir latino.json:', err);
+  }
 }
 
-extraerTodoSinLimites();
+runExtractor();
