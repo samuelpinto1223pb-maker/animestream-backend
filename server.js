@@ -4,35 +4,44 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
+// Servir estáticos
 app.use(express.static(path.join(__dirname, './')));
 
-// Ruta para servir latino.json buscando en múltiples ubicaciones posibles
+// Buscar latino.json sin importar si está en mayúscula o minúscula
+const getJsonPath = () => {
+  const p1 = path.join(__dirname, 'latino.json');
+  const p2 = path.join(__dirname, 'Latino.json');
+  if (fs.existsSync(p1)) return p1;
+  if (fs.existsSync(p2)) return p2;
+  return null;
+};
+
+// Endpoint optimizado para entregar el archivo grande
 app.get('/latino.json', (req, res) => {
-  const possiblePaths = [
-    path.join(__dirname, 'latino.json'),
-    path.join(__dirname, '../latino.json'),
-    path.join(__dirname, 'scripts', 'latino.json')
-  ];
-
-  for (let p of possiblePaths) {
-    if (fs.existsSync(p)) {
-      return res.sendFile(p);
-    }
+  const jsonPath = getJsonPath();
+  if (jsonPath) {
+    res.setHeader('Content-Type', 'application/json');
+    fs.createReadStream(jsonPath).pipe(res);
+  } else {
+    res.status(404).json({ error: "Archivo latino.json no encontrado" });
   }
+});
 
-  // Respuesta de respaldo si el archivo aún se está creando
-  res.json([]);
+// Alias API por compatibilidad
+app.get('/api/anime', (req, res) => {
+  const jsonPath = getJsonPath();
+  if (jsonPath) {
+    res.setHeader('Content-Type', 'application/json');
+    fs.createReadStream(jsonPath).pipe(res);
+  } else {
+    res.status(404).json({ error: "Archivo latino.json no encontrado" });
+  }
 });
 
 app.get('/', (req, res) => {
-  const indexPath = path.join(__dirname, 'index.html');
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.send("<h1>Servidor activo. Sube index.html a la raíz.</h1>");
-  }
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log(`Servidor de AnimeStream corriendo en el puerto ${PORT}`);
 });
