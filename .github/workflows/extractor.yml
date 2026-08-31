@@ -1,32 +1,35 @@
-name: Auto Actualización de Catálogo
+name: Auto Extractor de Animes y Peliculas 2026
 
 on:
   schedule:
-    - cron: '0 3 * * 0'
+    - cron: '0 0 * * 0'
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Descargar código del repositorio
+      - name: Clonar repositorio
         uses: actions/checkout@v3
 
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: 18
 
       - name: Instalar dependencias
         run: npm install
 
-      - name: Ejecutar extractor en modo sigilo
+      - name: Instalar Chrome para Puppeteer
+        run: npx puppeteer browsers install chrome
+
+      - name: Ejecutar Extractor
         run: node scripts/extractor.js
 
-      - name: Guardar cambios y subir latino.json
+      - name: Guardar cambios en latino.json
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name 'Bot Extractor'
+          git config --global user.email 'bot@github.com'
           git add latino.json
-          git commit -m "Auto-actualización catálogo (Latino / Castellano / 2026)" || exit 0
+          git commit -m "Auto-update: Nuevos datos en latino.json" || exit 0
           git push
