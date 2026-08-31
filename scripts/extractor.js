@@ -11,7 +11,7 @@ const HEADERS = {
 };
 
 async function runExtractor() {
-  console.log('🚀 Iniciando extractor de Animes (Latanime, JKAnime, AnimeFLV)...');
+  console.log('🚀 Iniciando extractor de Animes (Latanime y JKAnime)...');
 
   let catalog = [];
   if (fs.existsSync(JSON_PATH)) {
@@ -24,7 +24,7 @@ async function runExtractor() {
   }
 
   const existingTitles = new Set(catalog.map(item => item.titulo.toLowerCase().trim()));
-  const stats = { latanime: 0, jkanime: 0, animeflv: 0, ignorados: 0 };
+  const stats = { latanime: 0, jkanime: 0, ignorados: 0 };
 
   // ==========================================
   // 1. LATANIME.ORG
@@ -163,87 +163,20 @@ async function runExtractor() {
   }
 
   // ==========================================
-  // 3. ANIMEFLV.NET (Sin "www." para evitar fallos de DNS)
-  // ==========================================
-  try {
-    console.log('🌐 Escaneando AnimeFLV.net...');
-    const res = await axios.get('https://animeflv.net/', { headers: HEADERS, timeout: 15000 });
-    const $ = cheerio.load(res.data);
-    const flvPromesas = [];
-
-    $('.ListEpisodios li a, .ListAnimes li a').each((i, el) => {
-      if (flvPromesas.length >= 6) return;
-
-      const url = $(el).attr('href');
-      const title = $(el).find('.Title').text().trim() || $(el).find('strong').text().trim();
-      const img = $(el).find('img').attr('src') || '';
-
-      if (title && url) {
-        const fullUrl = url.startsWith('http') ? url : `https://animeflv.net${url}`;
-        const fullImg = img.startsWith('http') ? img : `https://animeflv.net${img}`;
-        flvPromesas.push({ url: fullUrl, title, poster: fullImg });
-      }
-    });
-
-    for (const item of flvPromesas) {
-      const cleanTitle = item.title.trim();
-      if (!cleanTitle || existingTitles.has(cleanTitle.toLowerCase())) {
-        stats.ignorados++;
-        continue;
-      }
-
-      try {
-        const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 10000 });
-        const $$ = cheerio.load(detailRes.data);
-        const servers = [];
-
-        $$('iframe').each((_, iframe) => {
-          const src = $$(iframe).attr('src') || $$(iframe).attr('data-src');
-          if (src && !src.includes('facebook')) {
-            servers.push({
-              idioma: 'Subtitulado / Latino',
-              servidor: 'Reproductor Directo',
-              url: src.startsWith('//') ? `https:${src}` : src
-            });
-          }
-        });
-
-        if (servers.length === 0) servers.push({ idioma: 'Subtitulado / Latino', servidor: 'Ver en AnimeFLV', url: item.url });
-
-        catalog.push({
-          id: `anime-flv-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-          titulo: cleanTitle,
-          tipo: 'anime',
-          anio: 2026,
-          audio: 'Subtitulado / Latino',
-          portada: item.poster,
-          episodios: [{ numero: 1, opciones_reproductor: servers }]
-        });
-
-        existingTitles.add(cleanTitle.toLowerCase());
-        stats.animeflv++;
-      } catch (e) {}
-    }
-  } catch (err) {
-    console.log('⚠️ Error al conectar con AnimeFLV.net:', err.message);
-  }
-
-  // ==========================================
   // REPORTE FINAL Y GUARDADO
   // ==========================================
   console.log('\n=============================================');
-  console.log('📊 REPORTE FINAL DE EXTRACCIÓN (3 FUENTES)');
+  console.log('📊 REPORTE FINAL DE EXTRACCIÓN (2 FUENTES)');
   console.log('=============================================');
   console.log(`✨ Latanime.org:  ${stats.latanime}`);
   console.log(`✨ JKAnime.net:   ${stats.jkanime}`);
-  console.log(`✨ AnimeFLV.net:  ${stats.animeflv}`);
   console.log(`🚫 Omitidos (ya existían): ${stats.ignorados}`);
   console.log('---------------------------------------------');
   console.log(`📦 TOTAL EN LATINO.JSON: ${catalog.length} items`);
   console.log('=============================================\n');
 
   fs.writeFileSync(JSON_PATH, JSON.stringify(catalog, null, 2), 'utf-8');
-  console.log('💾 Archivo latino.json actualizado correctamente con las 3 fuentes.');
+  console.log('💾 Archivo latino.json actualizado correctamente.');
 }
 
 runExtractor();
