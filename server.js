@@ -1,15 +1,18 @@
 const express = require('express');
-const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Habilitar CORS para permitir peticiones desde cualquier página o celular
-app.use(cors());
+// Configuración manual de CORS sin dependencias externas
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
-// Función auxiliar para leer el archivo latino.json
+// Función para leer el archivo latino.json
 const getAnimeData = () => {
   const filePath = path.join(__dirname, 'latino.json');
   if (fs.existsSync(filePath)) {
@@ -19,24 +22,13 @@ const getAnimeData = () => {
   return [];
 };
 
-// Ruta principal de la API
+// Rutas de la API
 app.get('/api/anime', (req, res) => {
-  try {
-    const data = getAnimeData();
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al leer la base de datos de anime' });
-  }
+  res.json(getAnimeData());
 });
 
-// Ruta raíz de respaldo (por si entras directo a la URL base)
 app.get('/', (req, res) => {
-  try {
-    const data = getAnimeData();
-    res.json(data);
-  } catch (error) {
-    res.status(500).json({ error: 'Error al leer la base de datos de anime' });
-  }
+  res.json(getAnimeData());
 });
 
 app.listen(PORT, () => {
