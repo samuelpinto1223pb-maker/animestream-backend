@@ -1,34 +1,45 @@
 const express = require('express');
-const fs = require('fs');
+const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// Configuración manual de CORS sin dependencias externas
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+// Habilitar CORS para permitir peticiones desde cualquier cliente (Acode, localhost, etc.)
+app.use(cors());
+app.use(express.json());
 
-// Función para leer el archivo latino.json
-const getAnimeData = () => {
+// Servir archivos estáticos del directorio raíz
+app.use(express.static(path.join(__dirname)));
+
+// Endpoint principal para obtener el catálogo completo de animes
+app.get('/latino.json', (req, res) => {
   const filePath = path.join(__dirname, 'latino.json');
+  
   if (fs.existsSync(filePath)) {
-    const rawData = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(rawData);
+    res.setHeader('Content-Type', 'application/json');
+    res.sendFile(filePath);
+  } else {
+    res.status(404).json({ error: 'El archivo latino.json aún no se ha generado.' });
   }
-  return [];
-};
-
-// Rutas de la API
-app.get('/api/anime', (req, res) => {
-  res.json(getAnimeData());
 });
 
+// Endpoint alternativo tipo API
+app.get('/api/animes', (req, res) => {
+  const filePath = path.join(__dirname, 'latino.json');
+  
+  if (fs.existsSync(filePath)) {
+    res.setHeader('Content-Type', 'application/json');
+    res.sendFile(filePath);
+  } else {
+    res.status(404).json({ error: 'El archivo latino.json aún no se ha generado.' });
+  }
+});
+
+// Ruta raíz de prueba
 app.get('/', (req, res) => {
-  res.json(getAnimeData());
+  res.send('Servidor de AnimeStream corriendo correctamente 🚀');
 });
 
 app.listen(PORT, () => {
