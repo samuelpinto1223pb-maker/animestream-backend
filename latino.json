@@ -1,1 +1,162 @@
-[]
+[
+  {
+    "id": "anime-lat-1788210513886-261",
+    "titulo": "MOBILE SUIT GUNDAM HATHAWAY The Sorcery ...",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/mobile-suit-gundam-hathaway-the-sorcery-of-nymph-circe-1788190714.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/mobile-suit-gundam-hathaway-the-sorcery-of-nymph-circe"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788210514181-189",
+    "titulo": "Mobile Suit Gundam Hathaway",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/mobile-suit-gundam-hathaway-1788190709.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/mobile-suit-gundam-hathaway"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788210514491-820",
+    "titulo": "Bleach: Sennen Kessen-hen S4 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/bleach-sennen-kessen-hen-s4-latino-1788070469.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/bleach-sennen-kessen-hen-s4-latino"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788210514762-200",
+    "titulo": "Gintama: Yoshiwara en llamas Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/gintama-yoshiwara-en-llamas-castellano-1788023991.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/gintama-yoshiwara-en-llamas-castellano"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788210515017-457",
+    "titulo": "Gintama: Yoshiwara en llamas Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/gintama-the-movie-2026-yoshiwara-in-flames-1788022444.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/gintama-the-movie-2026-yoshiwara-in-flames"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788210515339-978",
+    "titulo": "MAO Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/mao-1787671022.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/mao"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788210515592-320",
+    "titulo": "Kaguya-sama: Love Is War -Stairway to Ad...",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/kaguya-sama-love-is-war-stairway-to-adulthood-latino-1787328766.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/kaguya-sama-love-is-war-stairway-to-adulthood-latino"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788210515858-653",
+    "titulo": "Jaadugar: A Witch in Mongolia",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/jaadugar-a-witch-in-mongolia-1786810822.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/jaadugar-a-witch-in-mongolia"
+          }
+        ]
+      }
+    ]
+  }
+]
