@@ -1,14 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-const puppeteer = require('puppeteer');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 const JSON_PATH = path.join(__dirname, '../latino.json');
 
-// Servidores limpios permitidos
-const ALLOWED_SERVERS = ['voe', 'filemoon', 'vidhide', 'mp4upload', 'streamwish', 'mega', 'mixdrop', 'ok.ru', 'dood'];
+// Headers para simular un navegador real y saltar bloqueos
+const HEADERS = {
+  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+  'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8'
+};
 
 async function runExtractor() {
-  console.log('🚀 Iniciando extractor de respaldo directo...');
+  console.log('🚀 Iniciando extractor ligero y directo (Axios + Cheerio)...');
 
   let catalog = [];
   if (fs.existsSync(JSON_PATH)) {
@@ -21,119 +25,138 @@ async function runExtractor() {
   }
 
   const existingTitles = new Set(catalog.map(item => item.titulo.toLowerCase().trim()));
-  const stats = { latanime: 0, henaojara: 0, otakustv: 0, sololatino: 0, ignorados: 0 };
-
-  const browser = await puppeteer.launch({
-    headless: "new",
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-blink-features=AutomationControlled',
-      '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
-    ]
-  });
-
-  const page = await browser.newPage();
+  const stats = { latanime: 0, sololatino: 0, ignorados: 0 };
 
   // ==========================================
   // 1. ANIME: Latanime.org
   // ==========================================
   try {
     console.log('🌐 Escaneando Latanime.org...');
-    await page.goto('https://latanime.org/', { waitUntil: 'commit', timeout: 30000 });
-    await page.waitForTimeout(5000); // Espera forzada para bypass de Cloudflare
+    const res = await axios.get('https://latanime.org/', { headers: HEADERS, timeout: 15000 });
+    const $ = cheerio.load(res.data);
 
-    const animeList = await page.evaluate(() => {
-      const items = [];
-      const links = document.querySelectorAll('a');
-      links.forEach(a => {
-        const href = a.href || '';
-        if (href.includes('/anime/') || href.includes('/ver/')) {
-          const title = a.innerText.trim() || a.querySelector('h3, .title')?.innerText.trim();
-          const img = a.querySelector('img')?.src || '';
-          if (title && title.length > 2) {
-            items.push({ url: href, title, poster: img });
-          }
-        }
-      });
-      return items;
+    const animePromesas = [];
+
+    $('a[href*="/anime/"], a[href*="/ver/"]').each((i, el) => {
+      if (animePromesas.length >= 8) return;
+
+      const url = $(el).attr('href');
+      const rawTitle = $(el).find('.title, h3, .name').text().trim() || $(el).text().trim();
+      const img = $(el).find('img').attr('src') || $(el).find('img').attr('data-src') || '';
+      const fullUrl = url.startsWith('http') ? url : `https://latanime.org${url}`;
+
+      if (rawTitle && rawTitle.length > 2) {
+        animePromesas.push({ url: fullUrl, rawTitle, poster: img });
+      }
     });
 
-    for (const item of animeList.slice(0, 5)) {
-      const cleanTitle = item.title.replace(/Capítulo\s+\d+/i, '').replace(/Episodio\s+\d+/i, '').trim();
-      
+    for (const item of animePromesas) {
+      const cleanTitle = item.rawTitle.replace(/Capítulo\s+\d+/i, '').replace(/Episodio\s+\d+/i, '').trim();
+
       if (existingTitles.has(cleanTitle.toLowerCase())) {
         stats.ignorados++;
         continue;
       }
 
-      catalog.push({
-        id: `anime-lat-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-        titulo: cleanTitle,
-        tipo: 'anime',
-        anio: 2026,
-        audio: 'Español Latino',
-        portada: item.poster,
-        episodios: [{
-          numero: 1,
-          opciones_reproductor: [{ idioma: 'Español Latino', servidor: 'Voe Directo', url: item.url }]
-        }]
-      });
-      existingTitles.add(cleanTitle.toLowerCase());
-      stats.latanime++;
+      try {
+        const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 10000 });
+        const $$ = cheerio.load(detailRes.data);
+        const servers = [];
+
+        $$('iframe').each((_, iframe) => {
+          const src = $$(iframe).attr('src');
+          if (src && !src.includes('facebook') && !src.includes('twitter')) {
+            servers.push({ idioma: 'Español Latino', servidor: 'Reproductor Directo', url: src });
+          }
+        });
+
+        if (servers.length === 0) {
+          servers.push({ idioma: 'Español Latino', servidor: 'Enlace Directo', url: item.url });
+        }
+
+        catalog.push({
+          id: `anime-lat-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+          titulo: cleanTitle,
+          tipo: 'anime',
+          anio: 2026,
+          audio: 'Español Latino',
+          portada: item.poster,
+          episodios: [{ numero: 1, opciones_reproductor: servers }]
+        });
+
+        existingTitles.add(cleanTitle.toLowerCase());
+        stats.latanime++;
+      } catch (e) {}
     }
   } catch (err) {
-    console.log('⚠️ Error procesando Latanime.org');
+    console.log('⚠️ Error al conectar con Latanime.org:', err.message);
   }
 
   // ==========================================
-  // 2. PELÍCULAS: Sololatino.net
+  // 2. PELÍCULAS: Sololatino.net (Privado)
   // ==========================================
   try {
     console.log('🎬 Escaneando Sololatino.net...');
-    await page.goto('https://sololatino.net/', { waitUntil: 'commit', timeout: 30000 });
-    await page.waitForTimeout(5000);
+    const res = await axios.get('https://sololatino.net/', { headers: HEADERS, timeout: 15000 });
+    const $ = cheerio.load(res.data);
 
-    const movieList = await page.evaluate(() => {
-      const items = [];
-      const links = document.querySelectorAll('a[href*="/pelicula/"]');
-      links.forEach(a => {
-        const title = a.innerText.trim() || a.querySelector('h2, h3, .title')?.innerText.trim();
-        const img = a.querySelector('img')?.src || '';
-        if (title && title.length > 2) {
-          items.push({ url: a.href, title, poster: img });
-        }
-      });
-      return items;
+    const peliPromesas = [];
+
+    $('a[href*="/pelicula/"]').each((i, el) => {
+      if (peliPromesas.length >= 8) return;
+
+      const url = $(el).attr('href');
+      const title = $(el).find('.title, h2, h3').text().trim() || $(el).text().trim();
+      const img = $(el).find('img').attr('src') || '';
+      const fullUrl = url.startsWith('http') ? url : `https://sololatino.net${url}`;
+
+      if (title && title.length > 2) {
+        peliPromesas.push({ url: fullUrl, title, poster: img });
+      }
     });
 
-    for (const item of movieList.slice(0, 5)) {
+    for (const item of peliPromesas) {
       if (existingTitles.has(item.title.toLowerCase())) {
         stats.ignorados++;
         continue;
       }
 
-      catalog.push({
-        id: `peli-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-        titulo: item.title,
-        tipo: 'pelicula',
-        anio: 2026,
-        audio: 'Español Latino',
-        portada: item.poster,
-        episodios: [{
-          numero: 1,
-          opciones_reproductor: [{ idioma: 'Español Latino', servidor: 'Servidor Película', url: item.url }]
-        }]
-      });
-      existingTitles.add(item.title.toLowerCase());
-      stats.sololatino++;
+      try {
+        const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 10000 });
+        const $$ = cheerio.load(detailRes.data);
+        const servers = [];
+
+        $$('iframe').each((_, iframe) => {
+          const src = $$(iframe).attr('src');
+          if (src && !src.includes('facebook')) {
+            servers.push({ idioma: 'Español Latino', servidor: 'Servidor Película', url: src });
+          }
+        });
+
+        if (servers.length === 0) {
+          servers.push({ idioma: 'Español Latino', servidor: 'Servidor Película', url: item.url });
+        }
+
+        catalog.push({
+          id: `peli-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+          titulo: item.title,
+          tipo: 'pelicula',
+          anio: 2026,
+          audio: 'Español Latino',
+          portada: item.poster,
+          episodios: [{ numero: 1, opciones_reproductor: servers }]
+        });
+
+        existingTitles.add(item.title.toLowerCase());
+        stats.sololatino++;
+      } catch (e) {}
     }
   } catch (err) {
-    console.log('⚠️ Error procesando Sololatino.net');
+    console.log('⚠️ Error al conectar con Sololatino.net:', err.message);
   }
 
   // ==========================================
-  // REPORTE DE EXTRACCIÓN
+  // REPORTE FINAL
   // ==========================================
   console.log('\n=============================================');
   console.log('📊 REPORTE FINAL DE EXTRACCIÓN');
@@ -147,10 +170,9 @@ async function runExtractor() {
 
   if (catalog.length > 0) {
     fs.writeFileSync(JSON_PATH, JSON.stringify(catalog, null, 2), 'utf-8');
-    console.log('💾 ¡latino.json guardado con éxito!');
+    console.log('💾 Archivo latino.json actualizado y guardado correctamente.');
   }
 
-  await browser.close();
 }
 
 runExtractor();
