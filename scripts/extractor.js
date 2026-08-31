@@ -11,7 +11,7 @@ const HEADERS = {
 };
 
 async function runExtractor() {
-  console.log('🚀 Iniciando extractor corregido (Limpieza de títulos y portadas real)...');
+  console.log('🚀 Iniciando extractor de Animes (Latanime, JKAnime, AnimeFLV)...');
 
   let catalog = [];
   if (fs.existsSync(JSON_PATH)) {
@@ -24,53 +24,38 @@ async function runExtractor() {
   }
 
   const existingTitles = new Set(catalog.map(item => item.titulo.toLowerCase().trim()));
-  const stats = { latanime: 0, sololatino: 0, ignorados: 0 };
+  const stats = { latanime: 0, jkanime: 0, animeflv: 0, ignorados: 0 };
 
   // ==========================================
-  // 1. ANIME: Latanime.org
+  // 1. LATANIME.ORG
   // ==========================================
   try {
     console.log('🌐 Escaneando Latanime.org...');
     const res = await axios.get('https://latanime.org/', { headers: HEADERS, timeout: 15000 });
     const $ = cheerio.load(res.data);
-
     const animePromesas = [];
 
     $('a[href*="/anime/"], a[href*="/ver/"]').each((i, el) => {
-      if (animePromesas.length >= 8) return;
+      if (animePromesas.length >= 6) return;
 
       const url = $(el).attr('href');
-      // Obtener únicamente el texto de etiquetas de título o la primera línea limpia
       let rawTitle = $(el).find('.title, h3, .name').first().text().trim();
-      if (!rawTitle) {
-        rawTitle = $(el).text().split('\n')[0].trim();
-      }
+      if (!rawTitle) rawTitle = $(el).text().split('\n')[0].trim();
 
-      // Obtener imagen real evitando la imagen en blanco (capblank.png)
-      let img = $(el).find('img').attr('data-src') || 
-                $(el).find('img').attr('src') || 
-                $(el).find('img').attr('data-lazy-src') || '';
-
+      let img = $(el).find('img').attr('data-src') || $(el).find('img').attr('src') || '';
       if (img.includes('capblank.png') || !img) {
         img = $(el).find('div[style*="background"]').css('background-image') || '';
         img = img.replace(/^url\(['"]?/, '').replace(/['"]?\)$/, '');
       }
 
       const fullUrl = url ? (url.startsWith('http') ? url : `https://latanime.org${url}`) : '';
-
       if (rawTitle && rawTitle.length > 2 && fullUrl) {
         animePromesas.push({ url: fullUrl, rawTitle, poster: img });
       }
     });
 
     for (const item of animePromesas) {
-      // Limpiar Saltos de línea, caracteres extraños y palabras de capítulo/episodio
-      const cleanTitle = item.rawTitle
-        .split('\n')[0]
-        .replace(/Capítulo\s+\d+/i, '')
-        .replace(/Episodio\s+\d+/i, '')
-        .trim();
-
+      const cleanTitle = item.rawTitle.split('\n')[0].replace(/Capítulo\s+\d+/i, '').trim();
       if (!cleanTitle || existingTitles.has(cleanTitle.toLowerCase())) {
         stats.ignorados++;
         continue;
@@ -81,23 +66,18 @@ async function runExtractor() {
         const $$ = cheerio.load(detailRes.data);
         const servers = [];
 
-        // Capturar la imagen real si en la lista era capblank
-        let realPoster = item.poster;
-        if (!realPoster || realPoster.includes('capblank.png')) {
-          realPoster = $$('.anime-single img, .poster img, meta[property="og:image"]').first().attr('src') ||
-                       $$('meta[property="og:image"]').attr('content') || '';
-        }
-
         $$('iframe').each((_, iframe) => {
           const src = $$(iframe).attr('src') || $$(iframe).attr('data-src');
-          if (src && !src.includes('facebook') && !src.includes('twitter') && !src.includes('disqus')) {
-            servers.push({ idioma: 'Español Latino', servidor: 'Reproductor Directo', url: src });
+          if (src && !src.includes('facebook') && !src.includes('twitter')) {
+            servers.push({
+              idioma: 'Español Latino',
+              servidor: 'Reproductor Directo',
+              url: src.startsWith('//') ? `https:${src}` : src
+            });
           }
         });
 
-        if (servers.length === 0) {
-          servers.push({ idioma: 'Español Latino', servidor: 'Ver en Web', url: item.url });
-        }
+        if (servers.length === 0) servers.push({ idioma: 'Español Latino', servidor: 'Ver en Web', url: item.url });
 
         catalog.push({
           id: `anime-lat-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
@@ -105,7 +85,7 @@ async function runExtractor() {
           tipo: 'anime',
           anio: 2026,
           audio: 'Español Latino',
-          portada: realPoster.startsWith('/') ? `https://latanime.org${realPoster}` : realPoster,
+          portada: item.poster.startsWith('/') ? `https://latanime.org${item.poster}` : item.poster,
           episodios: [{ numero: 1, opciones_reproductor: servers }]
         });
 
@@ -118,97 +98,152 @@ async function runExtractor() {
   }
 
   // ==========================================
-  // 2. PELÍCULAS: Sololatino.net
+  // 2. JKANIME.NET
   // ==========================================
   try {
-    console.log('🎬 Escaneando Sololatino.net...');
-    const res = await axios.get('https://sololatino.net/', {
-      headers: {
-        ...HEADERS,
-        'Referer': 'https://sololatino.net/'
-      },
-      timeout: 15000
-    });
+    console.log('🌐 Escaneando JKAnime.net...');
+    const res = await axios.get('https://jkanime.net/', { headers: HEADERS, timeout: 15000 });
     const $ = cheerio.load(res.data);
+    const jkPromesas = [];
 
-    const peliPromesas = [];
+    $('.anime__item, .items .item').each((i, el) => {
+      if (jkPromesas.length >= 6) return;
 
-    $('a[href*="/pelicula/"]').each((i, el) => {
-      if (peliPromesas.length >= 8) return;
+      const link = $(el).find('a').first();
+      const url = link.attr('href');
+      const title = $(el).find('h5, h2, .title').first().text().trim();
+      const img = $(el).find('.anime__item__pic, div[data-setbg]').attr('data-setbg') || $(el).find('img').attr('src') || '';
 
-      const url = $(el).attr('href');
-      let title = $(el).find('.title, h2, h3').first().text().trim() || $(el).text().split('\n')[0].trim();
-      const img = $(el).find('img').attr('data-src') || $(el).find('img').attr('src') || '';
-      const fullUrl = url ? (url.startsWith('http') ? url : `https://sololatino.net${url}`) : '';
-
-      if (title && title.length > 2 && fullUrl) {
-        peliPromesas.push({ url: fullUrl, title, poster: img });
+      if (title && url) {
+        jkPromesas.push({ url, title, poster: img });
       }
     });
 
-    for (const item of peliPromesas) {
-      const cleanTitle = item.title.split('\n')[0].trim();
-
+    for (const item of jkPromesas) {
+      const cleanTitle = item.title.trim();
       if (!cleanTitle || existingTitles.has(cleanTitle.toLowerCase())) {
         stats.ignorados++;
         continue;
       }
 
       try {
-        const detailRes = await axios.get(item.url, {
-          headers: {
-            ...HEADERS,
-            'Referer': 'https://sololatino.net/'
-          },
-          timeout: 10000
-        });
+        const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 10000 });
         const $$ = cheerio.load(detailRes.data);
         const servers = [];
 
         $$('iframe').each((_, iframe) => {
           const src = $$(iframe).attr('src') || $$(iframe).attr('data-src');
           if (src && !src.includes('facebook')) {
-            servers.push({ idioma: 'Español Latino', servidor: 'Servidor Película', url: src });
+            servers.push({
+              idioma: 'Subtitulado / Latino',
+              servidor: 'Reproductor Directo',
+              url: src.startsWith('//') ? `https:${src}` : src
+            });
           }
         });
 
-        if (servers.length === 0) {
-          servers.push({ idioma: 'Español Latino', servidor: 'Servidor Película', url: item.url });
-        }
+        if (servers.length === 0) servers.push({ idioma: 'Subtitulado / Latino', servidor: 'Ver en JKAnime', url: item.url });
 
         catalog.push({
-          id: `peli-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+          id: `anime-jk-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
           titulo: cleanTitle,
-          tipo: 'pelicula',
+          tipo: 'anime',
           anio: 2026,
-          audio: 'Español Latino',
-          portada: item.poster.startsWith('/') ? `https://sololatino.net${item.poster}` : item.poster,
+          audio: 'Subtitulado / Latino',
+          portada: item.poster,
           episodios: [{ numero: 1, opciones_reproductor: servers }]
         });
 
         existingTitles.add(cleanTitle.toLowerCase());
-        stats.sololatino++;
+        stats.jkanime++;
       } catch (e) {}
     }
   } catch (err) {
-    console.log('⚠️ Error al conectar con Sololatino.net:', err.message);
+    console.log('⚠️ Error al conectar con JKAnime.net:', err.message);
+  }
+
+  // ==========================================
+  // 3. ANIMEFLV.NET
+  // ==========================================
+  try {
+    console.log('🌐 Escaneando AnimeFLV.net...');
+    const res = await axios.get('https://www.animeflv.net/', { headers: HEADERS, timeout: 15000 });
+    const $ = cheerio.load(res.data);
+    const flvPromesas = [];
+
+    $('.ListEpisodios li a, .ListAnimes li a').each((i, el) => {
+      if (flvPromesas.length >= 6) return;
+
+      const url = $(el).attr('href');
+      const title = $(el).find('.Title').text().trim() || $(el).find('strong').text().trim();
+      const img = $(el).find('img').attr('src') || '';
+
+      if (title && url) {
+        const fullUrl = url.startsWith('http') ? url : `https://www.animeflv.net${url}`;
+        const fullImg = img.startsWith('http') ? img : `https://www.animeflv.net${img}`;
+        flvPromesas.push({ url: fullUrl, title, poster: fullImg });
+      }
+    });
+
+    for (const item of flvPromesas) {
+      const cleanTitle = item.title.trim();
+      if (!cleanTitle || existingTitles.has(cleanTitle.toLowerCase())) {
+        stats.ignorados++;
+        continue;
+      }
+
+      try {
+        const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 10000 });
+        const $$ = cheerio.load(detailRes.data);
+        const servers = [];
+
+        $$('iframe').each((_, iframe) => {
+          const src = $$(iframe).attr('src') || $$(iframe).attr('data-src');
+          if (src && !src.includes('facebook')) {
+            servers.push({
+              idioma: 'Subtitulado / Latino',
+              servidor: 'Reproductor Directo',
+              url: src.startsWith('//') ? `https:${src}` : src
+            });
+          }
+        });
+
+        if (servers.length === 0) servers.push({ idioma: 'Subtitulado / Latino', servidor: 'Ver en AnimeFLV', url: item.url });
+
+        catalog.push({
+          id: `anime-flv-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+          titulo: cleanTitle,
+          tipo: 'anime',
+          anio: 2026,
+          audio: 'Subtitulado / Latino',
+          portada: item.poster,
+          episodios: [{ numero: 1, opciones_reproductor: servers }]
+        });
+
+        existingTitles.add(cleanTitle.toLowerCase());
+        stats.animeflv++;
+      } catch (e) {}
+    }
+  } catch (err) {
+    console.log('⚠️ Error al conectar con AnimeFLV.net:', err.message);
   }
 
   // ==========================================
   // REPORTE FINAL Y GUARDADO
   // ==========================================
   console.log('\n=============================================');
-  console.log('📊 REPORTE FINAL DE EXTRACCIÓN');
+  console.log('📊 REPORTE FINAL DE EXTRACCIÓN (3 FUENTES)');
   console.log('=============================================');
-  console.log(`✨ Animes (Latanime.org):  ${stats.latanime}`);
-  console.log(`🎬 Películas (Sololatino): ${stats.sololatino}`);
-  console.log(`🚫 Repetidos omitidos:    ${stats.ignorados}`);
+  console.log(`✨ Latanime.org:  ${stats.latanime}`);
+  console.log(`✨ JKAnime.net:   ${stats.jkanime}`);
+  console.log(`✨ AnimeFLV.net:  ${stats.animeflv}`);
+  console.log(`🚫 Omitidos (ya existían): ${stats.ignorados}`);
   console.log('---------------------------------------------');
-  console.log(`📦 TOTAL EN LATINO.JSON:   ${catalog.length} items`);
+  console.log(`📦 TOTAL EN LATINO.JSON: ${catalog.length} items`);
   console.log('=============================================\n');
 
   fs.writeFileSync(JSON_PATH, JSON.stringify(catalog, null, 2), 'utf-8');
-  console.log('💾 Archivo latino.json actualizado y guardado correctamente.');
+  console.log('💾 Archivo latino.json actualizado correctamente con las 3 fuentes.');
 }
 
 runExtractor();
