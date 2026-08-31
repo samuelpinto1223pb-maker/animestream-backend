@@ -1,1 +1,2020 @@
-[]
+[
+  {
+    "id": "anime-lat-1788217525868-8919",
+    "titulo": "MOBILE SUIT GUNDAM HATHAWAY The Sorcery of Nymph Circe Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mobile-suit-gundam-hathaway-the-sorcery-of-nymph-circe-1788190714.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mobile-suit-gundam-hathaway-the-sorcery-of-nymph-circe-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217526964-9969",
+    "titulo": "Mobile Suit Gundam Hathaway",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mobile-suit-gundam-hathaway-1788190709.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mobile-suit-gundam-hathaway-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217528088-9934",
+    "titulo": "Bleach: Sennen Kessen-hen S4 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/bleach-sennen-kessen-hen-s4-latino-1788070469.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/bleach-sennen-kessen-hen-s4-latino-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217529159-586",
+    "titulo": "Gintama: Yoshiwara en llamas Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/gintama-yoshiwara-en-llamas-castellano-1788023991.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/gintama-yoshiwara-en-llamas-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217530283-3826",
+    "titulo": "Gintama: Yoshiwara en llamas Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/gintama-the-movie-2026-yoshiwara-in-flames-1788022444.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/gintama-the-movie-2026-yoshiwara-in-flames-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217534528-8610",
+    "titulo": "MAO Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mao-1787671022.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 7,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 10,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-10"
+          }
+        ]
+      },
+      {
+        "numero": 11,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-11"
+          }
+        ]
+      },
+      {
+        "numero": 12,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mao-episodio-12"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217535902-7034",
+    "titulo": "Kaguya-sama: Love Is War -Stairway to Adulthood- Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/kaguya-sama-love-is-war-stairway-to-adulthood-latino-1787328766.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaguya-sama-love-is-war-stairway-to-adulthood-latino-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaguya-sama-love-is-war-stairway-to-adulthood-latino-episodio-2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217537627-8516",
+    "titulo": "Jaadugar: A Witch in Mongolia",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/jaadugar-a-witch-in-mongolia-1786810822.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217540769-3265",
+    "titulo": "Star Wars Visions: La Jedi número 9 Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/star-wars-visions-la-jedi-numero-9-castellano-1786305921.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-castellano-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-castellano-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-castellano-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-castellano-episodio-8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217544194-3910",
+    "titulo": "Star Wars Visions: La Jedi número 9 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/star-wars-visions-la-jedi-numero-9-1786303925.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/star-wars-visions-la-jedi-numero-9-episodio-8"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217545251-1519",
+    "titulo": "La heroína del lazo Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/la-heroina-del-lazo-castellano-1786207911.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/la-heroina-del-lazo-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217547454-8444",
+    "titulo": "Though I Am an Inept Villainess Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-1786205628.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-episodio-5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217548521-2316",
+    "titulo": "La heroína del lazo Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/la-heroina-del-lazo-1786204611.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/la-heroina-del-lazo-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217552499-1163",
+    "titulo": "Enen no Shouboutai S3 Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/enen-no-shouboutai-s3-castellano-1785969258.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-10"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-11"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/enen-no-shouboutai-s3-castellano-episodio-12"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217556685-7775",
+    "titulo": "Blue Exorcist: Ao no Exorcist: Yosuga-hen",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/blue-exorcist-ao-no-exorcist-yosuga-hen-1785963264.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 7,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 10,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-10"
+          }
+        ]
+      },
+      {
+        "numero": 11,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-11"
+          }
+        ]
+      },
+      {
+        "numero": 12,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/blue-exorcist-ao-no-exorcist-yosuga-hen-episodio-12"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217560856-1411",
+    "titulo": "Oshi no Ko S2 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/oshi-no-ko-s2-latino-1785873032.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-10"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-11"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/oshi-no-ko-s2-latino-episodio-12"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217561991-2689",
+    "titulo": "Boku no Hero Academia S8 + Especial Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/boku-no-hero-academia-s8-especial-castellano-1785700082.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/boku-no-hero-academia-s8-especial-castellano-episodio-13"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217563133-5874",
+    "titulo": "That Time I Got Reincarnated as a Slime. La película: Lágrimas del mar celeste Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/that-time-i-got-reincarnated-as-a-slime-la-pelicula-lagrimas-del-mar-celeste-castellano-1785518542.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/that-time-i-got-reincarnated-as-a-slime-la-pelicula-lagrimas-del-mar-celeste-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217564234-8092",
+    "titulo": "That Time I Got Reincarnated as a Slime. La película: Lágrimas del mar celeste Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/that-time-i-got-reincarnated-as-a-slime-la-pelicula-lagrimas-del-mar-celeste-1785517099.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/that-time-i-got-reincarnated-as-a-slime-la-pelicula-lagrimas-del-mar-celeste-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217566487-3597",
+    "titulo": "Fumando juntos detrás del súper Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/fumando-juntos-detras-del-super-1785427841.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217568669-7960",
+    "titulo": "Tomb Raider King Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/tomb-raider-king-1785349422.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tomb-raider-king-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tomb-raider-king-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tomb-raider-king-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tomb-raider-king-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tomb-raider-king-episodio-5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217570862-1714",
+    "titulo": "Otome Game Sekai wa Mob ni Kibishii Sekai desu S2",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-1785340334.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217573031-861",
+    "titulo": "Youjo Senki S2",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/youjo-senki-temporada-2-1785336054.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217577187-2689",
+    "titulo": "Novia de Alquiler S4 Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/novia-de-alquiler-s4-castellano-1785283494.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-10"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-11"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/novia-de-alquiler-s4-castellano-episodio-12"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217578246-14",
+    "titulo": "Kimetsu no Yaiba: Castillo infinito Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/kimetsu-no-yaiba-castillo-infinito-castellano-1785267146.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kimetsu-no-yaiba-castillo-infinito-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217581031-7216",
+    "titulo": "Mushoku Tensei Jobless Reincarnation S3 Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mushoku-tensei-jobless-reincarnation-s3-castellano-1785083181.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-s3-castellano-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-s3-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-s3-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-s3-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-s3-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-s3-castellano-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-s3-castellano-episodio-7"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217583751-660",
+    "titulo": "Mushoku Tensei Jobless Reincarnation S3 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mushoku-tensei-jobless-reincarnation-temporada-3-1785082116.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-temporada-3-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-temporada-3-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-temporada-3-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-temporada-3-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-temporada-3-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-temporada-3-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mushoku-tensei-jobless-reincarnation-temporada-3-episodio-7"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217586205-7910",
+    "titulo": "KAIJU GIRL CARAMELISE Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/kaiju-girl-caramelise-1784828423.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-girl-caramelise-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-girl-caramelise-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-girl-caramelise-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-girl-caramelise-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-girl-caramelise-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-girl-caramelise-episodio-6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217588990-4843",
+    "titulo": "Hana-Kimi S2 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/hana-kimi-temporada-2-1784819244.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/hana-kimi-temporada-2-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/hana-kimi-temporada-2-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/hana-kimi-temporada-2-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/hana-kimi-temporada-2-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/hana-kimi-temporada-2-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/hana-kimi-temporada-2-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/hana-kimi-temporada-2-episodio-7"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788217590813-3766",
+    "titulo": "The Quintessential Quintuplets∽ Especiales Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino / Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/the-quintessential-quintuplets-1784677217.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino / Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-quintessential-quintuplets-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino / Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-quintessential-quintuplets-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino / Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-quintessential-quintuplets-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino / Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-quintessential-quintuplets-episodio-4"
+          }
+        ]
+      }
+    ]
+  }
+]
