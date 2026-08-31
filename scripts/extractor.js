@@ -10,10 +10,12 @@ const HEADERS = {
   'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8,ja;q=0.7'
 };
 
-// Número de páginas del directorio a recorrer por fuente
-const MAX_PAGINAS_DIRECTORIO = 5;
+// Aumentamos a 25 páginas para cubrir los 200+ animes
+const MAX_PAGINAS_DIRECTORIO = 25;
 
-// Función para extraer el número de temporada a partir del título
+// Función de pausa para evitar bloqueos del servidor (Cloudflare / 429)
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function detectarTemporada(titulo) {
   const match = titulo.match(/(?:season|temporada|st|nd|rd|th\s+season)\s*(\d+)/i) || 
                 titulo.match(/\s+T(\d+)\b/i) || 
@@ -23,7 +25,6 @@ function detectarTemporada(titulo) {
   return match ? parseInt(match[1], 10) : 1;
 }
 
-// Función para detectar el idioma desde el título o etiquetas
 function detectarIdioma(texto) {
   const t = texto.toLowerCase();
   const idiomas = [];
@@ -31,11 +32,16 @@ function detectarIdioma(texto) {
   if (t.includes('castellano') || t.includes('esp')) idiomas.push('Castellano');
   if (t.includes('sub') || t.includes('subtitulado') || t.includes('japanese')) idiomas.push('Subtitulado');
   
-  return idiomas.length > 0 ? idiomas.join(' / ') : 'Multi-Idioma (Latino / Castellano / Sub)';
+  return idiomas.length > 0 ? idiomas.join(' / ') : 'Español Latino';
+}
+
+// Normalizador para eliminar espacios extras o caracteres especiales en la clave de duplicados
+function normalizarTitulo(titulo) {
+  return titulo.toLowerCase().trim().replace(/[^\w\s]/gi, '');
 }
 
 async function runExtractor() {
-  console.log('🚀 Iniciando EXTRACCIÓN ULTRA COMPLETA (Temporadas, Episodios, Reproductores e Idiomas)...');
+  console.log('🚀 Iniciando EXTRACCIÓN MASIVA DE CATALOGO (Paginación ampliada)...');
 
   let catalog = [];
   if (fs.existsSync(JSON_PATH)) {
@@ -46,23 +52,31 @@ async function runExtractor() {
     }
   }
 
-  const catalogMap = new Map(catalog.map(item => [item.titulo.toLowerCase().trim(), item]));
+  // Mapeador por título normalizado para evitar duplicados
+  const catalogMap = new Map();
+  catalog.forEach(item => {
+    if (item.titulo) catalogMap.set(normalizarTitulo(item.titulo), item);
+  });
+
   const stats = { animesNuevos: 0, animesActualizados: 0, episodiosExtraidos: 0 };
 
   // ==========================================
-  // 1. LATANIME.ORG (Temporadas y Episodios)
+  // 1. LATANIME.ORG 
   // ==========================================
-  console.log('🌐 Escaneando catálogo de Latanime.org...');
+  console.log('🌐 Escaneando catálogo principal de Latanime.org...');
   for (let page = 1; page <= MAX_PAGINAS_DIRECTORIO; page++) {
     try {
-      const dirUrl = `https://latanime.org/buscar?q=&page=${page}`;
+      // Cambio de endpoint para obtener la lista general completa
+      const dirUrl = `https://latanime.org/animes?page=${page}`;
+      console.log(`📄 Procesando Latanime página [${page}/${MAX_PAGINAS_DIRECTORIO}]...`);
+      
       const res = await axios.get(dirUrl, { headers: HEADERS, timeout: 15000 });
       const $ = cheerio.load(res.data);
       const items = [];
 
       $('a[href*="/anime/"]').each((_, el) => {
         const url = $(el).attr('href');
-        let title = $(el).find('.title, h3, .name').first().text().trim() || $(el).text().split('\n')[0].trim();
+        let title = $(el).find('.title, h3, .name, .text-sm').first().text().trim() || $(el).text().split('\n')[0].trim();
         let img = $(el).find('img').attr('data-src') || $(el).find('img').attr('src') || '';
 
         if (title && url) {
@@ -71,11 +85,16 @@ async function runExtractor() {
         }
       });
 
+      if (items.length === 0) {
+        console.log(`⚠️ Fin de directorio alcanzado en Latanime (Página ${page}).`);
+        break;
+      }
+
       for (const item of items) {
         const cleanTitle = item.title.replace(/Capítulo\s+\d+/i, '').trim();
         if (!cleanTitle) continue;
 
-        const titleKey = cleanTitle.toLowerCase();
+        const titleKey = normalizarTitulo(cleanTitle);
         const numTemporada = detectarTemporada(cleanTitle);
         const idiomaDetectado = detectarIdioma(cleanTitle);
 
@@ -83,7 +102,6 @@ async function runExtractor() {
           const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 12000 });
           const $$ = cheerio.load(detailRes.data);
 
-          // Extraer lista de episodios de la ficha del anime
           const listaEpisodios = [];
           $$('a[href*="/ver/"]').each((_, epEl) => {
             const epUrl = $$(epEl).attr('href');
@@ -97,22 +115,21 @@ async function runExtractor() {
             }
           });
 
-          // Si no encontró lista explícita, procesa la URL principal
           if (listaEpisodios.length === 0) {
             listaEpisodios.push({ numero: 1, url: item.url });
           }
 
           const episodiosEstructurados = [];
 
-          // Escanear reproductores de cada episodio
-          for (const ep of listaEpisodios.slice(0, 24)) { // Escanea hasta 24 caps por anime
+          // Escanear reproductores (Primeros 12 episodios para agilizar la carga)
+          for (const ep of listaEpisodios.slice(0, 12)) {
             try {
               const epRes = await axios.get(ep.url, { headers: HEADERS, timeout: 8000 });
               const $$$ = cheerio.load(epRes.data);
               const servers = [];
 
               $$$('iframe').each((_, iframe) => {
-                const src = $$$(iframe).attr('src') || $$$(iframe).attr('data-src');
+                const src = $$$ (iframe).attr('src') || $$$ (iframe).attr('data-src');
                 if (src && !src.includes('facebook') && !src.includes('twitter')) {
                   servers.push({
                     idioma: idiomaDetectado,
@@ -153,137 +170,36 @@ async function runExtractor() {
               portada: posterUrl,
               episodios: episodiosEstructurados
             };
-            catalog.push(newAnime);
             catalogMap.set(titleKey, newAnime);
             stats.animesNuevos++;
           }
         } catch (e) {}
+
+        await sleep(500); // Pausa de medio segundo entre animes
       }
     } catch (err) {
       console.log(`⚠️ Error en Latanime página ${page}:`, err.message);
     }
   }
 
-  // ==========================================
-  // 2. JKANIME.NET (Temporadas y Episodios)
-  // ==========================================
-  console.log('🌐 Escaneando catálogo de JKAnime.net...');
-  for (let page = 1; page <= MAX_PAGINAS_DIRECTORIO; page++) {
-    try {
-      const dirUrl = `https://jkanime.net/directorio/${page}/`;
-      const res = await axios.get(dirUrl, { headers: HEADERS, timeout: 15000 });
-      const $ = cheerio.load(res.data);
-      const items = [];
-
-      $('.anime__item, .custom_item, .items .item').each((_, el) => {
-        const link = $(el).find('a').first();
-        const url = link.attr('href');
-        const title = $(el).find('h5, h2, .title').first().text().trim();
-        const img = $(el).find('.anime__item__pic, div[data-setbg]').attr('data-setbg') || $(el).find('img').attr('src') || '';
-
-        if (title && url) items.push({ url, title, poster: img });
-      });
-
-      for (const item of items) {
-        const cleanTitle = item.title.trim();
-        if (!cleanTitle) continue;
-
-        const titleKey = cleanTitle.toLowerCase();
-        const numTemporada = detectarTemporada(cleanTitle);
-        const idiomaDetectado = detectarIdioma(cleanTitle);
-
-        try {
-          const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 12000 });
-          const $$ = cheerio.load(detailRes.data);
-
-          const listaEpisodios = [];
-          $$('a[href*="' + item.url + '"]').each((_, epEl) => {
-            const epUrl = $$(epEl).attr('href');
-            const epText = $$(epEl).text().trim();
-            const epMatch = epText.match(/(\d+)/);
-            if (epUrl && epMatch) {
-              listaEpisodios.push({ numero: parseInt(epMatch[1], 10), url: epUrl });
-            }
-          });
-
-          if (listaEpisodios.length === 0) {
-            listaEpisodios.push({ numero: 1, url: item.url });
-          }
-
-          const episodiosEstructurados = [];
-
-          for (const ep of listaEpisodios.slice(0, 24)) {
-            try {
-              const epRes = await axios.get(ep.url, { headers: HEADERS, timeout: 8000 });
-              const $$$ = cheerio.load(epRes.data);
-              const servers = [];
-
-              $$$('iframe').each((_, iframe) => {
-                const src = $$$(iframe).attr('src') || $$$(iframe).attr('data-src');
-                if (src && !src.includes('facebook')) {
-                  servers.push({
-                    idioma: idiomaDetectado,
-                    servidor: 'Reproductor Directo',
-                    url: src.startsWith('//') ? `https:${src}` : src
-                  });
-                }
-              });
-
-              if (servers.length === 0) {
-                servers.push({ idioma: idiomaDetectado, servidor: 'Ver en JKAnime', url: ep.url });
-              }
-
-              episodiosEstructurados.push({
-                numero: ep.numero,
-                temporada: numTemporada,
-                opciones_reproductor: servers
-              });
-              stats.episodiosExtraidos++;
-            } catch (e) {}
-          }
-
-          if (catalogMap.has(titleKey)) {
-            const existingAnime = catalogMap.get(titleKey);
-            existingAnime.episodios = episodiosEstructurados;
-            existingAnime.temporadas = Math.max(existingAnime.temporadas || 1, numTemporada);
-            stats.animesActualizados++;
-          } else {
-            const newAnime = {
-              id: `anime-jk-${Date.now()}-${Math.floor(Math.random() * 10000)}`,
-              titulo: cleanTitle,
-              tipo: 'anime',
-              anio: 2026,
-              idiomas: [idiomaDetectado],
-              temporadas: numTemporada,
-              portada: item.poster,
-              episodios: episodiosEstructurados
-            };
-            catalog.push(newAnime);
-            catalogMap.set(titleKey, newAnime);
-            stats.animesNuevos++;
-          }
-        } catch (e) {}
-      }
-    } catch (err) {
-      console.log(`⚠️ Error en JKAnime página ${page}:`, err.message);
-    }
-  }
+  // Reconstruir la lista limpia sin duplicados desde el mapa
+  catalog = Array.from(catalogMap.values());
 
   // ==========================================
-  // REPORTE FINAL Y GUARDADO
+  // REPORTE FINAL Y GUARDADO EN ARCHO
   // ==========================================
   console.log('\n=============================================');
-  console.log('📊 REPORTE DE EXTRACCIÓN MASIVA Y ESTRUCTURADA');
+  console.log('📊 REPORTE DE EXTRACCIÓN Y CONSOLIDACIÓN');
   console.log('=============================================');
   console.log(`✨ Animes nuevos registrados:     ${stats.animesNuevos}`);
   console.log(`🔄 Animes/Temporadas actualizadas: ${stats.animesActualizados}`);
   console.log(`🎬 Total episodios extraídos:      ${stats.episodiosExtraidos}`);
   console.log('---------------------------------------------');
-  console.log(`📦 TOTAL DE ANIMES EN LATINO.JSON: ${catalog.length} items`);
+  console.log(`📦 TOTAL DE ANIMES UNICOS EN LATINO.JSON: ${catalog.length}`);
   console.log('=============================================\n');
 
   fs.writeFileSync(JSON_PATH, JSON.stringify(catalog, null, 2), 'utf-8');
-  console.log('💾 Archivo latino.json guardado con éxito.');
+  console.log('💾 Archivo latino.json actualizado exitosamente en el disco.');
 }
 
 runExtractor();
