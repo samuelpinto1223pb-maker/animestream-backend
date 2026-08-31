@@ -163,11 +163,11 @@ async function runExtractor() {
   }
 
   // ==========================================
-  // 3. ANIMEFLV.NET
+  // 3. ANIMEFLV.NET (Sin "www." para evitar fallos de DNS)
   // ==========================================
   try {
     console.log('🌐 Escaneando AnimeFLV.net...');
-    const res = await axios.get('https://www.animeflv.net/', { headers: HEADERS, timeout: 15000 });
+    const res = await axios.get('https://animeflv.net/', { headers: HEADERS, timeout: 15000 });
     const $ = cheerio.load(res.data);
     const flvPromesas = [];
 
@@ -179,8 +179,8 @@ async function runExtractor() {
       const img = $(el).find('img').attr('src') || '';
 
       if (title && url) {
-        const fullUrl = url.startsWith('http') ? url : `https://www.animeflv.net${url}`;
-        const fullImg = img.startsWith('http') ? img : `https://www.animeflv.net${img}`;
+        const fullUrl = url.startsWith('http') ? url : `https://animeflv.net${url}`;
+        const fullImg = img.startsWith('http') ? img : `https://animeflv.net${img}`;
         flvPromesas.push({ url: fullUrl, title, poster: fullImg });
       }
     });
