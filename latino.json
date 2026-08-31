@@ -158,5 +158,85 @@
         ]
       }
     ]
+  },
+  {
+    "id": "anime-lat-1788213663751-151",
+    "titulo": "Star Wars Visions: La Jedi número 9 Cas...",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/star-wars-visions-la-jedi-numero-9-castellano-1786305921.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/star-wars-visions-la-jedi-numero-9-castellano"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788213664060-964",
+    "titulo": "Star Wars Visions: La Jedi número 9 Lat...",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/star-wars-visions-la-jedi-numero-9-1786303925.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/star-wars-visions-la-jedi-numero-9"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788213664325-190",
+    "titulo": "La heroína del lazo Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/la-heroina-del-lazo-castellano-1786207911.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/la-heroina-del-lazo-castellano"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788213664602-821",
+    "titulo": "Though I Am an Inept Villainess Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "audio": "Español Latino",
+    "portada": "https://latanime.org/thumbs/imagen/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-1786205628.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/anime/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den"
+          }
+        ]
+      }
+    ]
   }
 ]
