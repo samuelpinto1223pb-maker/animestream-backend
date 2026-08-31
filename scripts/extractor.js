@@ -11,7 +11,7 @@ const HEADERS = {
 };
 
 async function runExtractor() {
-  console.log('🚀 Iniciando extractor de Animes (Latanime y JKAnime)...');
+  console.log('🚀 Iniciando extractor completo y actualizador de Animes...');
 
   let catalog = [];
   if (fs.existsSync(JSON_PATH)) {
@@ -23,20 +23,21 @@ async function runExtractor() {
     }
   }
 
-  const existingTitles = new Set(catalog.map(item => item.titulo.toLowerCase().trim()));
-  const stats = { latanime: 0, jkanime: 0, ignorados: 0 };
+  // Mapa para buscar rápidamente animes existentes por título
+  const catalogMap = new Map(catalog.map(item => [item.titulo.toLowerCase().trim(), item]));
+  const stats = { agregados: 0, actualizados: 0, sinCambios: 0 };
 
   // ==========================================
-  // 1. LATANIME.ORG
+  // 1. LATANIME.ORG (Escaneo Ampliado)
   // ==========================================
   try {
-    console.log('🌐 Escaneando Latanime.org...');
-    const res = await axios.get('https://latanime.org/', { headers: HEADERS, timeout: 15000 });
+    console.log('🌐 Escaneando Latanime.org (página completa)...');
+    const res = await axios.get('https://latanime.org/', { headers: HEADERS, timeout: 20000 });
     const $ = cheerio.load(res.data);
     const animePromesas = [];
 
     $('a[href*="/anime/"], a[href*="/ver/"]').each((i, el) => {
-      if (animePromesas.length >= 6) return;
+      if (animePromesas.length >= 50) return; // Escanea toda la portada (hasta 50 items)
 
       const url = $(el).attr('href');
       let rawTitle = $(el).find('.title, h3, .name').first().text().trim();
@@ -56,10 +57,9 @@ async function runExtractor() {
 
     for (const item of animePromesas) {
       const cleanTitle = item.rawTitle.split('\n')[0].replace(/Capítulo\s+\d+/i, '').trim();
-      if (!cleanTitle || existingTitles.has(cleanTitle.toLowerCase())) {
-        stats.ignorados++;
-        continue;
-      }
+      if (!cleanTitle) continue;
+
+      const titleKey = cleanTitle.toLowerCase();
 
       try {
         const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 10000 });
@@ -79,18 +79,39 @@ async function runExtractor() {
 
         if (servers.length === 0) servers.push({ idioma: 'Español Latino', servidor: 'Ver en Web', url: item.url });
 
-        catalog.push({
-          id: `anime-lat-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-          titulo: cleanTitle,
-          tipo: 'anime',
-          anio: 2026,
-          audio: 'Español Latino',
-          portada: item.poster.startsWith('/') ? `https://latanime.org${item.poster}` : item.poster,
-          episodios: [{ numero: 1, opciones_reproductor: servers }]
-        });
+        const posterUrl = item.poster.startsWith('/') ? `https://latanime.org${item.poster}` : item.poster;
 
-        existingTitles.add(cleanTitle.toLowerCase());
-        stats.latanime++;
+        // Si el anime ya existe, actualizamos sus reproductores/portada si hay cambios
+        if (catalogMap.has(titleKey)) {
+          const existingAnime = catalogMap.get(titleKey);
+          let updated = false;
+
+          if (servers.length > 0) {
+            existingAnime.episodios[0].opciones_reproductor = servers;
+            updated = true;
+          }
+          if (posterUrl && existingAnime.portada !== posterUrl) {
+            existingAnime.portada = posterUrl;
+            updated = true;
+          }
+
+          if (updated) stats.actualizados++;
+          else stats.sinCambios++;
+        } else {
+          // Si es un anime o temporada nueva, lo agregamos
+          const newAnime = {
+            id: `anime-lat-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+            titulo: cleanTitle,
+            tipo: 'anime',
+            anio: 2026,
+            audio: 'Español Latino',
+            portada: posterUrl,
+            episodios: [{ numero: 1, opciones_reproductor: servers }]
+          };
+          catalog.push(newAnime);
+          catalogMap.set(titleKey, newAnime);
+          stats.agregados++;
+        }
       } catch (e) {}
     }
   } catch (err) {
@@ -98,16 +119,16 @@ async function runExtractor() {
   }
 
   // ==========================================
-  // 2. JKANIME.NET
+  // 2. JKANIME.NET (Escaneo Ampliado)
   // ==========================================
   try {
-    console.log('🌐 Escaneando JKAnime.net...');
-    const res = await axios.get('https://jkanime.net/', { headers: HEADERS, timeout: 15000 });
+    console.log('🌐 Escaneando JKAnime.net (página completa)...');
+    const res = await axios.get('https://jkanime.net/', { headers: HEADERS, timeout: 20000 });
     const $ = cheerio.load(res.data);
     const jkPromesas = [];
 
     $('.anime__item, .items .item').each((i, el) => {
-      if (jkPromesas.length >= 6) return;
+      if (jkPromesas.length >= 50) return; // Escanea toda la portada (hasta 50 items)
 
       const link = $(el).find('a').first();
       const url = link.attr('href');
@@ -121,10 +142,9 @@ async function runExtractor() {
 
     for (const item of jkPromesas) {
       const cleanTitle = item.title.trim();
-      if (!cleanTitle || existingTitles.has(cleanTitle.toLowerCase())) {
-        stats.ignorados++;
-        continue;
-      }
+      if (!cleanTitle) continue;
+
+      const titleKey = cleanTitle.toLowerCase();
 
       try {
         const detailRes = await axios.get(item.url, { headers: HEADERS, timeout: 10000 });
@@ -144,18 +164,35 @@ async function runExtractor() {
 
         if (servers.length === 0) servers.push({ idioma: 'Subtitulado / Latino', servidor: 'Ver en JKAnime', url: item.url });
 
-        catalog.push({
-          id: `anime-jk-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
-          titulo: cleanTitle,
-          tipo: 'anime',
-          anio: 2026,
-          audio: 'Subtitulado / Latino',
-          portada: item.poster,
-          episodios: [{ numero: 1, opciones_reproductor: servers }]
-        });
+        if (catalogMap.has(titleKey)) {
+          const existingAnime = catalogMap.get(titleKey);
+          let updated = false;
 
-        existingTitles.add(cleanTitle.toLowerCase());
-        stats.jkanime++;
+          if (servers.length > 0) {
+            existingAnime.episodios[0].opciones_reproductor = servers;
+            updated = true;
+          }
+          if (item.poster && existingAnime.portada !== item.poster) {
+            existingAnime.portada = item.poster;
+            updated = true;
+          }
+
+          if (updated) stats.actualizados++;
+          else stats.sinCambios++;
+        } else {
+          const newAnime = {
+            id: `anime-jk-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+            titulo: cleanTitle,
+            tipo: 'anime',
+            anio: 2026,
+            audio: 'Subtitulado / Latino',
+            portada: item.poster,
+            episodios: [{ numero: 1, opciones_reproductor: servers }]
+          };
+          catalog.push(newAnime);
+          catalogMap.set(titleKey, newAnime);
+          stats.agregados++;
+        }
       } catch (e) {}
     }
   } catch (err) {
@@ -166,17 +203,17 @@ async function runExtractor() {
   // REPORTE FINAL Y GUARDADO
   // ==========================================
   console.log('\n=============================================');
-  console.log('📊 REPORTE FINAL DE EXTRACCIÓN (2 FUENTES)');
+  console.log('📊 REPORTE DE ESCANEO COMPLETO');
   console.log('=============================================');
-  console.log(`✨ Latanime.org:  ${stats.latanime}`);
-  console.log(`✨ JKAnime.net:   ${stats.jkanime}`);
-  console.log(`🚫 Omitidos (ya existían): ${stats.ignorados}`);
+  console.log(`✨ Animes/Temporadas nuevas agregadas: ${stats.agregados}`);
+  console.log(`🔄 Animes/Capítulos actualizados:      ${stats.actualizados}`);
+  console.log(`☕ Sin cambios (ya al día):           ${stats.sinCambios}`);
   console.log('---------------------------------------------');
-  console.log(`📦 TOTAL EN LATINO.JSON: ${catalog.length} items`);
+  console.log(`📦 TOTAL ACUMULADO EN LATINO.JSON: ${catalog.length} items`);
   console.log('=============================================\n');
 
   fs.writeFileSync(JSON_PATH, JSON.stringify(catalog, null, 2), 'utf-8');
-  console.log('💾 Archivo latino.json actualizado correctamente.');
+  console.log('💾 Archivo latino.json actualizado con éxito.');
 }
 
 runExtractor();
