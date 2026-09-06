@@ -68,6 +68,17 @@
             "url": "https://latanime.org/ver/bleach-sennen-kessen-hen-s4-latino-episodio-1"
           }
         ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/bleach-sennen-kessen-hen-s4-latino-episodio-2"
+          }
+        ]
       }
     ]
   },
@@ -340,6 +351,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-4"
           }
         ]
       }
@@ -1235,6 +1257,17 @@
             "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-5"
           }
         ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-6"
+          }
+        ]
       }
     ]
   },
@@ -1301,6 +1334,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/tomb-raider-king-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tomb-raider-king-episodio-6"
           }
         ]
       }
@@ -1371,6 +1415,17 @@
             "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-5"
           }
         ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-6"
+          }
+        ]
       }
     ]
   },
@@ -1437,6 +1492,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-6"
           }
         ]
       }
@@ -2012,6 +2078,89 @@
             "idioma": "Español Latino / Castellano",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/the-quintessential-quintuplets-episodio-4"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788653255645-7494",
+    "titulo": "Link Click S3 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/link-click-temporada-4-1788534806.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/link-click-temporada-4-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/link-click-temporada-4-episodio-2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788653256868-5777",
+    "titulo": "Mobile Suit Gundam Hathaway Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mobile-suit-gundam-hathaway-castellano-1788276417.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mobile-suit-gundam-hathaway-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1788653257904-5000",
+    "titulo": "MOBILE SUIT GUNDAM HATHAWAY The Sorcery of Nymph Circe Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mobile-suit-gundam-hathaway-the-sorcery-of-nymph-circe-castellano-1788275974.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mobile-suit-gundam-hathaway-the-sorcery-of-nymph-circe-castellano-episodio-1"
           }
         ]
       }
