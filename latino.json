@@ -364,6 +364,17 @@
             "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-4"
           }
         ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-5"
+          }
+        ]
       }
     ]
   },
@@ -1268,6 +1279,17 @@
             "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-6"
           }
         ]
+      },
+      {
+        "numero": 7,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-7"
+          }
+        ]
       }
     ]
   },
@@ -1426,6 +1448,17 @@
             "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-6"
           }
         ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/otome-game-sekai-wa-mob-ni-kibishii-sekai-desu-temporada-2-episodio-7"
+          }
+        ]
       }
     ]
   },
@@ -1503,6 +1536,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/youjo-senki-temporada-2-episodio-7"
           }
         ]
       }
@@ -2115,6 +2159,17 @@
             "url": "https://latanime.org/ver/link-click-temporada-4-episodio-2"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/link-click-temporada-4-episodio-3"
+          }
+        ]
       }
     ]
   },
@@ -2161,6 +2216,223 @@
             "idioma": "Castellano",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/mobile-suit-gundam-hathaway-the-sorcery-of-nymph-circe-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1789258024750-7356",
+    "titulo": "Kaijuu 8-gou: Narumi no Heijitsu Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/assets/img/default.png",
+    "episodios": [
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaijuu-8-gou-narumi-no-heijitsu-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1789258026131-5046",
+    "titulo": "Kaijuu 8-gou: Narumi no Heijitsu Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/kaiju-no-8-original-short-anime-narumis-week-at-work-1789226289.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-no-8-original-short-anime-narumis-week-at-work-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-no-8-original-short-anime-narumis-week-at-work-episodio-2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1789258028860-7297",
+    "titulo": "La Misión de la Familia Yozakura S2 Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/la-mision-de-la-familia-yozakura-s2-castellano-1788830558.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/la-mision-de-la-familia-yozakura-s2-castellano-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/la-mision-de-la-familia-yozakura-s2-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/la-mision-de-la-familia-yozakura-s2-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/la-mision-de-la-familia-yozakura-s2-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/la-mision-de-la-familia-yozakura-s2-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/la-mision-de-la-familia-yozakura-s2-castellano-episodio-6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1789258031647-8024",
+    "titulo": "La Misión de la Familia Yozakura S2 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mission-yozakura-family-temporada-2-1788830488.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-6"
           }
         ]
       }
