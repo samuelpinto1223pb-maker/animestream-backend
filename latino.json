@@ -408,6 +408,17 @@
             "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-6"
           }
         ]
+      },
+      {
+        "numero": 7,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-7"
+          }
+        ]
       }
     ]
   },
@@ -722,6 +733,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futsutsuka-na-akujo-dewa-gozaimasu-ga-suuguu-chouso-torikae-den-episodio-8"
           }
         ]
       }
@@ -1354,6 +1376,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/fumando-juntos-detras-del-super-episodio-9"
           }
         ]
       }
@@ -2258,6 +2291,17 @@
             "url": "https://latanime.org/ver/link-click-temporada-4-episodio-4"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/link-click-temporada-4-episodio-5"
+          }
+        ]
       }
     ]
   },
@@ -2341,6 +2385,17 @@
             "url": "https://latanime.org/ver/kaijuu-8-gou-narumi-no-heijitsu-castellano-episodio-2"
           }
         ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaijuu-8-gou-narumi-no-heijitsu-castellano-episodio-3"
+          }
+        ]
       }
     ]
   },
@@ -2385,6 +2440,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/kaiju-no-8-original-short-anime-narumis-week-at-work-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaiju-no-8-original-short-anime-narumis-week-at-work-episodio-4"
           }
         ]
       }
@@ -2811,6 +2877,173 @@
             "idioma": "Castellano",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1790467623713-450",
+    "titulo": "Futari wa Precure Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/futari-wa-precure-castellano-1790107392.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 7,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 10,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-10"
+          }
+        ]
+      },
+      {
+        "numero": 11,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-11"
+          }
+        ]
+      },
+      {
+        "numero": 12,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-12"
           }
         ]
       }
