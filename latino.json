@@ -101,6 +101,17 @@
             "url": "https://latanime.org/ver/bleach-sennen-kessen-hen-s4-latino-episodio-4"
           }
         ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/bleach-sennen-kessen-hen-s4-latino-episodio-5"
+          }
+        ]
       }
     ]
   },
@@ -417,6 +428,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/jaadugar-a-witch-in-mongolia-episodio-8"
           }
         ]
       }
@@ -2302,6 +2324,17 @@
             "url": "https://latanime.org/ver/link-click-temporada-4-episodio-5"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/link-click-temporada-4-episodio-6"
+          }
+        ]
       }
     ]
   },
@@ -2394,6 +2427,17 @@
             "idioma": "Castellano",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/kaijuu-8-gou-narumi-no-heijitsu-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/kaijuu-8-gou-narumi-no-heijitsu-castellano-episodio-4"
           }
         ]
       }
@@ -2675,6 +2719,72 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-10"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-11"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mission-yozakura-family-temporada-2-episodio-12"
           }
         ]
       }
@@ -3044,6 +3154,257 @@
             "idioma": "Castellano",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/futari-wa-precure-castellano-episodio-12"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084709937-1739",
+    "titulo": "Los siete caballeros del Reino Marronnier Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/los-siete-caballeros-del-reino-marronnier-castellano-1791042525.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084710737-2255",
+    "titulo": "Los siete caballeros del Reino Marronnier Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/los-siete-caballeros-del-reino-marronnier-1791042342.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084711510-3497",
+    "titulo": "Tokyo Revengers: Santen Sensou-hen Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/tokyo-revengers-santen-sensou-hen-castellano-1790990289.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084712291-1949",
+    "titulo": "Tokyo Revengers: Santen Sensou-hen",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/tokyo-revengers-santen-sensou-hen-1790959473.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084713067-7715",
+    "titulo": "Tougen Anki Temporada 2",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 2,
+    "portada": "https://latanime.org/thumbs/imagen/tougen-anki-temporada-2-1790957142.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 2,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tougen-anki-temporada-2-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084713854-9160",
+    "titulo": "Mononoke III: La maldición de la serpiente Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mononoke-iii-la-maldicion-de-la-serpiente-castellano-1790724769.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mononoke-iii-la-maldicion-de-la-serpiente-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084714630-2423",
+    "titulo": "Mononoke III: La maldición de la serpiente Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/mononoke-iii-la-maldicion-de-la-serpiente-1790707312.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mononoke-iii-la-maldicion-de-la-serpiente-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084715572-9044",
+    "titulo": "LEGO ONE PIECE Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/lego-one-piece-1790707236.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/lego-one-piece-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/lego-one-piece-episodio-2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084716352-7157",
+    "titulo": "Overgeared Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/overgeared-castellano-1790528225.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/overgeared-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1791084717137-9398",
+    "titulo": "Overgeared Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/overgeared-1790525357.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/overgeared-episodio-1"
           }
         ]
       }
