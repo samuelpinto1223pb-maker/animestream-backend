@@ -2357,6 +2357,17 @@
             "url": "https://latanime.org/ver/link-click-temporada-4-episodio-7"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/link-click-temporada-4-episodio-8"
+          }
+        ]
       }
     ]
   },
@@ -3055,6 +3066,28 @@
             "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-8"
           }
         ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 10,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-10"
+          }
+        ]
       }
     ]
   },
@@ -3235,6 +3268,17 @@
             "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-castellano-episodio-2"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-castellano-episodio-3"
+          }
+        ]
       }
     ]
   },
@@ -3270,6 +3314,17 @@
             "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-episodio-2"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-episodio-3"
+          }
+        ]
       }
     ]
   },
@@ -3303,6 +3358,17 @@
             "idioma": "Castellano",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-castellano-episodio-3"
           }
         ]
       }
@@ -3471,6 +3537,17 @@
             "url": "https://latanime.org/ver/overgeared-castellano-episodio-2"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/overgeared-castellano-episodio-3"
+          }
+        ]
       }
     ]
   },
@@ -3504,6 +3581,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/overgeared-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/overgeared-episodio-3"
           }
         ]
       }
@@ -3550,6 +3638,39 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/avatar-los-siete-refugios-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/avatar-los-siete-refugios-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/avatar-los-siete-refugios-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/avatar-los-siete-refugios-episodio-6"
           }
         ]
       }
@@ -3745,6 +3866,17 @@
             "url": "https://latanime.org/ver/tank-chair-castellano-episodio-1"
           }
         ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tank-chair-castellano-episodio-2"
+          }
+        ]
       }
     ]
   },
@@ -3769,6 +3901,17 @@
             "url": "https://latanime.org/ver/tank-chair-episodio-1"
           }
         ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tank-chair-episodio-2"
+          }
+        ]
       }
     ]
   },
@@ -3791,6 +3934,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/mezametara-saikyou-soubi-to-uchuusen-mochi-datta-no-de-ikkodate-mezashite-youhei-toshite-jiyuu-ni-ikitai-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mezametara-saikyou-soubi-to-uchuusen-mochi-datta-no-de-ikkodate-mezashite-youhei-toshite-jiyuu-ni-ikitai-episodio-2"
           }
         ]
       }
@@ -3828,6 +3982,17 @@
             "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-episodio-2"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-episodio-3"
+          }
+        ]
       }
     ]
   },
@@ -3861,6 +4026,188 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/tougen-anki-temporada-2-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tougen-anki-temporada-2-episodio-3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792289833519-1857",
+    "titulo": "Black Butler S3 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/black-butler-temporada-3-1792085396.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/black-butler-temporada-3-episodio-10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792289834464-8697",
+    "titulo": "One Piece: Heroínas Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/one-piece-heroinas-1791913474.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/one-piece-heroinas-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792289835415-7163",
+    "titulo": "Dragon Ball Super: Beerus",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/dragon-ball-super-beerus-1791736329.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/dragon-ball-super-beerus-episodio-1"
           }
         ]
       }
