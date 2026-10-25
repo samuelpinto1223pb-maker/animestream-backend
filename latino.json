@@ -3088,6 +3088,28 @@
             "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-10"
           }
         ]
+      },
+      {
+        "numero": 11,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-11"
+          }
+        ]
+      },
+      {
+        "numero": 12,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/dragon-ball-daima-castellano-episodio-12"
+          }
+        ]
       }
     ]
   },
@@ -3279,6 +3301,17 @@
             "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-castellano-episodio-3"
           }
         ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-castellano-episodio-4"
+          }
+        ]
       }
     ]
   },
@@ -3325,6 +3358,17 @@
             "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-episodio-3"
           }
         ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/los-siete-caballeros-del-reino-marronnier-episodio-4"
+          }
+        ]
       }
     ]
   },
@@ -3369,6 +3413,17 @@
             "idioma": "Castellano",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-castellano-episodio-4"
           }
         ]
       }
@@ -3548,6 +3603,17 @@
             "url": "https://latanime.org/ver/overgeared-castellano-episodio-3"
           }
         ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/overgeared-castellano-episodio-4"
+          }
+        ]
       }
     ]
   },
@@ -3592,6 +3658,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/overgeared-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/overgeared-episodio-4"
           }
         ]
       }
@@ -3671,6 +3748,39 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/avatar-los-siete-refugios-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 7,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/avatar-los-siete-refugios-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 8,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/avatar-los-siete-refugios-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 9,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/avatar-los-siete-refugios-episodio-9"
           }
         ]
       }
@@ -3877,6 +3987,17 @@
             "url": "https://latanime.org/ver/tank-chair-castellano-episodio-2"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tank-chair-castellano-episodio-3"
+          }
+        ]
       }
     ]
   },
@@ -3912,6 +4033,17 @@
             "url": "https://latanime.org/ver/tank-chair-episodio-2"
           }
         ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tank-chair-episodio-3"
+          }
+        ]
       }
     ]
   },
@@ -3945,6 +4077,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/mezametara-saikyou-soubi-to-uchuusen-mochi-datta-no-de-ikkodate-mezashite-youhei-toshite-jiyuu-ni-ikitai-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/mezametara-saikyou-soubi-to-uchuusen-mochi-datta-no-de-ikkodate-mezashite-youhei-toshite-jiyuu-ni-ikitai-episodio-3"
           }
         ]
       }
@@ -3993,6 +4136,17 @@
             "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-episodio-3"
           }
         ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tokyo-revengers-santen-sensou-hen-episodio-4"
+          }
+        ]
       }
     ]
   },
@@ -4037,6 +4191,17 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/tougen-anki-temporada-2-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/tougen-anki-temporada-2-episodio-4"
           }
         ]
       }
@@ -4208,6 +4373,649 @@
             "idioma": "Español Latino",
             "servidor": "Ver en Web",
             "url": "https://latanime.org/ver/dragon-ball-super-beerus-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/dragon-ball-super-beerus-episodio-2"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792895235171-138",
+    "titulo": "YAIBA: Samurai Legend Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/yaiba-samurai-legend-castellano-1792866267.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 1,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/yaiba-samurai-legend-castellano-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/yaiba-samurai-legend-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/yaiba-samurai-legend-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 4,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/yaiba-samurai-legend-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 5,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/yaiba-samurai-legend-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 6,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/yaiba-samurai-legend-castellano-episodio-6"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792895236974-5530",
+    "titulo": "Helluva Boss S3 Castellano AMZ",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/assets/img/default.png",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-s3-castellano-amz-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-s3-castellano-amz-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-s3-castellano-amz-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-s3-castellano-amz-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-s3-castellano-amz-episodio-5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792895238717-8872",
+    "titulo": "Helluva Boss S3 Latino AMZ",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/helluva-boss-temporada-3-1792784447.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-temporada-3-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-temporada-3-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-temporada-3-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-temporada-3-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/helluva-boss-temporada-3-episodio-5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792895241444-6876",
+    "titulo": "The Elusive Samurai S2 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/the-elusive-samurai-temporada-2-1792775120.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/the-elusive-samurai-temporada-2-episodio-10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792895242346-4924",
+    "titulo": "Los Diarios De La Boticaria S3 Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/los-diarios-de-la-boticaria-s3-castellano-1792770983.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/los-diarios-de-la-boticaria-s3-castellano-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792895243245-5690",
+    "titulo": "Los Diarios De La Boticaria S3 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/los-diarios-de-la-boticaria-s3-latino-1792770560.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 3,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/los-diarios-de-la-boticaria-s3-latino-episodio-1"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792895245869-7550",
+    "titulo": "Cyberpunk: Edgerunners S2 Castellano",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Castellano"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/cyberpunk-edgerunners-s2-castellano-1792522790.jpg?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Castellano",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-s2-castellano-episodio-10"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "anime-lat-1792895248523-6258",
+    "titulo": "Cyberpunk: Edgerunners S2 Latino",
+    "tipo": "anime",
+    "anio": 2026,
+    "idiomas": [
+      "Español Latino"
+    ],
+    "temporadas": 1,
+    "portada": "https://latanime.org/thumbs/imagen/cyberpunk-edgerunners-temporada-2-1792510468.webp?v=1.5",
+    "episodios": [
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-1"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-2"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-3"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-4"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-5"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-6"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-7"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-8"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-9"
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "temporada": 1,
+        "opciones_reproductor": [
+          {
+            "idioma": "Español Latino",
+            "servidor": "Ver en Web",
+            "url": "https://latanime.org/ver/cyberpunk-edgerunners-temporada-2-episodio-10"
           }
         ]
       }
